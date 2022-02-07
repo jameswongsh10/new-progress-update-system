@@ -55,11 +55,11 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm">
-                    User Name
+                    {{$user->name}}
                 </div>
                 <div class="col-sm-3 bg-light">
-                    <a href="#" class="btn btn-sm btn-success">Monthly View</a>
-                    <a href="#" class="btn btn-sm btn-success">Weekly View</a>
+                    <a href="{{route('monthview', $user->id)}}" class="btn btn-sm btn-success">Monthly View</a>
+                    <a href="{{route('weekview',  $user->id)}}" class="btn btn-sm btn-success">Weekly View</a>
                 </div>
             </div>
         </div>

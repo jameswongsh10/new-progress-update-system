@@ -14,7 +14,6 @@ class DashboardController extends Controller
         return view('dashboard', compact('teams'));
     }
 
-
     public function settings() {
         return view('settings');
     }
@@ -35,19 +34,14 @@ class DashboardController extends Controller
 //        return view('edituser');
 //    }
 //
-//    public function weekview() {
-//        return view('weekview');
-//    }
 //
-//    public function userweekview() {
-//        return view('userweekview');
-//    }
-//
+    public function userweekview() {
+        return view('userweekview');
+    }
+
     public function addtask() {
         return view('addtask');
     }
 
-//    public function monthview() {
-//        return view('monthview ');
-//    }
+
 }

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Week View</title>
+    <title>Month View</title>
 </head>
 <body>
 <!-- sidebar -->
@@ -73,10 +73,12 @@
                         <th>Description</th>
                         <th>Status</th>
                         <th>Remark</th>
+                        <th>Edit</th>
                     </tr>
+                    @forelse($tasks as $task)
                     <tr>
-                        <td>Task 1</td>
-                        <td>Description of task 1</td>
+                        <td>{{$task->task_title}}</td>
+                        <td>{{$task->task_description}}</td>
                         <td>
                             <select id="status" name="status" class="form-control">
                                 <option value="delay">Delay</option>
@@ -84,9 +86,16 @@
                                 <option value="ongoing">On Going</option>
                             </select>
                         </td>
-                        <td>Remark</td>
+                        <td>{{$task->remark}}</td>
+                        <td><a href="#" class="btn btn-sm btn-warning">Edit</a> </td>
                     </tr>
+                    @empty
+                    <p>There is no task</p>
+                    @endforelse
                 </table>
+                <div class="d-flex justify-content-center">
+                    {{$tasks->links()}}
+                </div>
             </div>
         </div>
     </div>

@@ -27,5 +27,11 @@ class User extends Model
         return $this->belongsToMany(Team::class);
     }
 
+    public function calendar() {
+        return $this->hasMany(CalendarEvent::class);
+    }
 
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 }
