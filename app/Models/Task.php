@@ -16,9 +16,9 @@ class Task extends Model
     protected $fillable = [
         'task_title',
         'task_description',
-        'setting_id',
-        'answer',
         'status',
-        'remark'
+        'remark',
+        'start_date',
+        'end_date'
     ];
 }

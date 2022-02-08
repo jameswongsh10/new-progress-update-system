@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Acaronlex\LaravelCalendar\Facades\Calendar;
-use App\Models\CalendarEvent;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,12 +20,12 @@ class FullCalendarController extends Controller
 //        return view('admincalendar');
         $scheduleEvents= [];
         $user = User::find($id);
-        $data = CalendarEvent::all();
+        $data = Task::all();
         if($data->count()) {
             foreach($data as $key => $value) {
                 if($value->user_id == $user->id) {
                     $scheduleEvents[] = Calendar::event(
-                        $value->title,
+                        $value->task_title,
                         true,
                         new \DateTime($value->start_date),
                         new \DateTime($value->end_date),
