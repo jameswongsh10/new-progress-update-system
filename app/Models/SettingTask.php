@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CalendarEvent extends Model
+class SettingTask extends Model
 {
     use HasFactory;
 
-    protected $table = 'calendar_events';
+    protected $table = 'setting_task';
 
     protected $primaryKey = 'id';
 
-    protected $fillable = [
-        'title',
-        'start_date',
-        'end_date'
-    ];
+    protected $fillable = ['user_id', 'team_id', 'answer'];
 }
