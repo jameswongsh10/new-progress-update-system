@@ -11,7 +11,7 @@ use App\Models\Team;
 class TaskController extends Controller
 {
     public function monthview($id) {
-        $tasks = Task::where('user_id', $id)->paginate(3);
+        $tasks = Task::where('user_id', $id)->paginate();
 
         return view('monthview', compact('tasks'));
     }
