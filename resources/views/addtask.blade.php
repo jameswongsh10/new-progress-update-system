@@ -10,7 +10,7 @@
     <title>Add task</title>
 </head>
 <body>
-<!-- sidebar -->
+<!-- sidebar --->
 <div class="sidenav">
     <header>Progress Update System</header>
     <hr>
