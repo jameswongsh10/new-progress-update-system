@@ -52,7 +52,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm">
-                    Month
+                    <?php ?>
                 </div>
                 <div class="col-sm-3 bg-light">
                     <div class="input-group">
@@ -93,9 +93,9 @@
                     <p>There is no task</p>
                     @endforelse
                 </table>
-                <div class="d-flex justify-content-center">
-                    {{$tasks->links()}}
-                </div>
+{{--                <div class="d-flex justify-content-center">--}}
+{{--                    {{$tasks->links()}}--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Acaronlex\LaravelCalendar\Facades\Calendar;
 use Illuminate\Http\Request;
 
 class MonthlyViewController extends Controller
@@ -13,7 +14,7 @@ class MonthlyViewController extends Controller
      */
     public function index()
     {
-        //qh testing
+        //
     }
 
     /**

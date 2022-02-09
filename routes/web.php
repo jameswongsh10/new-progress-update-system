@@ -52,9 +52,13 @@ Route::get('/userweekview', [DashboardController::class, 'userweekview']);
 Route::get('/addtask', [DashboardController::class, 'addtask']);
 
 Route::get('/monthview/{id}', [TaskController::class, 'monthview'])->name('monthview')->where('id', '[0-9]+');
+//Route::post('/monthview/{id}', [TaskController::class, 'monthview'])->name('monthviewPost')->where('id', '[0-9]+');
+Route::post('/getRequestPost', [TaskController::class, 'getRequestPost'])->name('getRequestPost');
+
+
 Route::get('/weekview/{id}', [TaskController::class, 'weekview'])->name('weekview')->where('id', '[0-9]+');
 
-
+//Route::post('/monthview', [TaskController::class, 'getRequest']);
 /*
 
 
