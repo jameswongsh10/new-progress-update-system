@@ -8,15 +8,14 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    //---------------------------Progress Update Setting
     public function progressUpdateSetting()
     {
-
+        return view('settings.progress-update-setting');
     }
 
-    //-----------------------------------Team Setting----------------------------
-    public function teamSetting()
-    {
-        $team = Team::all();
-
+    //---------------------------Role access setting
+    public function roleAccessSetting() {
+        return view('settings.role-access-setting');
     }
 }

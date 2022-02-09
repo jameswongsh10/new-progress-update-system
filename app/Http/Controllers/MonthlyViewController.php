@@ -13,7 +13,8 @@ class MonthlyViewController extends Controller
      */
     public function index()
     {
-        //qh testing
+        //
+
     }
 
     /**
@@ -46,6 +47,7 @@ class MonthlyViewController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**

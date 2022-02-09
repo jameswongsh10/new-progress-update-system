@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\MonthlyViewController;
+use App\Http\Controllers\ProgressUpdateSettingController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamSettingController;
 use App\Http\Controllers\UserManagementController;
@@ -26,8 +29,7 @@ Route::post('/', [LoginController::class, 'check'])->name('check');
 //----------------- User Management -----------------
 
 Route::resource('users', UserManagementController::class);
-Route::resource('teamsetting', TeamSettingController::class);
-//Route::resource('monthview', TaskController::class);
+//Route::resource('monthview', MonthlyViewController::class);
 //Route::get('/users', [DashboardController::class, 'displayUsers'])->name('users');
 Route::get('/users/adduser', [DashboardController::class, 'addUser'])->name('adduser');
 //Route::post('/users/adduser', [DashboardController::class, 'addUserCheck'])->name('addusercheck');
@@ -38,7 +40,6 @@ Route::get('/users/adduser', [DashboardController::class, 'addUser'])->name('add
 
 Route::get('/dashboard', [DashboardController::class, 'admindashboard'])->name('dashboard');
 //
-Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
 Route::get('/teamview/{id}', [DashboardController::class, 'teamview'])->name('teamview')->where('id', '[0-9]+');
 Route::get('/calendar/{id}', [FullCalendarController::class, 'usercalendar'])->name('calendar')->where('id', '[0-9]+');
 //Route::post('/calendar', [FullCalendarController::class, 'admincalendar'])->name('calendar');
@@ -55,8 +56,23 @@ Route::get('/monthview/{id}', [TaskController::class, 'monthview'])->name('month
 Route::get('/weekview/{id}', [TaskController::class, 'weekview'])->name('weekview')->where('id', '[0-9]+');
 
 
-/*
 
+
+
+//--------------------------------Setting-----------------------------
+Route::resource('/settings/teamsetting', TeamSettingController::class);
+Route::resource('/settings/progress-update-setting', ProgressUpdateSettingController::class);
+//Route::get('/setting/progress-update-setting', [SettingController::class, 'progressUpdateSetting'])->name('progress-update-setting');
+Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
+
+
+
+
+
+
+
+
+/*
 
 
 //do routing later for this

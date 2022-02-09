@@ -21,13 +21,13 @@
     </a>
     <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
         <li class="w-100">
-            <a href="{{ route('settings') }}" class="item-nav custom-font-size px-0">Progress Update Settings</a>
+            <a href="{{ route('progress-update-setting.index') }}" class="item-nav custom-font-size px-0">Progress Update Settings</a>
         </li>
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
         <li>
-            <a href="{{ route('settings') }}" class="item-nav custom-font-size px-0">Role Access</a>
+            <a href="{{ route('role-access-setting') }}" class="item-nav custom-font-size px-0">Role Access</a>
         </li>
     </ul>
     <a href="#" class="item-nav">Logout</a>

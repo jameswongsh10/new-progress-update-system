@@ -7,16 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Settings</title>
+    <title>Month View</title>
 </head>
 <body>
 <!-- sidebar -->
 <div class="sidenav">
     <header>Progress Update System</header>
     <hr>
-    <a href="{{ route('dashboard') }}" class="item-nav">Dashboard</a>
+    <a href="{{ route('dashboard') }}" class="item-nav active ">Dashboard</a>
     <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
-    <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle active">
+    <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
         <span class="ms-1 d-none d-sm-inline">Settings</span>
     </a>
     <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
@@ -52,45 +52,53 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm">
-                    Team Settings
+                    Month
                 </div>
-                <div class="col-sm-1 bg-light">
-                    <a href=" {{ route('teamsetting.create') }}" class="btn btn-sm btn-success">Add Team</a>
+                <div class="col-sm-3 bg-light">
+                    <div class="input-group">
+                        <div class="form-outline">
+                            <input type="search" id="form1" class="form-control" />
+                        </div>
+                        <button type="button" class="btn btn-primary">Filter</button>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="card-body">
-            <div class="row">
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Tasks</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Remark</th>
+                        <th>Edit</th>
+                    </tr>
+                    @forelse($tasks as $task)
                         <tr>
-                            <th>Team</th>
-                            <th>Number of Members</th>
-                            <th class="width-action">Edit</th>
-                            <th class="width-action">Delete</th>
+                            <td>{{$task->task_title}}</td>
+                            <td>{{$task->task_description}}</td>
+                            <td>
+                                <select id="status" name="status" class="form-control">
+                                    <option value="delay">Delay</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="ongoing">On Going</option>
+                                </select>
+                            </td>
+                            <td>{{$task->remark}}</td>
+                            <td><a href="#" class="btn btn-sm btn-warning">Edit</a> </td>
                         </tr>
-                        @foreach($teams as $team)
-                            <tr>
-                                <td>{{ $team->team_name }}</td>
-                                <td>{{ $team->users->count() }}</td>
-                                <td><a href="{{route('teamsetting.edit',$team->id )}}" class="btn btn-sm btn-warning">Edit</a> </td>
-                                <td><form action="{{route('teamsetting.destroy', $team->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onClick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
+                    @empty
+                        <p>There is no task</p>
+                    @endforelse
+                </table>
+                <div class="d-flex justify-content-center">
+                    {{$tasks->links()}}
                 </div>
             </div>
-
         </div>
     </div>
-
-
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

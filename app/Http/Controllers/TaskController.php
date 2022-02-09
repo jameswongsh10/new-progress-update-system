@@ -20,7 +20,4 @@ class TaskController extends Controller
         return view('weekview');
     }
 
-
-
-
 }

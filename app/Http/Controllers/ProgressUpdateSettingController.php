@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Team;
+use App\Models\Setting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 
-class TeamSettingController extends Controller
+class ProgressUpdateSettingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,9 @@ class TeamSettingController extends Controller
      */
     public function index()
     {
-        $teams = Team::all();
-        return view('settings.teamsetting.index', compact("teams"));
+        //
+        $setting = Setting::all();
+        return view('settings.progress-update-setting.index', compact('setting'));
     }
 
     /**
@@ -28,8 +27,6 @@ class TeamSettingController extends Controller
     public function create()
     {
         //
-
-        return view('settings.teamsetting.create');
     }
 
     /**
@@ -40,17 +37,7 @@ class TeamSettingController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'teamname' => 'required',
-        ]);
-
-        $newTeam = new Team();
-        $newTeam->team_name = $request->input('teamname');
-        $save = $newTeam->save();
-
-        if ($save) {
-            return back()->with('success', 'New team has been added.');
-        }
+        //
     }
 
     /**
@@ -73,8 +60,6 @@ class TeamSettingController extends Controller
     public function edit($id)
     {
         //
-        $teams = Team::all();
-        return view('settings.teamsetting.edit', compact('teams'));
     }
 
     /**
@@ -87,17 +72,6 @@ class TeamSettingController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $request->validate([
-            'teamname' => 'required',
-        ]);
-
-        $save = Team::where('id', $id)->update([
-            'team_name' => $request->input('teamname')
-        ]);
-
-        if($save) {
-            return back()->with('success', 'User has been updated.');
-        }
     }
 
     /**
@@ -108,10 +82,6 @@ class TeamSettingController extends Controller
      */
     public function destroy($id)
     {
-        $team = Team::find($id);
-        $team->delete();
-
-        Session::flash('deleted', 'User has been deleted');
-        return Redirect::to('users');
+        //
     }
 }
