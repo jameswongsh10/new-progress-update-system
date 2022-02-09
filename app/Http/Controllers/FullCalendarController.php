@@ -6,6 +6,7 @@ use Acaronlex\LaravelCalendar\Facades\Calendar;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 
 class FullCalendarController extends Controller
@@ -35,5 +36,9 @@ class FullCalendarController extends Controller
         }
         $calendar = Calendar::addEvents($scheduleEvents);
         return view('calendar', compact('calendar', 'user'));
+    }
+
+    public function getDate(){
+        return \Acaronlex\LaravelCalendar\Calendar::event($this->getDate())->isAllDay();
     }
 }
