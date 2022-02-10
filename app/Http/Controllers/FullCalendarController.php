@@ -35,6 +35,18 @@ class FullCalendarController extends Controller
             }
         }
         $calendar = Calendar::addEvents($scheduleEvents);
+        $calendar->setOptions([
+            'weekNumbers' => 'local',
+            'weekNumberCalculation' => 'local',
+            'navLinks' => 'true',
+            'firstDay' => '1'
+        ]);
+        $calendar->setCallbacks([
+            'navLinkWeekClick' => 'function(weekStart, jsEvent) {
+                console.log(\'week start\', weekStart.toISOString());
+                console.log(\'coords\', jsEvent.pageX, jsEvent.pageY);
+            }'
+        ]);
         return view('calendar', compact('calendar', 'user'));
     }
 
