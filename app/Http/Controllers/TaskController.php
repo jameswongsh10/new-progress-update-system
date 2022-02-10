@@ -12,30 +12,32 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
-    public function getRequestPost() {
-        $data = $_POST['myData'];
-        $tasks = Task::where('user_id', 2)->whereMonth('start_date',$data)->paginate();
+    public $month, $user;
+
+    public function getData()
+    {
+        $this->month = $_POST['myMonth'];
+        $this->user = $_POST['myID'];
+        setcookie("user", $this->user, time() + (86400 * 30), "/");
+        setcookie("month", $this->month, time() + (86400 * 30), "/");
+    }
+
+    public function monthlyView()
+    {
+        if(!isset($_COOKIE["user"])) {
+            echo "Cookie named '" . "' is not set!";
+        } else {
+            $id = $_COOKIE['user'];
+            $date = $_COOKIE['month'];
+        }
+        $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->paginate();
         return view('monthview', compact('tasks'));
     }
 
-    public function monthview($id) {
-        $tasks = Task::where('user_id', $id);//->whereMonth('start_date',$data)->paginate();
-        return view('monthview', compact('tasks'));
-    }
-//
-//    public function monthviewPost() {
-//        $data = $_POST['myData'];
-//        $tasks = Task::where('user_id', 2)->whereMonth('start_date',$data)->paginate();
-//        return view('monthview', compact('tasks'));
-//    }
-
-//    public function monthview() {
-//        $tasks = Task::where('user_id', 1)->paginate();
-//        return view('monthview', compact('tasks'));
-//    }
-
-    public function weekview($id) {
+    public function weekview($id)
+    {
         return view('weekview');
     }
+
 
 }
