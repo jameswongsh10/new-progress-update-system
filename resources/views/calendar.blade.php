@@ -59,7 +59,7 @@
                     {{$user->name}}
                 </div>
                 <div class="col-sm-3 bg-light">
-                    <a href="{{route('monthview', $user->id)}}" id=Mmonthbutton class="btn btn-sm btn-success">Monthly View</a>
+                    <a href="{{route('monthview')}}" id=Mmonthbutton class="btn btn-sm btn-success">Monthly View</a>
                     <a href="#" id=monthbutton class="btn btn-submit">Monthly View</a>
                     <a href="{{route('weekview',  $user->id)}}" class="btn btn-sm btn-success">Weekly View</a>
                 </div>
@@ -97,14 +97,18 @@
             var date = calendar.getDate();
             var month = date.getMonth();
             var finalMonth = ++month;
+            var id = 1;
 
             $.ajax({
                 type:'POST',
-                url:"{{ route('getRequestPost')}}",
-                data:{myData:finalMonth},
+                url:"{{route('monthview')}}",
+                // data:JSON.stringify({myData:finalMonth, myID:id}),
+                data:{myData:finalMonth, myID:id},
+                // processData: false,
+                // contentType: "application/json; charset=UTF-8",
                 success:function(data){
                     console.log("===== " + data + " =====");
-                    window.location.href = "{{route('monthview', $user->id)}}";
+                    window.location.href = "{{route('changeView')}}";
                 }
             });
         });
