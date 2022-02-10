@@ -14,16 +14,15 @@ class TaskController extends Controller
 {
     public $month, $user;
 
-    public function monthview()
+    public function getData()
     {
-        $this->month = $_POST['myData'];
+        $this->month = $_POST['myMonth'];
         $this->user = $_POST['myID'];
         setcookie("user", $this->user, time() + (86400 * 30), "/");
         setcookie("month", $this->month, time() + (86400 * 30), "/");
-
     }
 
-    public function changeView()
+    public function monthlyView()
     {
         if(!isset($_COOKIE["user"])) {
             echo "Cookie named '" . "' is not set!";

@@ -59,8 +59,7 @@
                     {{$user->name}}
                 </div>
                 <div class="col-sm-3 bg-light">
-                    <a href="{{route('monthview')}}" id=Mmonthbutton class="btn btn-sm btn-success">Monthly View</a>
-                    <a href="#" id=monthbutton class="btn btn-submit">Monthly View</a>
+                    <a href="#" id=monthbutton class="btn btn-sm btn-success btn-submit">Monthly View</a>
                     <a href="{{route('weekview',  $user->id)}}" class="btn btn-sm btn-success">Weekly View</a>
                 </div>
             </div>
@@ -83,7 +82,6 @@
         crossorigin="anonymous">
 </script>
 <script>
-    // document.getElementById('monthbutton').addEventListener('click', function() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -97,18 +95,15 @@
             var date = calendar.getDate();
             var month = date.getMonth();
             var finalMonth = ++month;
-            var id = 1;
+            var id = {{$user->id}};
 
             $.ajax({
                 type:'POST',
-                url:"{{route('monthview')}}",
-                // data:JSON.stringify({myData:finalMonth, myID:id}),
-                data:{myData:finalMonth, myID:id},
-                // processData: false,
-                // contentType: "application/json; charset=UTF-8",
+                url:"{{route('getData')}}",
+                data:{myMonth:finalMonth, myID:id},
                 success:function(data){
                     console.log("===== " + data + " =====");
-                    window.location.href = "{{route('changeView')}}";
+                    window.location.href = "{{route('monthlyView')}}";
                 }
             });
         });
