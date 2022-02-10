@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProgressUpdateSettingController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamSettingController;
 use App\Http\Controllers\UserManagementController;
@@ -55,6 +57,12 @@ Route::post('getData', [TaskController::class, 'getData'])->name('getData');
 Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthlyView');
 
 Route::get('/weekview/{id}', [TaskController::class, 'weekview'])->name('weekview')->where('id', '[0-9]+');
+
+//--------------------------------Setting-----------------------------
+Route::resource('/settings/teamsetting', TeamSettingController::class);
+Route::resource('/settings/progress-update-setting', ProgressUpdateSettingController::class);
+//Route::get('/setting/progress-update-setting', [SettingController::class, 'progressUpdateSetting'])->name('progress-update-setting');
+Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
 
 
 /*

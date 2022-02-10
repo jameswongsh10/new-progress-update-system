@@ -8,14 +8,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Progress Update Setting</title>
+    <title>Add Progress Title</title>
 </head>
 <body>
 <!-- sidebar -->
 <div class="sidenav">
     <header>Progress Update System</header>
     <hr>
-    <a href="{{ route('dashboard') }}" class="item-nav">Dashboard</a>
+    <a href="{{ route('dashboard') }}" class="item-nav ">Dashboard</a>
     <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
     <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle active">
         <span class="ms-1 d-none d-sm-inline">Settings</span>
@@ -53,50 +53,40 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm">
-                    Progress Update Setting
-                </div>
-                <div class="col-sm-2 bg-light">
-                    <a href="{{route('progress-update-setting.create')}}" class="btn btn-sm btn-success">Add Setting</a>
+                    Add Progress Title
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <th>Title</th>
-                            <th class="custom-team">Is Active</th>
-                            <th class="width-action">Edit</th>
-                            <th class="width-action">Delete</th>
-                        </tr>
-                        @foreach($settings as $setting)
-                        <tr>
-                            <td>{{$setting->progress_title}}</td>
-                            <td>
-                                @if($setting->is_active == 1)
-                                    <i class="bi bi-check"></i>
-                                @else
-                                    <i class="bi bi-x"></i>
-                                @endif
-                            </td>
-                            <td><a href="{{ route('progress-update-setting.edit', $setting->id) }}" class="btn btn-sm btn-warning">Edit</a> </td>
-                            <td><form action="#" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onClick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </table>
+
+            @if( session()->get('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
                 </div>
-            </div>
+            @endif
+
+            <form autocomplete="off" method="post" action="{{ route('progress-update-setting.store') }}">
+                @csrf
+                <div class="form-group">
+                    <label>Title</label>
+                    <input autocomplete="off" type="search" name="title" class="form-control" />
+                    <span class="text-danger">@error ('title') {{$message}} @enderror</span>
+                </div>
+                <div class="form-group">
+                    <label>Is Active</label>
+                    <select name="isActive" class="form-control">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                    <span class="text-danger">@error ('isActive') {{$message}} @enderror</span>
+                </div>
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
         </div>
     </div>
-
-
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

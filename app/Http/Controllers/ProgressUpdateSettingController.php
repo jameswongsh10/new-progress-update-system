@@ -15,8 +15,8 @@ class ProgressUpdateSettingController extends Controller
     public function index()
     {
         //
-        $setting = Setting::all();
-        return view('settings.progress-update-setting.index', compact('setting'));
+        $settings = Setting::all();
+        return view('settings.progress-update-setting.index', compact('settings'));
     }
 
     /**
@@ -27,6 +27,7 @@ class ProgressUpdateSettingController extends Controller
     public function create()
     {
         //
+        return view('settings.progress-update-setting.create');
     }
 
     /**
@@ -38,6 +39,18 @@ class ProgressUpdateSettingController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'title' => 'required',
+        ]);
+
+        $newSetting = new Setting();
+        $newSetting->progress_title = $request->input('title');
+        $newSetting->is_active = $request->input('isActive');
+        $save = $newSetting->save();
+
+        if ($save) {
+            return back()->with('success', 'New progress title has been added.');
+        }
     }
 
     /**
@@ -60,6 +73,8 @@ class ProgressUpdateSettingController extends Controller
     public function edit($id)
     {
         //
+        $currentSetting = Setting::find($id);
+        return view("settings.progress-update-setting.edit", compact('currentSetting'));
     }
 
     /**
@@ -72,6 +87,19 @@ class ProgressUpdateSettingController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'title' => 'required',
+        ]);
+
+        $save = $newSetting = Setting::where('id', $id)->update([
+            'progress_title' => $request->input('title'),
+            'is_active' => $request->input('isActive')
+        ]);
+
+
+        if ($save) {
+            return back()->with('success', 'Progress title has been updated.');
+        }
     }
 
     /**

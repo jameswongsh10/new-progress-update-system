@@ -6,28 +6,29 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Month View</title>
+    <title>Add Progress Title</title>
 </head>
 <body>
 <!-- sidebar -->
 <div class="sidenav">
     <header>Progress Update System</header>
     <hr>
-    <a href="{{ route('dashboard') }}" class="item-nav active ">Dashboard</a>
+    <a href="{{ route('dashboard') }}" class="item-nav ">Dashboard</a>
     <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
-    <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
+    <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle active">
         <span class="ms-1 d-none d-sm-inline">Settings</span>
     </a>
     <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
         <li class="w-100">
-            <a href="{{ route('settings') }}" class="item-nav custom-font-size px-0">Progress Update Settings</a>
+            <a href="{{ route('progress-update-setting.index') }}" class="item-nav custom-font-size px-0">Progress Update Settings</a>
         </li>
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
         <li>
-            <a href="{{ route('settings') }}" class="item-nav custom-font-size px-0">Role Access</a>
+            <a href="{{ route('role-access-setting') }}" class="item-nav custom-font-size px-0">Role Access</a>
         </li>
     </ul>
     <a href="#" class="item-nav">Logout</a>
@@ -52,51 +53,39 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm">
-                    Month
-                </div>
-                <div class="col-sm-3 bg-light">
-                    <div class="input-group">
-                        <div class="form-outline">
-                            <input type="search" id="form1" class="form-control" />
-                        </div>
-                        <button type="button" class="btn btn-primary">Filter</button>
-                    </div>
+                    Add Progress Title
                 </div>
             </div>
         </div>
-
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <tr>
-                        <th>Tasks</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Remark</th>
-                        <th>Edit</th>
-                    </tr>
-                    @forelse($tasks as $task)
-                        <tr>
-                            <td>{{$task->task_title}}</td>
-                            <td>{{$task->task_description}}</td>
-                            <td>
-                                <select id="status" name="status" class="form-control">
-                                    <option value="delay">Delay</option>
-                                    <option value="completed">Completed</option>
-                                    <option value="ongoing">On Going</option>
-                                </select>
-                            </td>
-                            <td>{{$task->remark}}</td>
-                            <td><a href="#" class="btn btn-sm btn-warning">Edit</a> </td>
-                        </tr>
-                    @empty
-                        <p>There is no task</p>
-                    @endforelse
-                </table>
-                <div class="d-flex justify-content-center">
-                    {{$tasks->links()}}
+
+            @if( session()->get('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
                 </div>
-            </div>
+            @endif
+
+            <form autocomplete="off" method="post" action="{{ route('progress-update-setting.update', $currentSetting->id) }}">
+                @csrf
+                @method('PUT')
+                <div class="form-group">
+                    <label>Title</label>
+                    <input autocomplete="off" type="search" name="title" class="form-control" value="{{$currentSetting->progress_title}}"/>
+                    <span class="text-danger">@error ('title') {{$message}} @enderror</span>
+                </div>
+                <div class="form-group">
+                    <label>Is Active</label>
+                    <select name="isActive" class="form-control">
+                        <option value="1" @if($currentSetting->is_active == 1) selected @endif>Yes</option>
+                        <option value="0" @if($currentSetting->is_active == 0) selected @endif>No</option>
+                    </select>
+                    <span class="text-danger">@error ('isActive') {{$message}} @enderror</span>
+                </div>
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
