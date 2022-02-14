@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Acaronlex\LaravelCalendar\Calendar;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Models\User;
