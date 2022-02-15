@@ -120,3 +120,7 @@ a.item-nav.active {
 .width-position {
     width: 5%;
 }
+
+.table{
+    width: 100%; display: table; table-layout: fixed;
+}
