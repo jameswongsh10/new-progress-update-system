@@ -52,39 +52,10 @@
         <div class="card-header">
             <div class="row">
                 <h4>
-                    Weekly View
+                    Report of User
                 </h4>
             </div>
         </div>
-
-        @for($x = 1; $x <= 7; $x++ )
-            <div class="card-body">
-                <h5><?php echo date('Y-m-d', strtotime($_COOKIE['week'] . ' +' . $x . ' days'))?></h5>
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <th>Tasks</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Report</th>
-                        </tr>
-                        @forelse($tasks as $task)
-                            @if(date('Y-m-d', strtotime($_COOKIE['week'] . ' +'.$x.' days')) >= $task->start_date && date('Y-m-d', strtotime($_COOKIE['week'] . ' +'.$x.' days')) <=$task->end_date)
-                                <tr>
-                                    <td>{{$task->task_title}}</td>
-                                    <td>{{$task->task_description}}</td>
-                                    <td>{{$task->status}}</td>
-                                    <td><a href="{{route('reportView')}}" class="btn btn-sm btn-success">Download Report</a></td>
-                                </tr>
-                            @endif
-                        @empty
-                            <p>There is no task</p>
-                        @endforelse
-                    </table>
-                </div>
-            </div>
-        @endfor
-
     </div>
 </div>
 
@@ -94,38 +65,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
-{{--<script src="http://code.jquery.com/jquery-3.3.1.min.js"--}}
-{{--        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--}}
-{{--        crossorigin="anonymous">--}}
-{{--</script>--}}
-{{--<script>--}}
-{{--    $.ajaxSetup({--}}
-{{--        headers: {--}}
-{{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-{{--        }--}}
-{{--    });--}}
 
-{{--    $(".btn-success").click(function(e){--}}
-
-{{--        e.preventDefault();--}}
-
-{{--        var date = calendar.getDate();--}}
-{{--        var month = date.getMonth();--}}
-{{--        var finalMonth = ++month;--}}
-{{--        var id = {{$user->id}};--}}
-
-{{--        $.ajax({--}}
-{{--            type:'POST',--}}
-{{--            url:"{{route('getData')}}",--}}
-{{--            data:{myMonth:finalMonth, myID:id},--}}
-{{--            success:function(data){--}}
-{{--                console.log("===== " + data + " =====");--}}
-{{--                window.location.href = "{{route('monthlyView')}}";--}}
-{{--            }--}}
-{{--        });--}}
-{{--    });--}}
-{{--    // });--}}
-{{--</script>--}}
 </body>
 
 </html>
