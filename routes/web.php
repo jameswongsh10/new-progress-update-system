@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProgressUpdateSettingController;
+use App\Http\Controllers\ReportViewController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamSettingController;
@@ -39,7 +40,6 @@ Route::get('/users/adduser', [DashboardController::class, 'addUser'])->name('add
 
 
 Route::get('/dashboard', [DashboardController::class, 'admindashboard'])->name('dashboard');
-Route::get('/userdashboard', [DashboardController::class, 'userdashboard'])->name('userdashboard');
 //
 Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
 Route::get('/teamview/{id}', [DashboardController::class, 'teamview'])->name('teamview')->where('id', '[0-9]+');
@@ -52,13 +52,16 @@ Route::get('/calendar/{id}', [FullCalendarController::class, 'usercalendar'])->n
 //
 
 Route::get('/userweekview', [DashboardController::class, 'userweekview']);
-Route::get('/addtask', [TaskController::class, 'addTaskView']);
+Route::post('getDay', [TaskController::class, 'getDay'])->name('getDay');
+Route::get('addTask', [TaskController::class, 'addTask'])->name('addTask');
 
 Route::post('getData', [TaskController::class, 'getData'])->name('getData');
 Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthlyView');
 
 Route::post('getWeek', [TaskController::class, 'getWeek'])->name('getWeek');
 Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
+
+Route::get('reportView', [ReportViewController::class, 'reportView'])->name('reportView');
 
 //--------------------------------Setting-----------------------------
 Route::resource('/settings/teamsetting', TeamSettingController::class);

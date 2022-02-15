@@ -74,5 +74,16 @@ class TaskController extends Controller
         return view('weekView', compact('tasks'));
     }
 
+    public function getDay()
+    {
+        $this->day = $_POST['myDay'];
+        setcookie("day", $this->day, time() + (86400 * 30), "/");
+    }
 
+    public function addTask() {
+        $today = $_COOKIE['day'];
+        echo $today;
+//        $settings = Setting::where('is_active', '=', 1)->get();
+//        return view('addtask', compact('settings'));
+    }
 }
