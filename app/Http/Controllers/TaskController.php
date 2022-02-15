@@ -51,8 +51,8 @@ class TaskController extends Controller
             $id = $_COOKIE['user'];
             $week = $_COOKIE['week'];
 
-            $week = date('Y-m-d', strtotime($week . ' +1 days'));
-            $weekend = date('Y-m-d', strtotime($week . ' +7 days'));
+            $week = date('Y-m-d', strtotime($week));
+            $weekend = date('Y-m-d', strtotime($week . ' +6 days'));
             $tasks = Task::where('user_id', $id)->where(function($query) use ($weekend, $week) {
                 $query->where('start_date', '<=', $week)
                     ->where('end_date', '>=', $weekend);

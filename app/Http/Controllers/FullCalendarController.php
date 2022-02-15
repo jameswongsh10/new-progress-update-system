@@ -31,7 +31,8 @@ class FullCalendarController extends Controller
                         $value->task_title,
                         true,
                         new \DateTime($value->start_date),
-                        new \DateTime($value->end_date),
+                        new \DateTime(date('Y-m-d', strtotime($value->end_date . ' +1 days'))),
+
                     );
                 }
             }

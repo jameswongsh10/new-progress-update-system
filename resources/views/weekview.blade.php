@@ -46,36 +46,42 @@
         </div>
     </nav>
 
-    <!-- table -->
-
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <tr>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Tasks</th>
-                    <th>Description</th>
-                    <th>Report</th>
-                </tr>
-                @forelse($tasks as $task)
-                    <tr>
-                        <td>{{$task->start_date}}</td>
-                        <td>{{$task->end_date}}</td>
-                        <td>{{$task->task_title}}</td>
-                        <td>{{$task->task_description}}</td>
-                        <td>Report File goes here</td>
-                    </tr>
-                @empty
-                    <p>There is no task</p>
-                @endforelse
-            </table>
-            {{--                <div class="d-flex justify-content-center">--}}
-            {{--                    {{$tasks->links()}}--}}
-            {{--                </div>--}}
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h4>
+                    Weekly View
+                </h4>
+            </div>
         </div>
-    </div>
-    <br>
+
+        @for($x = 1; $x <= 7; $x++ )
+        <div class="card-body">
+            <h5><?php echo date('Y-m-d', strtotime($_COOKIE['week'] . ' +'.$x.' days'))?></h5>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Tasks</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Report</th>
+                    </tr>
+                    @forelse($tasks as $task)
+                        @if(date('Y-m-d', strtotime($_COOKIE['week'] . ' +'.$x.' days')) >= $task->start_date && date('Y-m-d', strtotime($_COOKIE['week'] . ' +'.$x.' days')) <=$task->end_date)
+                            <tr>
+                                <td>{{$task->task_title}}</td>
+                                <td>{{$task->task_description}}</td>
+                                <td>{{$task->status}}</td>
+                                <td><a href="#" class="btn btn-sm btn-success">Download Report</a> </td>
+                            </tr>
+                        @endif
+                    @empty
+                        <p>There is no task</p>
+                    @endforelse
+                </table>
+            </div>
+        </div>
+        @endfor
 
 </div>
 
