@@ -58,15 +58,15 @@ class TaskController extends Controller
                     ->where('end_date', '>=', $weekend);
             })->orWhere(function($query) use ($id, $weekend, $week) {
                 $query->where('user_id', $id)
-                    ->where('start_date', '>', $week)
-                    ->where('end_date', '<', $weekend);
+                    ->where('start_date', '>=', $week)
+                    ->where('end_date', '<=', $weekend);
             })->orWhere(function($query) use ($id, $weekend, $week) {
                 $query->where('user_id', $id)
-                    ->where('start_date', '<', $week)
+                    ->where('start_date', '<=', $week)
                     ->where('end_date', '>', $week);
             })->orWhere(function($query) use ($id, $weekend, $week) {
                 $query->where('user_id', $id)
-                    ->where('start_date', '<=', $weekend)
+                    ->where('start_date', '<', $weekend)
                     ->where('end_date', '>=', $weekend);
             })->paginate();
 
