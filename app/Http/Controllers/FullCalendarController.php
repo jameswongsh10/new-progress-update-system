@@ -23,7 +23,6 @@ class FullCalendarController extends Controller
         $user = User::find($id);
         $data = Task::all();
         setcookie("id", $id, time() + (86400 * 30), "/");
-//        setcookie("week", $id, time() + (86400 * 30), "/");
 
         if($data->count()) {
             foreach($data as $key => $value) {
@@ -46,24 +45,22 @@ class FullCalendarController extends Controller
         ]);
         $calendar->setCallbacks([
             'navLinkWeekClick' => 'function(weekStart, jsEvent) {
-                console.log(\'week start\', weekStart.toISOString());
+                console.log(\'week start\', weekStart.toISOString().substring(0, 10));
                 console.log(\'coords\', jsEvent.pageX, jsEvent.pageY);
 
                 const value = `; ${document.cookie}`;
                 const userId = value.split(`; ${"id"}=`);
-//                const weekValue = value.split(`; ${"week"}=`);
-//                const
+                const weekValue = weekStart.toISOString().substring(0, 10);
                 if (userId.length === 2){
                 var id = userId.pop().split(\';\').shift();
-//                var week = weekValue.pop().split(\';\').shift();
                 }
 
                 $.ajax({
                 type:\'POST\',
-                url:"/getData",
-                data:{myMonth:2, myID:id},
+                url:"/getWeek",
+                data:{myID:id,myWeek:weekValue},
                 success:function(data){
-                    window.location.href = "/monthlyView";
+                    window.location.href = "/weekView";
                 }
             });
             }'

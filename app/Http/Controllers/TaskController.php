@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
-    public $month, $user;
+    public $month, $user, $week;
 
     public function getData()
     {
@@ -25,7 +25,7 @@ class TaskController extends Controller
 
     public function monthlyView()
     {
-        if(!isset($_COOKIE["user"])) {
+        if (!isset($_COOKIE["user"])) {
             echo "Cookie named '" . "' is not set!";
         } else {
             $id = $_COOKIE['user'];
@@ -35,9 +35,43 @@ class TaskController extends Controller
         return view('monthview', compact('tasks'));
     }
 
-    public function weekview($id)
+    public function getWeek()
     {
-        return view('weekview');
+        $this->week = $_POST['myWeek'];
+        $this->user = $_POST['myID'];
+        setcookie("user", $this->user, time() + (86400 * 30), "/");
+        setcookie("week", $this->week, time() + (86400 * 30), "/");
+    }
+
+    public function weekView()
+    {
+        if (!isset($_COOKIE["user"])) {
+            echo "Cookie named '" . "' is not set!";
+        } else {
+            $id = $_COOKIE['user'];
+            $week = $_COOKIE['week'];
+
+            $week = date('Y-m-d', strtotime($week . ' +1 days'));
+            $weekend = date('Y-m-d', strtotime($week . ' +7 days'));
+            $tasks = Task::where('user_id', $id)->where(function($query) use ($weekend, $week) {
+                $query->where('start_date', '<=', $week)
+                    ->where('end_date', '>=', $weekend);
+            })->orWhere(function($query) use ($id, $weekend, $week) {
+                $query->where('user_id', $id)
+                    ->where('start_date', '>', $week)
+                    ->where('end_date', '<', $weekend);
+            })->orWhere(function($query) use ($id, $weekend, $week) {
+                $query->where('user_id', $id)
+                    ->where('start_date', '<', $week)
+                    ->where('end_date', '>', $week);
+            })->orWhere(function($query) use ($id, $weekend, $week) {
+                $query->where('user_id', $id)
+                    ->where('start_date', '<=', $weekend)
+                    ->where('end_date', '>=', $weekend);
+            })->paginate();
+
+        }
+        return view('weekView', compact('tasks'));
     }
 
 

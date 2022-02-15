@@ -56,7 +56,8 @@ Route::get('/addtask', [DashboardController::class, 'addtask']);
 Route::post('getData', [TaskController::class, 'getData'])->name('getData');
 Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthlyView');
 
-Route::get('/weekview/{id}', [TaskController::class, 'weekview'])->name('weekview')->where('id', '[0-9]+');
+Route::post('getWeek', [TaskController::class, 'getWeek'])->name('getWeek');
+Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
 
 //--------------------------------Setting-----------------------------
 Route::resource('/settings/teamsetting', TeamSettingController::class);

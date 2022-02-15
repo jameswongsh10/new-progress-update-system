@@ -48,47 +48,34 @@
 
     <!-- table -->
 
-    <div class="card">
-        <div class="card-header">
-            Date: dd/mm/yyyy
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Tasks</th>
+                    <th>Description</th>
+                    <th>Report</th>
+                </tr>
+                @forelse($tasks as $task)
                     <tr>
-                        <th>Team</th>
-                        <th>Last Updated</th>
+                        <td>{{$task->start_date}}</td>
+                        <td>{{$task->end_date}}</td>
+                        <td>{{$task->task_title}}</td>
+                        <td>{{$task->task_description}}</td>
+                        <td>Report File goes here</td>
                     </tr>
-                    <tr>
-                        <td>Team 1</td>
-                        <td>Last updated on X/X/X</td>
-                    </tr>
-                </table>
-            </div>
+                @empty
+                    <p>There is no task</p>
+                @endforelse
+            </table>
+            {{--                <div class="d-flex justify-content-center">--}}
+            {{--                    {{$tasks->links()}}--}}
+            {{--                </div>--}}
         </div>
     </div>
     <br>
-    <div class="card">
-        <div class="card-header">
-            Date: dd/mm/yyyy
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <tr>
-                        <th>Team</th>
-                        <th>Last Updated</th>
-                    </tr>
-                    <tr>
-                        <td>Team 1</td>
-                        <td>Last updated on X/X/X</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-
 
 </div>
 
