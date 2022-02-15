@@ -36,7 +36,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm">
-                    Date: dd/mm/yyyy
+                    Date: {{$today}}
                 </div>
 
             </div>

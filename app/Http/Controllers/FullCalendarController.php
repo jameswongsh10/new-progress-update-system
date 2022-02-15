@@ -39,8 +39,7 @@ class FullCalendarController extends Controller
         ]);
         $calendar->setCallbacks([
             'navLinkWeekClick' => 'function(weekStart, jsEvent) {
-                console.log(\'week start\', weekStart.toISOString().substring(0, 10));
-                console.log(\'coords\', jsEvent.pageX, jsEvent.pageY);
+                console.log(weekStart.toISOString().substring(0, 10));
 
                 const value = `; ${document.cookie}`;
                 const userId = value.split(`; ${"id"}=`);

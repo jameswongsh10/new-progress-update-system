@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Acaronlex\LaravelCalendar\Calendar;
+use App\Models\Setting;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -81,9 +82,8 @@ class TaskController extends Controller
     }
 
     public function addTask() {
-        $today = $_COOKIE['day'];
-        echo $today;
-//        $settings = Setting::where('is_active', '=', 1)->get();
-//        return view('addtask', compact('settings'));
+        $today = date('Y-m-d', strtotime($_COOKIE['day'] . ' +1 days'));
+        $settings = Setting::where('is_active', '=', 1)->get();
+        return view('addtask', compact('settings','today'));
     }
 }

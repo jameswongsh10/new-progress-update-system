@@ -46,10 +46,10 @@ class DashboardController extends Controller
                 console.log(today);
                 $.ajax({
                     type:\'POST\',
-                    url:"/getWeek",
-                    data:{myID:1,myWeek:today},
+                    url:"/getDay",
+                    data:{myDay:today},
                     success:function(data){
-                        window.location.href = "/weekView";
+                        window.location.href = "/addTask";
                     }
                 });
             }',
