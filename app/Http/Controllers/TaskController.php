@@ -74,5 +74,4 @@ class TaskController extends Controller
         return view('weekView', compact('tasks'));
     }
 
-
 }
