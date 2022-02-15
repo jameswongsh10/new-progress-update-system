@@ -15,6 +15,7 @@
 <div class="sidenav">
     <header>Progress Update System</header>
     <hr>
+{{--    @if(strcmp($userRole, 'admin') == 0 || strcmp($userRole, 'viewer') == 0)--}}
     <a href="{{ route('dashboard') }}" class="item-nav active ">Dashboard</a>
     <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
     <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
@@ -36,20 +37,20 @@
 
 <!-- main content -->
 <div class="main">
+
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <h6 class="nav-link">Name</h6>
-                    </li>
-                </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <h6 class="nav-link">Name</h6>
+                </li>
+            </ul>
         </div>
     </nav>
 
-    <!-- table -->
-
-   <div class="card">
+    <!-- table for admin/viewer view -->
+    <div class="card">
        <div class="card-header">
            Dashboard
        </div>
@@ -69,7 +70,7 @@
                </table>
            </div>
        </div>
-   </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

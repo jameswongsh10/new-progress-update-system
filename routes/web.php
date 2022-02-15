@@ -40,6 +40,7 @@ Route::get('/users/adduser', [DashboardController::class, 'addUser'])->name('add
 
 
 Route::get('/dashboard', [DashboardController::class, 'admindashboard'])->name('dashboard');
+Route::get('/userdashboard', [DashboardController::class, 'userdashboard'])->name('userdashboard');
 //
 Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
 Route::get('/teamview/{id}', [DashboardController::class, 'teamview'])->name('teamview')->where('id', '[0-9]+');
@@ -52,7 +53,7 @@ Route::get('/calendar/{id}', [FullCalendarController::class, 'usercalendar'])->n
 //
 
 Route::get('/userweekview', [DashboardController::class, 'userweekview']);
-Route::get('/addtask', [DashboardController::class, 'addtask']);
+Route::get('/addtask', [TaskController::class, 'addTaskView']);
 
 Route::post('getData', [TaskController::class, 'getData'])->name('getData');
 Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthlyView');

@@ -32,7 +32,6 @@
     </nav>
 
     <!-- table -->
-
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -56,12 +55,18 @@
                 </div>
                 <div id="shownewtask" class="form-group">
                     <label>Name of new task</label>
-                    <input autocomplete="off" type="search" name="description" class="form-control" />
+                    <input autocomplete="off" type="search" name="newtask" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>Description</label>
                     <input autocomplete="off" type="search" name="description" class="form-control" />
                 </div>
+                @foreach($settings as $setting)
+                    <div class="form-group">
+                        <label>{{$setting->progress_title}}</label>
+                        <input autocomplete="=off" type="search" name={{$setting->id}} class="form-control" />
+                    </div>
+                @endforeach
                 <br>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Add</button>
@@ -69,6 +74,7 @@
             </form>
         </div>
     </div>
+</div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

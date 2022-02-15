@@ -12,13 +12,6 @@ use Illuminate\Support\Facades\View;
 class FullCalendarController extends Controller
 {
     public function usercalendar(Request $request, $id) {
-//        if($request->ajax()) {
-//            $data = CalendarEvent::whereDate('start_date', '>=', $request->start)
-//                ->whereDate('end_date', '<=', $request->end)
-//                ->get(['id', 'title', 'start_date', 'end_date']);
-//            return response()->json($data);
-//        }
-//        return view('admincalendar');
         $scheduleEvents= [];
         $user = User::find($id);
         $data = Task::all();
