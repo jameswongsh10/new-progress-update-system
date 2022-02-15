@@ -22,13 +22,12 @@ class User extends Model
         'password'
     ];
 
+    protected $hidden = [
+        'password'
+    ];
     //one user belongs to one team
     public function teams() {
         return $this->belongsToMany(Team::class);
-    }
-
-    public function calendar() {
-        return $this->hasMany(CalendarEvent::class);
     }
 
     public function tasks() {

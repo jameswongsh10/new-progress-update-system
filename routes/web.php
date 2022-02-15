@@ -52,7 +52,8 @@ Route::get('/calendar/{id}', [FullCalendarController::class, 'usercalendar'])->n
 //
 
 Route::get('/userweekview', [DashboardController::class, 'userweekview']);
-Route::get('/addtask', [DashboardController::class, 'addtask']);
+Route::post('getDay', [TaskController::class, 'getDay'])->name('getDay');
+Route::get('addTask', [TaskController::class, 'addTask'])->name('addTask');
 
 Route::post('getData', [TaskController::class, 'getData'])->name('getData');
 Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthlyView');

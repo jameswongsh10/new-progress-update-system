@@ -56,17 +56,17 @@
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     @if($team->users->count() > 0)
-                    <tr>
-                        <th>Members</th>
-                        <th>Last Updated</th>
-                    </tr>
+                        <tr>
+                            <th>Members</th>
+                            <th>Last Updated</th>
+                        </tr>
                     @endif
 
                     @forelse($team->users as $user)
-                    <tr>
-                        <td><a href="{{ route('calendar', $user->id) }}" class="a-custom-style">{{$user->name}}</a></td>
-                        <td>Last updated on X/X/X</td>
-                    </tr>
+                        <tr>
+                            <td><a href="{{ route('calendar', $user->id) }}" class="a-custom-style">{{$user->name}}</a></td>
+                            <td>Last updated on X/X/Xaa</td>
+                        </tr>
                     @empty
                         <p>
                             There is no user belonging to this group
