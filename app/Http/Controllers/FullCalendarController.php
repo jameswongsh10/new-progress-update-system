@@ -50,13 +50,13 @@ class FullCalendarController extends Controller
                 }
 
                 $.ajax({
-                type:\'POST\',
-                url:"/getWeek",
-                data:{myID:id,myWeek:weekValue},
-                success:function(data){
-                    window.location.href = "/weekView";
-                }
-            });
+                    type:\'POST\',
+                    url:"/getWeek",
+                    data:{myID:id,myWeek:weekValue},
+                    success:function(data){
+                        window.location.href = "/weekView";
+                    }
+                });
             }'
         ]);
         return view('calendar', compact('calendar', 'user'));

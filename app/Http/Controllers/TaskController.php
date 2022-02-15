@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
-    public $month, $user, $week;
+    public $month, $user, $week, $day;
 
     public function getData()
     {

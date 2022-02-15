@@ -43,12 +43,13 @@ class DashboardController extends Controller
         $calendar->setCallbacks([
             'navLinkDayClick' => 'function(date, jsEvent) {
                 const today = date.toISOString().substring(0, 10);
+                console.log(today);
                 $.ajax({
                     type:\'POST\',
-                    url:"/getDay",
-                    data:{myDay:today},
+                    url:"/getWeek",
+                    data:{myID:1,myWeek:today},
                     success:function(data){
-                        window.location.href = "/addTask";
+                        window.location.href = "/weekView";
                     }
                 });
             }',
