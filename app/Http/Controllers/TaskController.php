@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Acaronlex\LaravelCalendar\Calendar;
-use App\Models\Setting;
-use App\Models\SettingTask;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+
 
 class TaskController extends Controller
 {
@@ -73,15 +72,6 @@ class TaskController extends Controller
 
         }
         return view('weekView', compact('tasks'));
-    }
-
-    public function addTaskView() {
-        $settings = Setting::where('is_active', '=', 1)->get();
-        return view('addtask', compact('settings'));
-    }
-
-    public function addTaskCheck(Request $request) {
-
     }
 
 }

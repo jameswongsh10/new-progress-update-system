@@ -93,6 +93,9 @@
                     <p>There is no task</p>
                     @endforelse
                 </table>
+{{--                <div class="d-flex justify-content-center">--}}
+{{--                    {{$tasks->links()}}--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
