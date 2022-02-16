@@ -69,12 +69,14 @@
                             <th>Report</th>
                         </tr>
                         @forelse($tasks as $task)
-                            @if(date('Y-m-d', strtotime($_COOKIE['week'] . ' +'.$x.' days')) >= $task->start_date && date('Y-m-d', strtotime($_COOKIE['week'] . ' +'.$x.' days')) <=$task->end_date)
+                            <?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' +'.$x.' days'))?>
+                            @if($today >= $task->start_date && $today <=$task->end_date)
+                                <?php setcookie("report_date", $today, time() + (86400 * 30), "/"); ?>
                                 <tr>
                                     <td>{{$task->task_title}}</td>
                                     <td>{{$task->task_description}}</td>
                                     <td>{{$task->status}}</td>
-                                    <td><a href="{{route('reportView')}}" class="btn btn-sm btn-success">Download Report</a></td>
+                                    <td><a href="{{route('reportView',$today)}}" class="btn btn-sm btn-success">Download Report</a></td>
                                 </tr>
                             @endif
                         @empty
@@ -94,38 +96,37 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
-{{--<script src="http://code.jquery.com/jquery-3.3.1.min.js"--}}
-{{--        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--}}
-{{--        crossorigin="anonymous">--}}
-{{--</script>--}}
-{{--<script>--}}
-{{--    $.ajaxSetup({--}}
-{{--        headers: {--}}
-{{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-{{--        }--}}
-{{--    });--}}
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+<script>
+    {{--$.ajaxSetup({--}}
+    {{--    headers: {--}}
+    {{--        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+    {{--    }--}}
+    {{--});--}}
 
-{{--    $(".btn-success").click(function(e){--}}
+    {{--$(".btn-success").click(function(e){--}}
 
-{{--        e.preventDefault();--}}
+    {{--    e.preventDefault();--}}
 
-{{--        var date = calendar.getDate();--}}
-{{--        var month = date.getMonth();--}}
-{{--        var finalMonth = ++month;--}}
-{{--        var id = {{$user->id}};--}}
+    {{--    const value = `; ${document.cookie}`;--}}
+    {{--    const date = value.split(`; ${"report_date"}=`);--}}
+    {{--    if (date.length === 2){--}}
+    {{--        var report_date = date.pop().split(';').shift();--}}
+    {{--    }--}}
 
-{{--        $.ajax({--}}
-{{--            type:'POST',--}}
-{{--            url:"{{route('getData')}}",--}}
-{{--            data:{myMonth:finalMonth, myID:id},--}}
-{{--            success:function(data){--}}
-{{--                console.log("===== " + data + " =====");--}}
-{{--                window.location.href = "{{route('monthlyView')}}";--}}
-{{--            }--}}
-{{--        });--}}
-{{--    });--}}
-{{--    // });--}}
-{{--</script>--}}
+    {{--    $.ajax({--}}
+    {{--        type:'POST',--}}
+    {{--        url:"{{route('getReportDate')}}",--}}
+    {{--        data:{myMonth:report_date, myID:id},--}}
+    {{--        success:function(data){--}}
+    {{--            window.location.href = "{{route('monthlyView')}}";--}}
+    {{--        }--}}
+    {{--    });--}}
+    {{--});--}}
+</script>
 </body>
 
 </html>

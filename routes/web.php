@@ -62,7 +62,7 @@ Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthly
 Route::post('getWeek', [TaskController::class, 'getWeek'])->name('getWeek');
 Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
 
-Route::get('reportView', [ReportViewController::class, 'reportView'])->name('reportView');
+Route::get('/reportView/{created_at}', [ReportViewController::class, 'reportView'])->name('reportView');
 
 //--------------------------------Setting-----------------------------
 Route::resource('/settings/teamsetting', TeamSettingController::class);
