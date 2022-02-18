@@ -6,7 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-json": "*",
+        "ext-mysqli": "*",
         "acaronlex/laravel-calendar": "^1.6",
+        "elibyy/tcpdf-laravel": "^9.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
@@ -14,8 +17,6 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "maddhatter/laravel-fullcalendar": "*",
-        "ext-json": "*",
-      "ext-mysqli": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

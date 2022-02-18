@@ -11,12 +11,14 @@ use App\Models\User;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Elibyy\TCPDF\Facades\TCPDF;
 
 
 class ReportViewController extends Controller
 {
     public function reportView($created_at)
     {
+        setcookie("created_at", $created_at, time() + (86400 * 30), "/");
         $id = $_COOKIE['id'];
         $user = User::find($id);
         $answer = Report::where('user_id',$id)->whereDate('created_at', '=', date($created_at))->paginate();
@@ -26,11 +28,36 @@ class ReportViewController extends Controller
             $set = array($question->progress_title,$ans->answer);
             array_push($question_array,$set);
         }
-        return view('report',compact('created_at','user','answer','question_array'));
+        setcookie("report_user", serialize($user), time() + (86400 * 30), "/");
+        setcookie("array", serialize($question_array), time() + (86400 * 30), "/");
+        return view('report',compact('created_at','user','question_array'));
     }
 
-    public function getReportDate(){
+    public function pdf()
+    {
+        $filename = 'hello_world.pdf';
+        $created_at = $_COOKIE['created_at'];
+        $question_array = unserialize($_COOKIE["array"]);
+        $user = unserialize($_COOKIE["report_user"]);
+        $data = [
+            'title' => 'Hello world!',
+            'date' => $created_at,
+            'user' => $user,
+            'array' => $question_array
+        ];
 
+        $view = \View::make('ReportFile',$data);
+        $html = $view->render();
+
+        $pdf = new TCPDF;
+
+        $pdf::SetTitle('Hello World');
+        $pdf::AddPage();
+        $pdf::writeHTML($html, true, false, true, false, '');
+
+        $pdf::Output($filename);
+//
+//        return response()->download(public_path($filename));
     }
 
 }

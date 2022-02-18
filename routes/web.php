@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FullCalendarController;
+use App\Http\Controllers\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,7 @@ Route::post('getWeek', [TaskController::class, 'getWeek'])->name('getWeek');
 Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
 
 Route::get('/reportView/{created_at}', [ReportViewController::class, 'reportView'])->name('reportView');
+Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 
 //--------------------------------Setting-----------------------------
 Route::resource('/settings/teamsetting', TeamSettingController::class);

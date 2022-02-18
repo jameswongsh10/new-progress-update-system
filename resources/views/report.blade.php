@@ -73,7 +73,7 @@
                     <br>
                 @endforeach
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Download Report</button>
+                    <a href="{{route('pdf')}}" class="btn btn-success">Download as PDF</a>
                 </div>
             </form>
         </div>
