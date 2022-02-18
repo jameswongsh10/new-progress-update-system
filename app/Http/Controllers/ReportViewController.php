@@ -40,10 +40,9 @@ class ReportViewController extends Controller
         $question_array = unserialize($_COOKIE["array"]);
         $user = unserialize($_COOKIE["report_user"]);
         $data = [
-            'title' => 'Hello world!',
             'date' => $created_at,
             'user' => $user,
-            'array' => $question_array
+            'question_array' => $question_array
         ];
 
         $view = \View::make('ReportFile',$data);

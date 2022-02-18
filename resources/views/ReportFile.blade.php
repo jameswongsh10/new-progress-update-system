@@ -5,9 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<h1 style="color:red;">{!! $title !!}</h1>
-<h1 style="color:red;">{!! $date !!}</h1>
-<h1 style="color:red;">{!! $user->id !!}</h1>
-<h1 style="color:red;">{!! $array[0][0] !!}</h1>
+<h1 style="font-family:'Courier New',serif">Report of {{$user->name}} on {{$date}}</h1>
+<br>
+@csrf
+@foreach($question_array as $ans)
+    <div class="form-group">
+        <h4><?php echo "Question: " . $ans[0]; ?></h4>
+        <pre><?php echo "Answer: " . $ans[1]; ?></pre>
+    </div>
+@endforeach
 </body>
 </html>
