@@ -51,10 +51,31 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-                <h4>
-                    Report of User
+                <h4 class="col-sm">
+                    Report of <?php echo $user->name . " on " . $created_at;?>
                 </h4>
             </div>
+        </div>
+        <div class="card-body">
+            @if( session()->get('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+            @endif
+
+            <form>
+                @csrf
+                @foreach($question_array as $ans)
+                    <div class="form-group">
+                        <label><?php echo "Question: " . $ans[0]; ?></label>
+                        <input autocomplete="off" type="search" readonly class="form-control" value="<?php echo $ans[1]; ?>" />
+                    </div>
+                    <br>
+                @endforeach
+                <div class="form-group">
+                    <a href="{{route('pdf')}}" class="btn btn-success">Download as PDF</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>

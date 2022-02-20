@@ -5,7 +5,6 @@ use App\Http\Controllers\ReportViewController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamSettingController;
-use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -31,7 +30,6 @@ Route::post('/', [LoginController::class, 'check'])->name('check');
 
 Route::resource('users', UserManagementController::class);
 Route::resource('teamsetting', TeamSettingController::class);
-Route::resource('userdashboard', UserDashboardController::class );
 //Route::resource('monthview', TaskController::class);
 //Route::get('/users', [DashboardController::class, 'displayUsers'])->name('users');
 Route::get('/users/adduser', [DashboardController::class, 'addUser'])->name('adduser');
@@ -42,8 +40,7 @@ Route::get('/users/adduser', [DashboardController::class, 'addUser'])->name('add
 
 
 Route::get('/dashboard', [DashboardController::class, 'admindashboard'])->name('dashboard');
-
-
+Route::get('/userdashboard', [DashboardController::class, 'userdashboard'])->name('userdashboard');
 //
 Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
 Route::get('/teamview/{id}', [DashboardController::class, 'teamview'])->name('teamview')->where('id', '[0-9]+');
@@ -56,7 +53,8 @@ Route::get('/calendar/{id}', [FullCalendarController::class, 'usercalendar'])->n
 //
 
 Route::get('/userweekview', [DashboardController::class, 'userweekview']);
-Route::post('getDay', [UserDashboardController::class, 'getDay'])->name('getDay');
+Route::post('getDay', [TaskController::class, 'getDay'])->name('getDay');
+Route::get('addTask', [TaskController::class, 'addTask'])->name('addTask');
 
 Route::post('getData', [TaskController::class, 'getData'])->name('getData');
 Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthlyView');
@@ -67,6 +65,8 @@ Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
 Route::get('reportView', [ReportViewController::class, 'reportView'])->name('reportView');
 Route::post('getTaskId', [TaskController::class, 'getTaskId'])->name('getTaskId');
 
+Route::get('/reportView/{created_at}', [ReportViewController::class, 'reportView'])->name('reportView');
+Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 
 //--------------------------------Setting-----------------------------
 Route::resource('/settings/teamsetting', TeamSettingController::class);
