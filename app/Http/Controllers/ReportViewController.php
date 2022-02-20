@@ -50,12 +50,14 @@ class ReportViewController extends Controller
 
         $pdf = new TCPDF;
 
-        $pdf::SetTitle('Hello World');
-        $pdf::AddPage();
-        $pdf::writeHTML($html, true, false, true, false, '');
+        $pdf::SetTitle('Daily Report');
+        $pdf::SetMargins(8, 5, 10, true);
+        $pdf::SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE . ' 006', PDF_HEADER_STRING);
 
+        $pdf::AddPage();
+
+        $pdf::writeHTML($html, true, false, true, false, '');
         $pdf::Output($filename);
-//
 //        return response()->download(public_path($filename));
     }
 
