@@ -46,6 +46,9 @@ class ProgressUpdateSettingController extends Controller
         $newSetting = new Setting();
         $newSetting->progress_title = $request->input('title');
         $newSetting->is_active = $request->input('isActive');
+        $htmlNameLower = strtolower($request->input('title'));
+        $htmlName = str_replace(' ', '_', $htmlNameLower);
+        $newSetting->html_name = $htmlName;
         $save = $newSetting->save();
 
         if ($save) {

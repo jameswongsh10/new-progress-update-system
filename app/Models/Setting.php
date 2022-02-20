@@ -15,6 +15,7 @@ class Setting extends Model
 
     protected $fillable = [
         'progress_title',
-        'is_active'
+        'is_active',
+        'html_name'
     ];
 }

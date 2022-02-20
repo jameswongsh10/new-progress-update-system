@@ -17,6 +17,7 @@ class CreateSettingsTable extends Migration
             $table->id();
             $table->string('progress_title');
             $table->string('is_active');
+            $table->string('html_name');
             $table->timestamps();
         });
     }

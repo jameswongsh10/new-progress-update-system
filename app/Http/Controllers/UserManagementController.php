@@ -143,24 +143,6 @@ class UserManagementController extends Controller
             'team_id' => $request->input('team_id'),
         ]);
 
-        //$team = Team::find($request->input('team_id')); //2
-
-        // TODO
-        // skip this for now
-//            $team->users()->updateExistingPivot->id, [
-//            'team_id' => $request->input('team_id')
-//        ]);
-//        $existingUser->teams()->updateExistingPivot($existingUser->id, [
-//            'team_id' => 1,
-//        ]);
-
-
-        //error here, I don't know which method to use to update the pivot table
-        //$team->users()->attach($existingUser->id);
-        //$team->users()->sync([$id => ['team_id' => $request->input('team_id')]]);
-
-
-
         if ($save) {
             return back()->with('success', 'User has been updated.');
         }

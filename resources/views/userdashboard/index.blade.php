@@ -17,7 +17,7 @@
 <div class="sidenav">
     <header>Progress Update System</header>
     <hr>
-    <a href="{{ route('userdashboard') }}" class="item-nav active ">Dashboard</a>
+    <a href="{{ route('userdashboard.index') }}" class="item-nav active ">Dashboard</a>
     <a href="#" class="item-nav">Logout</a>
 </div>
 

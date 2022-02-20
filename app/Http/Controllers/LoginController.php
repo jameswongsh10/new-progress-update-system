@@ -33,7 +33,7 @@ class LoginController extends Controller
                 if(strcmp($userInfo->role, 'admin') == 0 || strcmp($userInfo->role, 'viewer') == 0) {
                     return redirect('dashboard');
                 } elseif(strcmp($userInfo->role, 'user') == 0 ) {
-                    return redirect('userdashboard');
+                    return redirect("userdashboard");
                 }
             } else {
                 return back()->with('fail', 'Email or password is wrong');

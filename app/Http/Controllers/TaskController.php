@@ -10,11 +10,12 @@ use App\Models\User;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 
 class TaskController extends Controller
 {
-    public $month, $user, $week, $day;
+    public $month, $user, $week, $day, $taskId;
 
     public function getData()
     {
@@ -22,6 +23,19 @@ class TaskController extends Controller
         $this->user = $_POST['myID'];
         setcookie("user", $this->user, time() + (86400 * 30), "/");
         setcookie("month", $this->month, time() + (86400 * 30), "/");
+    }
+
+    public function getTaskId() {
+        $this->taskId = $_POST['taskId'];
+        $returnTask = array();
+        $task = Task::where('id', $this->taskId)->first();
+
+        $returnTask['taskId'] = $task->id;
+        $returnTask['desc'] = $task->task_description;
+        $returnTask['start_date'] = $task->start_date;
+        $returnTask['end_date'] = $task->end_date;
+
+        echo json_encode($returnTask);
     }
 
     public function monthlyView()
@@ -73,17 +87,5 @@ class TaskController extends Controller
 
         }
         return view('weekView', compact('tasks'));
-    }
-
-    public function getDay()
-    {
-        $this->day = $_POST['myDay'];
-        setcookie("day", $this->day, time() + (86400 * 30), "/");
-    }
-
-    public function addTask() {
-        $today = date('Y-m-d', strtotime($_COOKIE['day'] . ' +1 days'));
-        $settings = Setting::where('is_active', '=', 1)->get();
-        return view('addtask', compact('settings','today'));
     }
 }

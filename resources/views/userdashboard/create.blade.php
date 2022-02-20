@@ -1,7 +1,7 @@
 @php
     use App\Models\Task;
 @endphp
-<!doctype html>
+    <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -48,7 +48,14 @@
             </div>
         </div>
         <div class="card-body">
-            <form autocomplete="off" method="post" action="{{route("addTaskCheck")}}">
+
+            @if( session()->get('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+            @endif
+
+            <form autocomplete="off" method="post" action="{{route("userdashboard.store")}}">
                 @csrf
                 <div class="form-group">
                     <label>Name of the task</label>
@@ -79,11 +86,15 @@
                     <input class="form-control" id="end_date" name="end_date" placeholder="YYYY-MM-DD" type="text"/>
                     <span class="text-danger">@error ("end_date") {{$message}} @enderror</span>
                 </div>
+                <br>
+                Daily Report
+                <hr>
                 @foreach($settings as $setting)
                     <div class="form-group">
                         <label>{{$setting->progress_title}}</label>
-                        <input autocomplete="=off" type="search" name={{$setting->id}} class="form-control" />
-                        <span class="text-danger">@error ($setting->id) {{$message}} @enderror</span>
+                        <input autocomplete="=off" type="search" name="{{$setting->html_name}}" class="form-control" />
+                        <span class="text-danger">@error ($setting->html_name) {{$message}} @enderror</span>
+
                     </div>
                 @endforeach
                 <br>
@@ -120,7 +131,7 @@
                 dataType: 'json',
                 success:function(data){
                     $("#description").val(data.desc).prop("disabled", true)
-                    $("#start_date").val(data.start_date).prop("disabled", true)
+                    $("#start_date").val(data.start_date)
                     $("#end_date").val(data.end_date)
                 }
             });
