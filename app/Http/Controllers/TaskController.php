@@ -145,8 +145,6 @@ class TaskController extends Controller
             } catch (\Exception $e) {
                 return back()->with('failed', 'Please check your information and try again.');
             }
-
         }
-
     }
 }

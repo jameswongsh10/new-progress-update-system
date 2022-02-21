@@ -47,7 +47,9 @@
 
     <div class="card">
         <div class="card-header">
-            Team name
+            @php
+            echo $team->team_name;
+            @endphp
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -62,7 +64,14 @@
                     @forelse($team->users as $user)
                         <tr>
                             <td><a href="{{ route('calendar', $user->id) }}" class="a-custom-style">{{$user->name}}</a></td>
-                            <td>Last updated on X/X/Xaa</td>
+                            @php
+                            try{
+                                $latestTime = \App\Models\Report::where('user_id',$user->id)->orderBy('created_at','DESC')->first()->created_at;
+                            }catch (\Exception $e){
+                                $latestTime = "-";
+                            }
+                            @endphp
+                            <td>Last updated on {{$latestTime}} </td>
                         </tr>
                     @empty
                         <p>
