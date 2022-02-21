@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
-    public $month, $user, $week, $day;
+    public $month, $user, $week, $day, $keyword;
 
     public function getData()
     {
@@ -54,18 +54,18 @@ class TaskController extends Controller
 
             $week = date('Y-m-d', strtotime($week));
             $weekend = date('Y-m-d', strtotime($week . ' +6 days'));
-            $tasks = Task::where('user_id', $id)->where(function($query) use ($weekend, $week) {
+            $tasks = Task::where('user_id', $id)->where(function ($query) use ($weekend, $week) {
                 $query->where('start_date', '<=', $week)
                     ->where('end_date', '>=', $weekend);
-            })->orWhere(function($query) use ($id, $weekend, $week) {
+            })->orWhere(function ($query) use ($id, $weekend, $week) {
                 $query->where('user_id', $id)
                     ->where('start_date', '>=', $week)
                     ->where('end_date', '<=', $weekend);
-            })->orWhere(function($query) use ($id, $weekend, $week) {
+            })->orWhere(function ($query) use ($id, $weekend, $week) {
                 $query->where('user_id', $id)
                     ->where('start_date', '<=', $week)
                     ->where('end_date', '>', $week);
-            })->orWhere(function($query) use ($id, $weekend, $week) {
+            })->orWhere(function ($query) use ($id, $weekend, $week) {
                 $query->where('user_id', $id)
                     ->where('start_date', '<', $weekend)
                     ->where('end_date', '>=', $weekend);
@@ -81,9 +81,32 @@ class TaskController extends Controller
         setcookie("day", $this->day, time() + (86400 * 30), "/");
     }
 
-    public function addTask() {
+    public function addTask()
+    {
         $today = date('Y-m-d', strtotime($_COOKIE['day'] . ' +1 days'));
         $settings = Setting::where('is_active', '=', 1)->get();
-        return view('addtask', compact('settings','today'));
+        return view('addtask', compact('settings', 'today'));
+    }
+
+    public function getKeyword()
+    {
+        $this->keyword = $_POST['myKeyword'];
+        setcookie('myKeyword', $this->keyword, time() + (86400 * 30), "/");
+    }
+
+    public function filteredView()
+    {
+        $id = $_COOKIE['user'];
+        $date = $_COOKIE['month'];
+
+        if (!isset($_COOKIE["myKeyword"])) {
+            $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->get();
+            return view('monthview', compact('tasks'));
+        } else {
+            $keyword = $_COOKIE['myKeyword'];
+            $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->where('task_title', 'like', array('%' . $keyword . '%'))->get();
+            return view('monthview', compact('tasks'));
+        }
+
     }
 }

@@ -63,6 +63,9 @@ Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthly
 Route::post('getWeek', [TaskController::class, 'getWeek'])->name('getWeek');
 Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
 
+Route::post('getKeyword', [TaskController::class, 'getKeyword'])->name('getKeyword');
+Route::get('filteredView', [TaskController::class, 'filteredView'])->name('filteredView');
+
 Route::get('/reportView/{created_at}', [ReportViewController::class, 'reportView'])->name('reportView');
 Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 
