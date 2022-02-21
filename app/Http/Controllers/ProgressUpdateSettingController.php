@@ -26,37 +26,39 @@ class ProgressUpdateSettingController extends Controller
      */
     public function create()
     {
-        //
-        return view('settings.progress-update-setting.create');
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            return view('settings.progress-update-setting.create');
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
-        $request->validate([
-            'title' => 'required',
-        ]);
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $request->validate([
+                'title' => 'required',
+            ]);
 
-        $newSetting = new Setting();
-        $newSetting->progress_title = $request->input('title');
-        $newSetting->is_active = $request->input('isActive');
-        $save = $newSetting->save();
+            $newSetting = new Setting();
+            $newSetting->progress_title = $request->input('title');
+            $newSetting->is_active = $request->input('isActive');
+            $save = $newSetting->save();
 
-        if ($save) {
-            return back()->with('success', 'New progress title has been added.');
+            if ($save) {
+                return back()->with('success', 'New progress title has been added.');
+            }
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -67,45 +69,47 @@ class ProgressUpdateSettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
-        $currentSetting = Setting::find($id);
-        return view("settings.progress-update-setting.edit", compact('currentSetting'));
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $currentSetting = Setting::find($id);
+            return view("settings.progress-update-setting.edit", compact('currentSetting'));
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
-        $request->validate([
-            'title' => 'required',
-        ]);
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $request->validate([
+                'title' => 'required',
+            ]);
 
-        $save = $newSetting = Setting::where('id', $id)->update([
-            'progress_title' => $request->input('title'),
-            'is_active' => $request->input('isActive')
-        ]);
+            $save = $newSetting = Setting::where('id', $id)->update([
+                'progress_title' => $request->input('title'),
+                'is_active' => $request->input('isActive')
+            ]);
 
 
-        if ($save) {
-            return back()->with('success', 'Progress title has been updated.');
+            if ($save) {
+                return back()->with('success', 'Progress title has been updated.');
+            }
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -27,36 +27,38 @@ class TeamSettingController extends Controller
      */
     public function create()
     {
-        //
-
-        return view('settings.teamsetting.create');
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            return view('settings.teamsetting.create');
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'teamname' => 'required',
-        ]);
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $request->validate([
+                'teamname' => 'required',
+            ]);
 
-        $newTeam = new Team();
-        $newTeam->team_name = $request->input('teamname');
-        $save = $newTeam->save();
+            $newTeam = new Team();
+            $newTeam->team_name = $request->input('teamname');
+            $save = $newTeam->save();
 
-        if ($save) {
-            return back()->with('success', 'New team has been added.');
+            if ($save) {
+                return back()->with('success', 'New team has been added.');
+            }
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -67,51 +69,55 @@ class TeamSettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
-        $teams = Team::all();
-        return view('settings.teamsetting.edit', compact('teams'));
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $teams = Team::all();
+            return view('settings.teamsetting.edit', compact('teams'));
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
-        $request->validate([
-            'teamname' => 'required',
-        ]);
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $request->validate([
+                'teamname' => 'required',
+            ]);
 
-        $save = Team::where('id', $id)->update([
-            'team_name' => $request->input('teamname')
-        ]);
+            $save = Team::where('id', $id)->update([
+                'team_name' => $request->input('teamname')
+            ]);
 
-        if($save) {
-            return back()->with('success', 'User has been updated.');
+            if ($save) {
+                return back()->with('success', 'User has been updated.');
+            }
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $team = Team::find($id);
-        $team->delete();
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $team = Team::find($id);
+            $team->delete();
 
-        Session::flash('deleted', 'User has been deleted');
-        return Redirect::to('users');
+            Session::flash('deleted', 'User has been deleted');
+            return Redirect::to('users');
+        }
     }
 }

@@ -70,7 +70,7 @@ Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 Route::resource('/settings/teamsetting', TeamSettingController::class);
 Route::resource('/settings/progress-update-setting', ProgressUpdateSettingController::class);
 //Route::get('/setting/progress-update-setting', [SettingController::class, 'progressUpdateSetting'])->name('progress-update-setting');
-Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
+//Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
 
 
 /*

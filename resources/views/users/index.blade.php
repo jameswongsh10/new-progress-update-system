@@ -26,9 +26,6 @@
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
-        <li>
-            <a href="{{ route('role-access-setting') }}" class="item-nav custom-font-size px-0">Role Access</a>
-        </li>
     </ul>
     <a href="#" class="item-nav">Logout</a>
 </div>
@@ -53,9 +50,11 @@
                 <div class="col-sm">
                     User Management
                 </div>
+                @if(!strcmp($_COOKIE['user_role'],'admin'))
                 <div class="col-sm-1 bg-light">
                     <a href=" {{ route('users.create') }}" class="btn btn-sm btn-success">Add User</a>
                 </div>
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -68,8 +67,10 @@
                         <th class="width-role">Role</th>
                         <th class="width-position">Position</th>
                         <th class="custom-team">Team</th>
+                        @if(!strcmp($_COOKIE['user_role'],'admin'))
                         <th class="width-action">Edit</th>
                         <th class="width-action">Delete</th>
+                        @endif
                     </tr>
 
 
@@ -82,6 +83,7 @@
                                 <td>{{$user->role}}</td>
                                 <td>{{$user->position}}</td>
                                 <td>{{$team->team_name}}</td>
+                                @if(!strcmp($_COOKIE['user_role'],'admin'))
                                 <td><a href="{{route('users.edit',$user->id )}}" class="btn btn-sm btn-warning">Edit</a> </td>
                                 <td><form action="{{route('users.destroy', $user->id)}}" method="post">
                                         @csrf
@@ -89,6 +91,7 @@
                                         <button type="submit" onClick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     @endforeach
