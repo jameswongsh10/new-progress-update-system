@@ -19,7 +19,7 @@ class DashboardController extends Controller
 
     public function userdashboard() {
         $scheduleEvents= [];
-        $id = Session::get('isLoggedIn');
+        $id = $_COOKIE['isLoggedIn'];
         $user = User::find($id);
         $data = Task::all();
         if($data->count()) {

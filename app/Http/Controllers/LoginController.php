@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use http\Cookie;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Team;
@@ -11,7 +12,8 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    public function login() {
+    public function login()
+    {
         return view('login');
     }
 
@@ -25,15 +27,16 @@ class LoginController extends Controller
 
         $userInfo = User::where('email', '=', $request->email)->first();
 
-        if(!$userInfo) {
+        if (!$userInfo) {
             return back()->with('fail', 'Email or password is wrong');
         } else {
-            if(Hash::check($request->password, $userInfo->password)) {
-                $request->session()->put('isLoggedIn', $userInfo->id);
+            if (Hash::check($request->password, $userInfo->password)) {
+                setcookie("isLoggedIn", $userInfo->id, time() + (86400 * 30), "/");
+                setcookie("online", "true", time() + (86400 * 30), "/");
                 setcookie("user_role", $userInfo->role, time() + (86400 * 30), "/");
-                if(strcmp($userInfo->role, 'admin') == 0 || strcmp($userInfo->role, 'viewer') == 0) {
+                if (strcmp($userInfo->role, 'admin') == 0 || strcmp($userInfo->role, 'viewer') == 0) {
                     return redirect('dashboard');
-                } elseif(strcmp($userInfo->role, 'user') == 0 ) {
+                } elseif (strcmp($userInfo->role, 'user') == 0) {
                     return redirect('userdashboard');
                 }
             } else {
@@ -42,20 +45,11 @@ class LoginController extends Controller
         }
     }
 
-    public function logout() {
-        if(session()->has('isLoggedIn')) {
-            Auth::logout();
-            Session::flush();
-            if (isset($_SERVER['HTTP_COOKIE'])) {
-                $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
-                foreach($cookies as $cookie) {
-                    $parts = explode('=', $cookie);
-                    $name = trim($parts[0]);
-                    setcookie($name, '', time()-1000);
-                    setcookie($name, '', time()-1000, '/');
-                }
-            }
-        }
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();
+        setcookie("online", "false", time() + (86400 * 30), "/");
         return redirect('login');
     }
 }

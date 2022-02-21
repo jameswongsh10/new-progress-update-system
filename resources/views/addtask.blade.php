@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-@if(session()->has('isLoggedIn'))
+@if(!strcmp($_COOKIE["online"],"true"))
 
 <head>
     <meta charset="UTF-8">
