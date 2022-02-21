@@ -15,7 +15,7 @@
     <header>Progress Update System</header>
     <hr>
     <a href="#" class="item-nav active ">Dashboard</a>
-    <a href="#" class="item-nav">Logout</a>
+    <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
 
 <!-- main content -->

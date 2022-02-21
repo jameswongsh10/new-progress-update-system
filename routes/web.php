@@ -26,6 +26,7 @@ use App\Http\Controllers\PdfController;
 //----------------- Login -----------------
 Route::get('/', [LoginController::class, 'login']);
 Route::post('/', [LoginController::class, 'check'])->name('check');
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 //----------------- User Management -----------------
 
@@ -47,11 +48,6 @@ Route::get('/settings', [DashboardController::class, 'settings'])->name('setting
 Route::get('/teamview/{id}', [DashboardController::class, 'teamview'])->name('teamview')->where('id', '[0-9]+');
 Route::get('/calendar/{id}', [FullCalendarController::class, 'usercalendar'])->name('calendar')->where('id', '[0-9]+');
 //Route::post('/calendar', [FullCalendarController::class, 'admincalendar'])->name('calendar');
-//
-////edit user
-//
-//
-//
 
 Route::get('/userweekview', [DashboardController::class, 'userweekview']);
 Route::post('getDay', [TaskController::class, 'getDay'])->name('getDay');
