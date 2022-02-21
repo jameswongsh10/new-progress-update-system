@@ -24,8 +24,8 @@ use App\Http\Controllers\PdfController;
 */
 
 //----------------- Login -----------------
-Route::get('/', [LoginController::class, 'login']);
-Route::post('/', [LoginController::class, 'check'])->name('check');
+Route::get('login', [LoginController::class, 'login'])->name('login');
+Route::post('check', [LoginController::class, 'check'])->name('check');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 //----------------- User Management -----------------

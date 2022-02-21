@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en">
+@if(session()->has('isLoggedIn') && (strcmp($_COOKIE['user_role'],"user")))
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -60,7 +62,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
-                    <tr>
+                     <tr>
                         <th class="width-id">ID</th>
                         <th class="custom-width">Name</th>
                         <th class="custom-width">Email</th>
@@ -109,5 +111,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>

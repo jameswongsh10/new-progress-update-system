@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+@if(session()->has('isLoggedIn') && (strcmp($_COOKIE['user_role'],"user")))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -131,5 +132,7 @@
     });
 </script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>
