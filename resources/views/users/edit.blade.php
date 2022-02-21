@@ -71,6 +71,10 @@
                 <div class="alert alert-success">
                     {{ session()->get('success') }}
                 </div>
+            @elseif(session()->get('failed'))
+                <div class="alert alert-danger">
+                    {{ session()->get('failed') }}
+                </div>
             @endif
 
             <form autocomplete="off" method="post" action="{{ route('users.update', $userByUrl->id) }}">
@@ -121,11 +125,6 @@
                             @endforeach
                     </select>
                     <span class="text-danger">@error ('team_id') {{$message}} @enderror</span>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input autocomplete="off" type="password" name="password" class="form-control" />
-                    <span class="text-danger">@error ('password') {{$message}} @enderror</span>
                 </div>
                 <br>
                 <div class="form-group">

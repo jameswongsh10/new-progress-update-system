@@ -112,36 +112,42 @@ class UserManagementController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
             'gender' => 'required',
             'position' => 'required',
             'role' => 'required',
             'team_id' => 'required',
-            'password' => 'required|min:8|max:20|alpha_num',
             //'oldPassword' => can have a confirmation of old and new password
             // or maybe admin shouldn't be able to edit password, but only users.
             // note to self*
         ]);
 
 
+        try {
+            $existingUser = User::find($id);
+            $existingUser->name = $request->input('name');
+            $existingUser->email = $request->input('email');
+            $existingUser->gender = $request->input('gender');
+            $existingUser->position = $request->input('position');
+            $existingUser->role = $request->input('role');
+            $save = $existingUser->save();
+            TeamUser::where('user_id', $id)->update([
+                'team_id' => $request->input('team_id'),
+            ]);
+            if ($save) {
+                return back()->with('success', 'User has been updated.');
+            }
+        } catch (\Exception $e) { // It's actually a QueryException but this works too
+            return back()->with('failed', 'Please check your information and try again.');
+        }
 
-        $existingUser = User::find($id);
-        $existingUser->name = $request->input('name');
-        $existingUser->email = $request->input('email');
-        $existingUser->gender = $request->input('gender');
-        $existingUser->position = $request->input('position');
-        $existingUser->role = $request->input('role');
-        $existingUser->password = Hash::make($request->input('password'));
-        $save = $existingUser->save();
-        TeamUser::where('user_id', $id)->update([
-            'team_id' => $request->input('team_id'),
-        ]);
+
 
         //$team = Team::find($request->input('team_id')); //2
 
@@ -159,11 +165,6 @@ class UserManagementController extends Controller
         //$team->users()->attach($existingUser->id);
         //$team->users()->sync([$id => ['team_id' => $request->input('team_id')]]);
 
-
-
-        if ($save) {
-            return back()->with('success', 'User has been updated.');
-        }
     }
 
     /**
