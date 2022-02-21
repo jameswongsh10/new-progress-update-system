@@ -73,7 +73,9 @@
                         <th>Description</th>
                         <th>Status</th>
                         <th>Remark</th>
+                        @if(!strcmp($_COOKIE['user_role'],'admin'))
                         <th>Edit</th>
+                        @endif
                     </tr>
                     @forelse($tasks as $task)
                         <tr>
@@ -81,13 +83,15 @@
                             <td>{{$task->task_description}}</td>
                             <td>
                                 <select id="status" name="status" class="form-control">
-                                    <option value="delay">Delay</option>
-                                    <option value="completed">Completed</option>
-                                    <option value="ongoing">On Going</option>
+                                    <option value="ongoing" @if($task->status == 'ongoing') selected @endif>Ongoing</option>
+                                    <option value="completed" @if($task->status == 'completed') selected @endif>Completed</option>
+                                    <option value="delay" @if($task->status == 'delay') selected @endif>Delay</option>
                                 </select>
                             </td>
                             <td>{{$task->remark}}</td>
-                            <td><a href="#" class="btn btn-sm btn-warning">Edit</a></td>
+                            @if(!strcmp($_COOKIE['user_role'],'admin'))
+                            <td><a href="{{route('editTask',$task->id)}}" class="btn btn-sm btn-warning">Edit</a></td>
+                            @endif
                         </tr>
                     @empty
                         <p>There is no task</p>

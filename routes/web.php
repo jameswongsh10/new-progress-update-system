@@ -66,6 +66,9 @@ Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
 Route::post('getKeyword', [TaskController::class, 'getKeyword'])->name('getKeyword');
 Route::get('filteredView', [TaskController::class, 'filteredView'])->name('filteredView');
 
+Route::get('/editTask/{id}', [TaskController::class, 'editTask'])->name('editTask');
+Route::get('/updateTask/{id}', [TaskController::class, 'updateTask'])->name('updateTask');
+
 Route::get('/reportView/{created_at}', [ReportViewController::class, 'reportView'])->name('reportView');
 Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Acaronlex\LaravelCalendar\Calendar;
 use App\Models\Setting;
 use App\Models\Task;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Team;
@@ -106,6 +107,45 @@ class TaskController extends Controller
             $keyword = $_COOKIE['myKeyword'];
             $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->where('task_title', 'like', array('%' . $keyword . '%'))->get();
             return view('monthview', compact('tasks'));
+        }
+    }
+
+    public function editTask($id)
+    {
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $task = Task::where('id', $id)->first();
+            return view('editTask', compact('task'));
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function updateTask(Request $request, int $id)
+    {
+        if (!strcmp($_COOKIE['user_role'], 'admin')) {
+
+            $request->validate([
+                'status' => 'required',
+                'remark' => 'required',
+            ]);
+
+            try {
+                $existingTask = Task::find($id);
+                $existingTask->status = $request->input('status');
+                $existingTask->remark = $request->input('remark');
+                $save = $existingTask->save();
+                if ($save) {
+                    return back()->with('success', 'User has been updated.');
+                }
+            } catch (\Exception $e) {
+                return back()->with('failed', 'Please check your information and try again.');
+            }
+
         }
 
     }
