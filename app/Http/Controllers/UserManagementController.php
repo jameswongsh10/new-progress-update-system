@@ -69,7 +69,7 @@ class UserManagementController extends Controller
 
 
             if ($save) {
-                return back()->with('success', 'New user has been added.');
+                return redirect('/users')->with('success', 'New user has been added.');
             }
         }
     }
@@ -132,7 +132,7 @@ class UserManagementController extends Controller
                     'team_id' => $request->input('team_id'),
                 ]);
                 if ($save) {
-                    return back()->with('success', 'User has been updated.');
+                    return redirect('/users')->with('success', 'User has been updated.');
                 }
             } catch (\Exception $e) { // It's actually a QueryException but this works too
                 return back()->with('failed', 'Please check your information and try again.');
@@ -140,7 +140,7 @@ class UserManagementController extends Controller
 
 
             if ($save) {
-                return back()->with('success', 'User has been updated.');
+                return redirect('/users')->with('success', 'User has been updated.');
             }
         }
     }
@@ -157,8 +157,7 @@ class UserManagementController extends Controller
             $user = User::find($id);
             $user->delete();
 
-            Session::flash('deleted', 'User has been deleted');
-            return Redirect::to('users');
+            return back()->with('success', 'Team has been deleted');
         }
     }
 }

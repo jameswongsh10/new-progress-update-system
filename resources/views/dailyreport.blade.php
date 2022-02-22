@@ -68,7 +68,7 @@
                 <br>
                 <br>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" onClick="return confirm('Please make sure that the details are correct.')" class="btn btn-primary">Add</button>
                 </div>
             </form>
         </div>

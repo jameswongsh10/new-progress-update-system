@@ -11,7 +11,7 @@
               crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <title>Add Progress Title</title>
+        <title>Add Report Title</title>
     </head>
     <body>
     <!-- sidebar -->
@@ -25,8 +25,7 @@
         </a>
         <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
             <li class="w-100">
-                <a href="{{ route('progress-update-setting.index') }}" class="item-nav custom-font-size px-0">Progress
-                    Update Settings</a>
+                <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
             </li>
             <li>
                 <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
@@ -59,7 +58,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form autocomplete="off" method="post" action="{{ route('progress-update-setting.store') }}">
+                <form autocomplete="off" method="post" action="{{ route('daily-report-setting.store') }}">
                     @csrf
                     <div class="form-group">
                         <label>Title</label>

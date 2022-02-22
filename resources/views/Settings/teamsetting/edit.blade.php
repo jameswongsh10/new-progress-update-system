@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Add users</title>
+    <title>Edit teams</title>
 </head>
 <body>
 <!-- sidebar -->
@@ -28,7 +28,7 @@
     </a>
     <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
         <li class="w-100">
-            <a href="{{ route('progress-update-setting.index') }}" class="item-nav custom-font-size px-0">Progress Update Settings</a>
+            <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
         </li>
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>

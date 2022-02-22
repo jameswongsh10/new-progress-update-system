@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProgressUpdateSettingController;
+use App\Http\Controllers\DailyReportSettingController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReportViewController;
 use App\Http\Controllers\SettingController;
@@ -74,7 +74,7 @@ Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 
 //--------------------------------Setting-----------------------------
 Route::resource('/settings/teamsetting', TeamSettingController::class);
-Route::resource('/settings/progress-update-setting', ProgressUpdateSettingController::class);
-//Route::get('/setting/progress-update-setting', [SettingController::class, 'progressUpdateSetting'])->name('progress-update-setting');
+Route::resource('/settings/daily-report-setting', DailyReportSettingController::class);
+//Route::get('/setting/daily-report-setting', [SettingController::class, 'progressUpdateSetting'])->name('daily-report-setting');
 //Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
 

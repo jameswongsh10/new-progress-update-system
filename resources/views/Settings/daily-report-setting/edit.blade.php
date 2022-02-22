@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Edit Progress Title</title>
+    <title>Edit Report Title</title>
 </head>
 <body>
 <!-- sidebar -->
@@ -24,7 +24,7 @@
     </a>
     <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
         <li class="w-100">
-            <a href="{{ route('progress-update-setting.index') }}" class="item-nav custom-font-size px-0">Progress Update Settings</a>
+            <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
         </li>
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
@@ -64,7 +64,7 @@
                 </div>
             @endif
 
-            <form autocomplete="off" method="post" action="{{ route('progress-update-setting.update', $currentSetting->id) }}">
+            <form autocomplete="off" method="post" action="{{ route('daily-report-setting.update', $currentSetting->id) }}">
                 @csrf
                 @method('PUT')
                 <div class="form-group">

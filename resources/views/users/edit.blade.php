@@ -32,7 +32,7 @@
     </a>
     <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
         <li class="w-100">
-            <a href="{{ route('progress-update-setting.index') }}" class="item-nav custom-font-size px-0">Progress Update Settings</a>
+            <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
         </li>
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
@@ -65,12 +65,7 @@
             </div>
         </div>
         <div class="card-body">
-
-            @if( session()->get('success'))
-                <div class="alert alert-success">
-                    {{ session()->get('success') }}
-                </div>
-            @elseif(session()->get('failed'))
+            @if(session()->get('failed'))
                 <div class="alert alert-danger">
                     {{ session()->get('failed') }}
                 </div>

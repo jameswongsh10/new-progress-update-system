@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Progress Update Setting</title>
+    <title>Daily Report Setting</title>
 </head>
 <body>
 <!-- sidebar -->
@@ -24,7 +24,7 @@
     </a>
     <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
         <li class="w-100">
-            <a href="{{ route('progress-update-setting.index') }}" class="item-nav custom-font-size px-0">Progress Update Settings</a>
+            <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
         </li>
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
@@ -52,11 +52,11 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm">
-                    Progress Update Setting
+                    Daily Report Settings
                 </div>
                 @if(!strcmp($_COOKIE['user_role'],'admin'))
                 <div class="col-sm-2 bg-light">
-                    <a href="{{route('progress-update-setting.create')}}" class="btn btn-sm btn-success">Add Setting</a>
+                    <a href="{{route('daily-report-setting.create')}}" class="btn btn-sm btn-success">Add Setting</a>
                 </div>
                 @endif
             </div>
@@ -76,7 +76,6 @@
                             <th class="custom-team">Is Active</th>
                             @if(!strcmp($_COOKIE['user_role'],'admin'))
                             <th class="width-action">Edit</th>
-                            <th class="width-action">Delete</th>
                             @endif
                         </tr>
                         @foreach($settings as $setting)
@@ -90,13 +89,8 @@
                                 @endif
                             </td>
                             @if(!strcmp($_COOKIE['user_role'],'admin'))
-                            <td><a href="{{ route('progress-update-setting.edit', $setting->id) }}" class="btn btn-sm btn-warning">Edit</a> </td>
-                            <td><form action="#" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onClick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
-                            </td>
+                            <td><a href="{{ route('daily-report-setting.edit', $setting->id) }}" class="btn btn-sm btn-warning">Edit</a> </td>
+
                             @endif
                         </tr>
                         @endforeach

@@ -36,7 +36,7 @@ class ReportController extends Controller
             $newReport->answer = $request->input($setting->html_name);
             $save = $newReport->save();
         }
-        setcookie('daily_report_done', '1', time() + (86400 * 30), "/");
+        setcookie('daily_report_done', '1', time() + (86400), "/");
 
         if ($save) {
             return redirect('/userdashboard/create')->with('success', 'Daily report has been added');

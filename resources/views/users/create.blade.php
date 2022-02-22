@@ -24,8 +24,7 @@
         </a>
         <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
             <li class="w-100">
-                <a href="{{ route('progress-update-setting.index') }}" class="item-nav custom-font-size px-0">Progress
-                    Update Settings</a>
+                <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
             </li>
             <li>
                 <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
@@ -58,13 +57,6 @@
                 </div>
             </div>
             <div class="card-body">
-
-                @if( session()->get('success'))
-                    <div class="alert alert-success">
-                        {{ session()->get('success') }}
-                    </div>
-                @endif
-
                 <form autocomplete="off" method="post" action="{{ route('users.store') }}">
                     @csrf
                     <div class="form-group">

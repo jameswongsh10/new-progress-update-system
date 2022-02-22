@@ -11,6 +11,6 @@ class SettingController extends Controller
     //---------------------------Progress Update Setting
     public function progressUpdateSetting()
     {
-        return view('settings.progress-update-setting');
+        return view('settings.daily-report-setting');
     }
 }

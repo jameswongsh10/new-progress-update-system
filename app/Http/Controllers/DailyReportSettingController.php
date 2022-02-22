@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
+use App\Models\Team;
 use Illuminate\Http\Request;
 
-class ProgressUpdateSettingController extends Controller
+class DailyReportSettingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class ProgressUpdateSettingController extends Controller
     {
         //
         $settings = Setting::all();
-        return view('settings.progress-update-setting.index', compact('settings'));
+        return view('settings.daily-report-setting.index', compact('settings'));
     }
 
     /**
@@ -27,7 +28,7 @@ class ProgressUpdateSettingController extends Controller
     public function create()
     {
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
-            return view('settings.progress-update-setting.create');
+            return view('settings.daily-report-setting.create');
         }
     }
 
@@ -53,7 +54,7 @@ class ProgressUpdateSettingController extends Controller
             $save = $newSetting->save();
 
             if ($save) {
-                return redirect('/settings/progress-update-setting')->with('success', 'New progress title has been added.');
+                return redirect('/settings/daily-report-setting')->with('success', 'New progress title has been added.');
             }
         }
     }
@@ -79,7 +80,7 @@ class ProgressUpdateSettingController extends Controller
     {
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
             $currentSetting = Setting::find($id);
-            return view("settings.progress-update-setting.edit", compact('currentSetting'));
+            return view("settings.daily-report-setting.edit", compact('currentSetting'));
         }
     }
 
@@ -104,7 +105,7 @@ class ProgressUpdateSettingController extends Controller
 
 
             if ($save) {
-                return redirect('/settings/progress-update-setting')->with('success', 'Progress title has been updated.');
+                return redirect('/settings/daily-report-setting')->with('success', 'Progress title has been updated.');
             }
         }
     }
