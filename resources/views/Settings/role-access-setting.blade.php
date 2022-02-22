@@ -40,7 +40,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <h6 class="nav-link">Name</h6>
+                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
                 </li>
             </ul>
         </div>
@@ -62,12 +62,8 @@
                     Role Access
                     <hr>
                 </div>
-
             </div>
         </div>
-
-
-
     </div>
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

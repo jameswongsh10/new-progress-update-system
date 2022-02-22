@@ -13,9 +13,4 @@ class SettingController extends Controller
     {
         return view('settings.progress-update-setting');
     }
-
-    //---------------------------Role access setting
-    public function roleAccessSetting() {
-        return view('settings.role-access-setting');
-    }
 }

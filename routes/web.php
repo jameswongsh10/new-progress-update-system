@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FullCalendarController;
+use App\Http\Controllers\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +26,9 @@ use App\Http\Controllers\FullCalendarController;
 */
 
 //----------------- Login -----------------
-Route::get('/', [LoginController::class, 'login']);
-Route::post('/', [LoginController::class, 'check'])->name('check');
+Route::get('login', [LoginController::class, 'login'])->name('login');
+Route::post('check', [LoginController::class, 'check'])->name('check');
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 //----------------- User Management -----------------
 
@@ -50,7 +52,8 @@ Route::get('/calendar/{id}', [FullCalendarController::class, 'usercalendar'])->n
 
 
 Route::get('/userweekview', [DashboardController::class, 'userweekview']);
-Route::post('getDay', [UserDashboardController::class, 'getDay'])->name('getDay');
+Route::post('getDay', [TaskController::class, 'getDay'])->name('getDay');
+Route::get('addTask', [TaskController::class, 'addTask'])->name('addTask');
 
 Route::post('getData', [TaskController::class, 'getData'])->name('getData');
 Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthlyView');
@@ -60,6 +63,12 @@ Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
 
 Route::post('getTaskId', [TaskController::class, 'getTaskId'])->name('getTaskId');
 
+Route::post('getKeyword', [TaskController::class, 'getKeyword'])->name('getKeyword');
+Route::get('filteredView', [TaskController::class, 'filteredView'])->name('filteredView');
+
+Route::get('/editTask/{id}', [TaskController::class, 'editTask'])->name('editTask');
+Route::get('/updateTask/{id}', [TaskController::class, 'updateTask'])->name('updateTask');
+
 Route::get('/reportView/{created_at}', [ReportViewController::class, 'reportView'])->name('reportView');
 Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 
@@ -67,5 +76,5 @@ Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 Route::resource('/settings/teamsetting', TeamSettingController::class);
 Route::resource('/settings/progress-update-setting', ProgressUpdateSettingController::class);
 //Route::get('/setting/progress-update-setting', [SettingController::class, 'progressUpdateSetting'])->name('progress-update-setting');
-Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
+//Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
 

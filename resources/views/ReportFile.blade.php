@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <title>Daily Report</title>
 </head>
 <body>
-<h1 style="font-family:'Courier New',serif">Report of {{$user->name}} on {{$date}}</h1>
-<br>
+
+<img src="..\images\Landscape.png" width="100px" height="50px"/>
+<h1>Daily Report</h1>
+
+<h4 style="font-family:'Courier New',serif; font-weight:normal;" >Name: {{$user->name}}</h4>
+<h4 style="font-family:'Courier New',serif; font-weight:normal;">Date: {{$date}}</h4>
+<hr>
+
 @csrf
+<?php $i = 1; ?>
 @foreach($question_array as $ans)
-    <div class="form-group">
-        <h4><?php echo "Question: " . $ans[0]; ?></h4>
-        <pre><?php echo "Answer: " . $ans[1]; ?></pre>
-    </div>
+    <h4><?php echo $i . ". " . $ans[0]; ?></h4>
+    <pre><?php echo "Answer: " . $ans[1]; $i++;?></pre>
 @endforeach
 </body>
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>
+
+<style>
+    h1,h4 {
+        font-family: 'Courier New', serif;
+    }
+</style>
+

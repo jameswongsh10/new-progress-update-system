@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en">
+@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -27,11 +29,8 @@
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
-        <li>
-            <a href="{{ route('role-access-setting') }}" class="item-nav custom-font-size px-0">Role Access</a>
-        </li>
     </ul>
-    <a href="#" class="item-nav">Logout</a>
+    <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
 
 <!-- main content -->
@@ -41,7 +40,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <h6 class="nav-link">Name</h6>
+                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
                 </li>
             </ul>
         </div>
@@ -55,9 +54,11 @@
                 <div class="col-sm">
                     Progress Update Setting
                 </div>
+                @if(!strcmp($_COOKIE['user_role'],'admin'))
                 <div class="col-sm-2 bg-light">
                     <a href="{{route('progress-update-setting.create')}}" class="btn btn-sm btn-success">Add Setting</a>
                 </div>
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -67,8 +68,10 @@
                         <tr>
                             <th>Title</th>
                             <th class="custom-team">Is Active</th>
+                            @if(!strcmp($_COOKIE['user_role'],'admin'))
                             <th class="width-action">Edit</th>
                             <th class="width-action">Delete</th>
+                            @endif
                         </tr>
                         @foreach($settings as $setting)
                         <tr>
@@ -80,6 +83,7 @@
                                     <i class="bi bi-x"></i>
                                 @endif
                             </td>
+                            @if(!strcmp($_COOKIE['user_role'],'admin'))
                             <td><a href="{{ route('progress-update-setting.edit', $setting->id) }}" class="btn btn-sm btn-warning">Edit</a> </td>
                             <td><form action="#" method="post">
                                     @csrf
@@ -87,6 +91,7 @@
                                     <button type="submit" onClick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </table>
@@ -103,5 +108,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>

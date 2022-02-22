@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en">
+@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -26,11 +28,8 @@
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
-        <li>
-            <a href="{{ route('role-access-setting') }}" class="item-nav custom-font-size px-0">Role Access</a>
-        </li>
     </ul>
-    <a href="#" class="item-nav">Logout</a>
+    <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
 
 <!-- main content -->
@@ -40,7 +39,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <h6 class="nav-link">Name</h6>
+                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
                 </li>
             </ul>
         </div>
@@ -53,23 +52,27 @@
                 <div class="col-sm">
                     User Management
                 </div>
+                @if(!strcmp($_COOKIE['user_role'],'admin'))
                 <div class="col-sm-1 bg-light">
                     <a href=" {{ route('users.create') }}" class="btn btn-sm btn-success">Add User</a>
                 </div>
+                @endif
             </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
-                    <tr>
+                     <tr>
                         <th class="width-id">ID</th>
                         <th class="custom-width">Name</th>
                         <th class="custom-width">Email</th>
                         <th class="width-role">Role</th>
                         <th class="width-position">Position</th>
                         <th class="custom-team">Team</th>
+                        @if(!strcmp($_COOKIE['user_role'],'admin'))
                         <th class="width-action">Edit</th>
                         <th class="width-action">Delete</th>
+                        @endif
                     </tr>
 
 
@@ -82,6 +85,7 @@
                                 <td>{{$user->role}}</td>
                                 <td>{{$user->position}}</td>
                                 <td>{{$team->team_name}}</td>
+                                @if(!strcmp($_COOKIE['user_role'],'admin'))
                                 <td><a href="{{route('users.edit',$user->id )}}" class="btn btn-sm btn-warning">Edit</a> </td>
                                 <td><form action="{{route('users.destroy', $user->id)}}" method="post">
                                         @csrf
@@ -89,6 +93,7 @@
                                         <button type="submit" onClick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     @endforeach
@@ -106,5 +111,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>

@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use http\Cookie;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    public function login() {
+    public function login()
+    {
         return view('login');
     }
 
     public function check(Request $request)
     {
         //validation
-
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8|alpha_num',
@@ -25,15 +27,17 @@ class LoginController extends Controller
 
         $userInfo = User::where('email', '=', $request->email)->first();
 
-        if(!$userInfo) {
+        if (!$userInfo) {
             return back()->with('fail', 'Email or password is wrong');
         } else {
-            if(Hash::check($request->password, $userInfo->password)) {
-                $request->session()->put('isLoggedIn', $userInfo->id);
-                if(strcmp($userInfo->role, 'admin') == 0 || strcmp($userInfo->role, 'viewer') == 0) {
+            if (Hash::check($request->password, $userInfo->password)) {
+                setcookie("isLoggedIn", $userInfo->id, time() + (86400 * 30), "/");
+                setcookie("online", "true", time() + (86400 * 30), "/");
+                setcookie("user_role", $userInfo->role, time() + (86400 * 30), "/");
+                if (strcmp($userInfo->role, 'admin') == 0 || strcmp($userInfo->role, 'viewer') == 0) {
                     return redirect('dashboard');
-                } elseif(strcmp($userInfo->role, 'user') == 0 ) {
-                    return redirect("userdashboard");
+                } elseif (strcmp($userInfo->role, 'user') == 0) {
+                    return redirect('userdashboard');
                 }
             } else {
                 return back()->with('fail', 'Email or password is wrong');
@@ -41,10 +45,11 @@ class LoginController extends Controller
         }
     }
 
-    public function logout() {
-        if(session()->has('isLoggedIn')) {
-            session()->pull('isLoggedIn');
-            return redirect('/');
-        }
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();
+        setcookie("online", "false", time() + (86400 * 30), "/");
+        return redirect('login');
     }
 }

@@ -3,6 +3,8 @@
 @endphp
 <!doctype html>
 <html lang="en">
+@if(!strcmp($_COOKIE["online"],"true"))
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -20,8 +22,8 @@
 <div class="sidenav">
     <header>Progress Update System</header>
     <hr>
-    <a href="{{route('userdashboard.index')}}" class="item-nav active ">Dashboard</a>
-    <a href="#" class="item-nav">Logout</a>
+    <a href="{{ route('userdashboard') }}" class="item-nav active ">Dashboard</a>
+    <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
 
 <!-- main content -->
@@ -31,7 +33,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <h6 class="nav-link">Name</h6>
+                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
                 </li>
             </ul>
         </div>
@@ -83,7 +85,6 @@
                     <div class="form-group">
                         <label>{{$setting->progress_title}}</label>
                         <input autocomplete="=off" type="search" name={{$setting->id}} class="form-control" />
-                        <span class="text-danger">@error ($setting->id) {{$message}} @enderror</span>
                     </div>
                 @endforeach
                 <br>
@@ -129,5 +130,7 @@
 
 </script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>

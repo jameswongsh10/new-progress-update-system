@@ -1,5 +1,8 @@
 <!doctype html>
 <html lang="en">
+@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -26,11 +29,8 @@
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
-        <li>
-            <a href="{{ route('role-access-setting') }}" class="item-nav custom-font-size px-0">Role Access</a>
-        </li>
     </ul>
-    <a href="#" class="item-nav">Logout</a>
+    <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
 
 <!-- main content -->
@@ -40,7 +40,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <h6 class="nav-link">Name</h6>
+                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
                 </li>
             </ul>
         </div>
@@ -50,7 +50,9 @@
 
     <div class="card">
         <div class="card-header">
-            Team name
+            @php
+            echo $team->team_name;
+            @endphp
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -65,7 +67,14 @@
                     @forelse($team->users as $user)
                         <tr>
                             <td><a href="{{ route('calendar', $user->id) }}" class="a-custom-style">{{$user->name}}</a></td>
-                            <td>Last updated on X/X/Xaa</td>
+                            @php
+                            try{
+                                $latestTime = \App\Models\Report::where('user_id',$user->id)->latest()->first()->created_at;
+                            }catch (\Exception $e){
+                                $latestTime = "2022-01-01 00:00:00";
+                            }
+                            @endphp
+                            <td>Last updated on {{$latestTime}} </td>
                         </tr>
                     @empty
                         <p>
@@ -82,5 +91,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -30,11 +31,8 @@
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
-        <li>
-            <a href="{{ route('role-access-setting') }}" class="item-nav custom-font-size px-0">Role Access</a>
-        </li>
     </ul>
-    <a href="#" class="item-nav">Logout</a>
+    <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
 
 <!-- main content -->
@@ -44,7 +42,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <h6 class="nav-link">Name</h6>
+                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
                 </li>
             </ul>
         </div>
@@ -109,5 +107,7 @@
         });
 </script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>

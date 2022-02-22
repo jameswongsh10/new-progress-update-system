@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -28,11 +29,8 @@
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
-        <li>
-            <a href="{{ route('role-access-setting') }}" class="item-nav custom-font-size px-0">Role Access</a>
-        </li>
     </ul>
-    <a href="#" class="item-nav">Logout</a>
+    <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
 
 <!-- main content -->
@@ -42,7 +40,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <h6 class="nav-link">Name</h6>
+                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
                 </li>
             </ul>
         </div>
@@ -59,9 +57,10 @@
 
         @for($x = 1; $x <= 7; $x++ )
             <div class="card-body">
-                <h5><?php echo date('Y-m-d', strtotime($_COOKIE['week'] . ' +' . $x . ' days'))?></h5>
+                <h5><?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' +' . $x . ' days')); echo $today?> <a href="{{route('reportView',$today)}}" class="btn btn-sm btn-success">View Report</a></h5>
+
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
+                    <table id="reportTable" class="table table-striped table-bordered">
                         <tr>
                             <th>Tasks</th>
                             <th>Description</th>
@@ -76,7 +75,6 @@
                                     <td>{{$task->task_title}}</td>
                                     <td>{{$task->task_description}}</td>
                                     <td>{{$task->status}}</td>
-                                    <td><a href="{{route('reportView',$today)}}" class="btn btn-sm btn-success">Download Report</a></td>
                                 </tr>
                             @endif
                         @empty
@@ -97,5 +95,7 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>

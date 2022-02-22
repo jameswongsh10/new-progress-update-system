@@ -121,6 +121,8 @@ a.item-nav.active {
     width: 5%;
 }
 
-.table{
+#reportTable{
     width: 100%; display: table; table-layout: fixed;
 }
+
+

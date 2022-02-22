@@ -3,6 +3,8 @@
 @endphp
 <!doctype html>
 <html lang="en">
+@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"admin")))
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -35,11 +37,8 @@
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
-        <li>
-            <a href="{{ route('role-access-setting') }}" class="item-nav custom-font-size px-0">Role Access</a>
-        </li>
     </ul>
-    <a href="#" class="item-nav">Logout</a>
+    <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
 
 <!-- main content -->
@@ -49,7 +48,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <h6 class="nav-link">Name</h6>
+                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
                 </li>
             </ul>
         </div>
@@ -70,6 +69,10 @@
             @if( session()->get('success'))
                 <div class="alert alert-success">
                     {{ session()->get('success') }}
+                </div>
+            @elseif(session()->get('failed'))
+                <div class="alert alert-danger">
+                    {{ session()->get('failed') }}
                 </div>
             @endif
 
@@ -122,11 +125,6 @@
                     </select>
                     <span class="text-danger">@error ('team_id') {{$message}} @enderror</span>
                 </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input autocomplete="off" type="password" name="password" class="form-control" />
-                    <span class="text-danger">@error ('password') {{$message}} @enderror</span>
-                </div>
                 <br>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Edit</button>
@@ -140,6 +138,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>
 
