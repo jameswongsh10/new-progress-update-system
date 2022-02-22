@@ -70,6 +70,7 @@
                 <div class="form-group">
                     <label>Name of the task</label>
                     <select id="taskname" name="tasks" class="form-control">
+                        <option value=""  selected="selected" disabled>Please select a task</option>
                         @foreach($tasks as $task)
                             <option value="{{$task->id}}">{{$task->task_title}}</option>
                         @endforeach

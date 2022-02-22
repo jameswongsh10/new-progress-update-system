@@ -22,8 +22,8 @@
     <header>Progress Update System</header>
     <hr>
     <a href="{{ route('dashboard') }}" class="item-nav ">Dashboard</a>
-    <a href="{{ route('users.index') }}" class="item-nav active">User Management</a>
-    <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
+    <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
+    <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle active">
         <span class="ms-1 d-none d-sm-inline">Settings</span>
     </a>
     <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">

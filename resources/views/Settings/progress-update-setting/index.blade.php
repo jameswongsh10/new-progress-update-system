@@ -63,6 +63,12 @@
         </div>
         <div class="card-body">
             <div class="row">
+
+                @if( session()->get('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <tr>

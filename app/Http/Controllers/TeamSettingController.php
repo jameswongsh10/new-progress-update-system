@@ -50,7 +50,7 @@ class TeamSettingController extends Controller
             $save = $newTeam->save();
 
             if ($save) {
-                return back()->with('success', 'New team has been added.');
+                return redirect('/settings/teamsetting')->with('success', 'New team has been added');
             }
         }
     }
@@ -99,7 +99,7 @@ class TeamSettingController extends Controller
             ]);
 
             if ($save) {
-                return back()->with('success', 'User has been updated.');
+                return redirect('/settings/teamsetting')->with('success', 'The name of the team has been updated');
             }
         }
     }
@@ -116,8 +116,7 @@ class TeamSettingController extends Controller
             $team = Team::find($id);
             $team->delete();
 
-            Session::flash('deleted', 'User has been deleted');
-            return Redirect::to('users');
+            return back()->with('success', 'Team has been deleted');
         }
     }
 }

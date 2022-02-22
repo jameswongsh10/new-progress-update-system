@@ -53,7 +53,7 @@ class ProgressUpdateSettingController extends Controller
             $save = $newSetting->save();
 
             if ($save) {
-                return back()->with('success', 'New progress title has been added.');
+                return redirect('/settings/progress-update-setting')->with('success', 'New progress title has been added.');
             }
         }
     }
@@ -104,7 +104,7 @@ class ProgressUpdateSettingController extends Controller
 
 
             if ($save) {
-                return back()->with('success', 'Progress title has been updated.');
+                return redirect('/settings/progress-update-setting')->with('success', 'Progress title has been updated.');
             }
         }
     }

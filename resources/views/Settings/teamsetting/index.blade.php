@@ -65,6 +65,11 @@
         <div class="card-body">
             <div class="row">
                 <div class="table-responsive">
+                    @if( session()->get('success'))
+                        <div class="alert alert-success">
+                            {{ session()->get('success') }}
+                        </div>
+                    @endif
                     <table class="table table-striped table-bordered">
                         <tr>
                             <th>Team</th>
