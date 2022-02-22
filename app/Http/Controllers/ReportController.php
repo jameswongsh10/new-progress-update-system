@@ -12,7 +12,7 @@ class ReportController extends Controller
 {
     public function create() {
         $settings = Setting::where('is_active', '=', '1')->get();
-        $today = Session::get('today');
+        $today = $_COOKIE['today'];
         return view('dailyreport', compact("today", "settings"));
     }
 
@@ -31,7 +31,7 @@ class ReportController extends Controller
 
         foreach ($settings as $setting) {
             $newReport = new Report();
-            $newReport->user_id = Session::get('isLoggedIn');
+            $newReport->user_id = $_COOKIE['isLoggedIn'];
             $newReport->setting_id = $setting->id;
             $newReport->answer = $request->input($setting->html_name);
             $save = $newReport->save();

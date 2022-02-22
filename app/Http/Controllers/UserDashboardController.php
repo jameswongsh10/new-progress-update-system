@@ -24,7 +24,7 @@ class UserDashboardController extends Controller
     public function index()
     {
         $scheduleEvents= [];
-        $id = Session::get('isLoggedIn');
+        $id = $_COOKIE['isLoggedIn'];
         $user = User::find($id);
         $data = Task::all();
         if($data->count()) {
@@ -79,8 +79,8 @@ class UserDashboardController extends Controller
     public function create()
     {
         $today = date('Y-m-d', strtotime($_COOKIE['day'] . ' +1 days'));
-        Session::put('today', $today);
-        $id = Session::get('isLoggedIn');
+        setcookie('today', $today, time() + (86400), "/");
+        $id = $_COOKIE['isLoggedIn'];
         $tasks = Task::where('user_id', $id)->get();
         $settings = Setting::where('is_active', '=', 1)->get();
         return view('userdashboard.create', compact('settings','today', 'tasks'));
@@ -120,7 +120,7 @@ class UserDashboardController extends Controller
             ];
 
             $newTask = new Task();
-            $newTask->user_id = Session::get('isLoggedIn');
+            $newTask->user_id = $_COOKIE['isLoggedIn'];
             $newTask->task_title = $request->input('newtask');
             $newTask->task_description = $request->input('description');
             $newTask->status = "";
