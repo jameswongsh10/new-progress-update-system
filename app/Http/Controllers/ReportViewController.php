@@ -35,7 +35,7 @@ class ReportViewController extends Controller
 
     public function pdf()
     {
-        $filename = 'hello_world.pdf';
+        $filename = 'Daily Report.pdf';
         $created_at = $_COOKIE['created_at'];
         $question_array = unserialize($_COOKIE["array"]);
         $user = unserialize($_COOKIE["report_user"]);
@@ -57,8 +57,7 @@ class ReportViewController extends Controller
         $pdf::AddPage();
 
         $pdf::writeHTML($html, true, false, true, false, '');
-        $pdf::Output($filename);
-//        return response()->download(public_path($filename));
+        $pdf::Output($filename,'D');
     }
 
 }
