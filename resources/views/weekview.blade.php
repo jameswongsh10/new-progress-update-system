@@ -57,9 +57,10 @@
 
         @for($x = 1; $x <= 7; $x++ )
             <div class="card-body">
-                <h5><?php echo date('Y-m-d', strtotime($_COOKIE['week'] . ' +' . $x . ' days'))?></h5>
+                <h5><?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' +' . $x . ' days')); echo $today?> <a href="{{route('reportView',$today)}}" class="btn btn-sm btn-success">View Report</a></h5>
+
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
+                    <table id="reportTable" class="table table-striped table-bordered">
                         <tr>
                             <th>Tasks</th>
                             <th>Description</th>
@@ -74,7 +75,6 @@
                                     <td>{{$task->task_title}}</td>
                                     <td>{{$task->task_description}}</td>
                                     <td>{{$task->status}}</td>
-                                    <td><a href="{{route('reportView',$today)}}" class="btn btn-sm btn-success">View Report</a></td>
                                 </tr>
                             @endif
                         @empty

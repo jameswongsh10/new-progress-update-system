@@ -69,13 +69,17 @@
                                 <td><a href="{{ route('teamview', $team->id) }}"
                                        class="a-custom-style">{{$team->team_name}}</a></td>
                                 @php
-                                    try{
-                                        foreach ($team->users as $user){
-                                            $latest_time = \App\Models\Report::where('user_id',$user->id)->latest()->first()->created_at;
+                                    $latest_time = "2022-01-01 00:00:00";
+                                        try{
+                                            foreach ($team->users as $user){
+                                                $newTime = \App\Models\Report::where('user_id',$user->id)->latest()->first()->created_at;
+                                                if($newTime>$latest_time){
+                                                    $latest_time = $newTime;
+                                                }
+                                            }
+                                        }catch (\Exception $e){
+
                                         }
-                                    }catch (\Exception $e){
-                                        $latest_time = "2022-01-01 00:00:00";
-                                    }
                                 @endphp
                                 <td>Last updated on {{$latest_time}}</td>
                             </tr>

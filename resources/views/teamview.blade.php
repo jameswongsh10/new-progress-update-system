@@ -69,9 +69,9 @@
                             <td><a href="{{ route('calendar', $user->id) }}" class="a-custom-style">{{$user->name}}</a></td>
                             @php
                             try{
-                                $latestTime = \App\Models\Report::where('user_id',$user->id)->orderBy('created_at','DESC')->first()->created_at;
+                                $latestTime = \App\Models\Report::where('user_id',$user->id)->latest()->first()->created_at;
                             }catch (\Exception $e){
-                                $latestTime = "-";
+                                $latestTime = "2022-01-01 00:00:00";
                             }
                             @endphp
                             <td>Last updated on {{$latestTime}} </td>
