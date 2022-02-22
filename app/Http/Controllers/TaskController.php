@@ -21,8 +21,8 @@ class TaskController extends Controller
     {
         $this->month = $_POST['myMonth'];
         $this->user = $_POST['myID'];
-        setcookie("user", $this->user, time() + (86400 * 30), "/");
-        setcookie("month", $this->month, time() + (86400 * 30), "/");
+        setcookie("user", $this->user, time() + 86400, "/");
+        setcookie("month", $this->month, time() + 86400, "/");
     }
 
     public function monthlyView()
@@ -41,8 +41,8 @@ class TaskController extends Controller
     {
         $this->week = $_POST['myWeek'];
         $this->user = $_POST['myID'];
-        setcookie("user", $this->user, time() + (86400 * 30), "/");
-        setcookie("week", $this->week, time() + (86400 * 30), "/");
+        setcookie("user", $this->user, time() + 86400, "/");
+        setcookie("week", $this->week, time() + 86400, "/");
     }
 
     public function weekView()
@@ -79,7 +79,7 @@ class TaskController extends Controller
     public function getDay()
     {
         $this->day = $_POST['myDay'];
-        setcookie("day", $this->day, time() + (86400 * 30), "/");
+        setcookie("day", $this->day, time() + 86400, "/");
     }
 
     public function addTask()
@@ -92,7 +92,7 @@ class TaskController extends Controller
     public function getKeyword()
     {
         $this->keyword = $_POST['myKeyword'];
-        setcookie('myKeyword', $this->keyword, time() + (86400 * 30), "/");
+        setcookie('myKeyword', $this->keyword, time() + 86400, "/");
     }
 
     public function filteredView()

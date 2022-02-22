@@ -15,7 +15,7 @@ class FullCalendarController extends Controller
         $scheduleEvents= [];
         $user = User::find($id);
         $data = Task::all();
-        setcookie("id", $id, time() + (86400 * 30), "/");
+        setcookie("id", $id, time() + 86400, "/");
 
         if($data->count()) {
             foreach($data as $key => $value) {
