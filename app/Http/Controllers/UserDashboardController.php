@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
@@ -78,6 +79,7 @@ class UserDashboardController extends Controller
     public function create()
     {
         $today = date('Y-m-d', strtotime($_COOKIE['day'] . ' +1 days'));
+        Session::put('today', $today);
         $id = Session::get('isLoggedIn');
         $tasks = Task::where('user_id', $id)->get();
         $settings = Setting::where('is_active', '=', 1)->get();
@@ -92,24 +94,13 @@ class UserDashboardController extends Controller
      */
     public function store(Request $request)
     {
-
-        $settings = Setting::where('is_active', '=', 1)->get();
-        $htmlName = array();
         $validateArray = array();
-        foreach($settings as $setting) {
-            $htmlName[] = $setting->html_name;
-        }
-
         //if it is an existing task
         if(strcmp($request->tasks, "newTaskOption") != 0) {
-
             $validateArray = [
                 'start_date' => 'required|date_format:Y-m-d',
                 'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date'
             ];
-            for($i = 0; $i < count($htmlName); $i++) {
-                $validateArray[$htmlName[$i]] = 'required';
-            }
             $this->validate($request, $validateArray);
             $save = Task::where('id', $request->get('tasks'))->update([
                     'end_date' => $request->input('end_date'),
@@ -127,10 +118,6 @@ class UserDashboardController extends Controller
                 'start_date' => 'required|date_format:Y-m-d',
                 'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date'
             ];
-            for($i = 0; $i < count($htmlName); $i++) {
-                $validateArray[$htmlName[$i]] = 'required';
-            }
-            $this->validate($request, $validateArray);
 
             $newTask = new Task();
             $newTask->user_id = Session::get('isLoggedIn');
@@ -141,16 +128,6 @@ class UserDashboardController extends Controller
             $newTask->start_date = $request->input('start_date');
             $newTask->end_date = $request->input('end_date');
             $save = $newTask->save();
-
-
-            foreach ($settings as $setting) {
-                $newReport = new Report();
-                $newReport->user_id = Session::get('isLoggedIn');
-                $newReport->setting_id = $setting->id;
-                $newReport->answer = $request->input($setting->html_name);
-                $newReport->save();
-            }
-
 
             if($save) {
                 return back()->with('success', 'Task Added');

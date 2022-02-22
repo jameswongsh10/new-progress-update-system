@@ -16,7 +16,7 @@
         "laravel/helpers": "^1.5",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "maddhatter/laravel-fullcalendar": "*",
+        "maddhatter/laravel-fullcalendar": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

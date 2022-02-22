@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProgressUpdateSettingController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReportViewController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamSettingController;
+use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -30,31 +32,25 @@ Route::post('/', [LoginController::class, 'check'])->name('check');
 
 Route::resource('users', UserManagementController::class);
 Route::resource('teamsetting', TeamSettingController::class);
-//Route::resource('monthview', TaskController::class);
+Route::resource('userdashboard', UserDashboardController::class);
+
+Route::get('/dailyreport', [ReportController::class, 'create'])->name('dailyreport');
+Route::post('/dailyreport', [ReportController::class, 'store'])->name("dailyreportstore");
+
 //Route::get('/users', [DashboardController::class, 'displayUsers'])->name('users');
 Route::get('/users/adduser', [DashboardController::class, 'addUser'])->name('adduser');
-//Route::post('/users/adduser', [DashboardController::class, 'addUserCheck'])->name('addusercheck');
-//Route::get('/users/{id}/edit', [DashboardController::class, 'getUser'])->where('id', '[0-9]+');
-
-
 
 
 Route::get('/dashboard', [DashboardController::class, 'admindashboard'])->name('dashboard');
-Route::get('/userdashboard', [DashboardController::class, 'userdashboard'])->name('userdashboard');
+
 //
 Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
 Route::get('/teamview/{id}', [DashboardController::class, 'teamview'])->name('teamview')->where('id', '[0-9]+');
 Route::get('/calendar/{id}', [FullCalendarController::class, 'usercalendar'])->name('calendar')->where('id', '[0-9]+');
-//Route::post('/calendar', [FullCalendarController::class, 'admincalendar'])->name('calendar');
-//
-////edit user
-//
-//
-//
+
 
 Route::get('/userweekview', [DashboardController::class, 'userweekview']);
-Route::post('getDay', [TaskController::class, 'getDay'])->name('getDay');
-Route::get('addTask', [TaskController::class, 'addTask'])->name('addTask');
+Route::post('getDay', [UserDashboardController::class, 'getDay'])->name('getDay');
 
 Route::post('getData', [TaskController::class, 'getData'])->name('getData');
 Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthlyView');
@@ -62,7 +58,6 @@ Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthly
 Route::post('getWeek', [TaskController::class, 'getWeek'])->name('getWeek');
 Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
 
-Route::get('reportView', [ReportViewController::class, 'reportView'])->name('reportView');
 Route::post('getTaskId', [TaskController::class, 'getTaskId'])->name('getTaskId');
 
 Route::get('/reportView/{created_at}', [ReportViewController::class, 'reportView'])->name('reportView');
@@ -74,8 +69,3 @@ Route::resource('/settings/progress-update-setting', ProgressUpdateSettingContro
 //Route::get('/setting/progress-update-setting', [SettingController::class, 'progressUpdateSetting'])->name('progress-update-setting');
 Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
 
-
-/*
-//do routing later for this
-Route::get('/edituser', [MainController::class, 'edituser']);
-*/

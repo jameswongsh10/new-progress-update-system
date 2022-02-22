@@ -1,6 +1,5 @@
 @php
     use App\Models\Task;
-    use Illuminate\Support\Facades\Cookie;
 @endphp
     <!doctype html>
 <html lang="en">
@@ -14,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Add task</title>
+    <title>Daily Report</title>
 </head>
 <body>
 <!-- sidebar --->
@@ -45,16 +44,6 @@
                 <div class="col-sm">
                     Date: {{$today}}
                 </div>
-                @if(isset($_COOKIE['daily_report_done']))
-                    <div class="col-sm-2 bg-light">
-                        You have done the report for today
-                    </div>
-                @else
-                <div class="col-sm-2 bg-light">
-                    <a href=" {{ route('dailyreport') }}" class="btn btn-sm btn-success">Add Daily Report</a>
-                </div>
-                @endif
-
             </div>
         </div>
         <div class="card-body">
@@ -65,37 +54,18 @@
                 </div>
             @endif
 
-            <form autocomplete="off" method="post" action="{{route("userdashboard.store")}}">
+            <form autocomplete="off" method="post" action="{{route("dailyreportstore")}}">
                 @csrf
-                <div class="form-group">
-                    <label>Name of the task</label>
-                    <select id="taskname" name="tasks" class="form-control">
-                        @foreach($tasks as $task)
-                            <option value="{{$task->id}}">{{$task->task_title}}</option>
-                        @endforeach
-                        <option value="newTaskOption">Add a new task</option>
-                    </select>
-                </div>
-                <div id="shownewtask" class="form-group">
-                    <label>Name of new task</label>
-                    <input autocomplete="off" type="search" name="newtask" class="form-control" />
-                    <span class="text-danger">@error ("newtask") {{$message}} @enderror</span>
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <input autocomplete="off" type="search" id="description" name="description" class="form-control"  />
-                    <span class="text-danger">@error ("description") {{$message}} @enderror</span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="start_date">Start Date</label>
-                    <input class="form-control" id="start_date" name="start_date" placeholder="YYYY-MM-DD" type="text"/>
-                    <span class="text-danger">@error ("start_date") {{$message}} @enderror</span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="end_date">End Date</label>
-                    <input class="form-control" id="end_date" name="end_date" placeholder="YYYY-MM-DD" type="text"/>
-                    <span class="text-danger">@error ("end_date") {{$message}} @enderror</span>
-                </div>
+                Daily Report
+                <hr>
+                @foreach($settings as $setting)
+                    <div class="form-group">
+                        <label>{{$setting->progress_title}}</label>
+                        <input autocomplete="=off" type="search" name="{{$setting->html_name}}" class="form-control" />
+                        <span class="text-danger">@error ($setting->html_name) {{$message}} @enderror</span>
+                    </div>
+                @endforeach
+                <br>
                 <br>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Add</button>
