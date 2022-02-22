@@ -69,15 +69,15 @@
                                        class="a-custom-style">{{$team->team_name}}</a></td>
                                 @php
                                     $latest_time = "2022-01-01 00:00:00";
-                                        try{
-                                            foreach ($team->users as $user){
-                                                $newTime = \App\Models\Report::where('user_id',$user->id)->latest()->first()->created_at;
-                                                if($newTime>$latest_time){
-                                                    $latest_time = $newTime;
-                                                }
+                                    foreach ($team->users as $user){
+                                        try {
+                                            $newTime = \App\Models\Report::where('user_id',$user->id)->latest()->first()->created_at;
+                                            if($newTime>=$latest_time){
+                                                $latest_time = $newTime;
                                             }
-                                        }catch (\Exception $e){
+                                        }catch(\Exception $e){
                                         }
+                                    }
                                 @endphp
                                 <td>Last updated on {{$latest_time}}</td>
                             </tr>
