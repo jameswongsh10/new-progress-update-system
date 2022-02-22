@@ -39,7 +39,7 @@ class ReportController extends Controller
         setcookie('daily_report_done', '1', time() + (86400), "/");
 
         if ($save) {
-            return redirect('/userdashboard/create')->with('success', 'Daily report has been added');
+            return redirect('/userdashboard')->with('success', 'Daily report has been added');
         }
     }
 }

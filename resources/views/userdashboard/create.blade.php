@@ -58,13 +58,6 @@
             </div>
         </div>
         <div class="card-body">
-
-            @if( session()->get('success'))
-                <div class="alert alert-success">
-                    {{ session()->get('success') }}
-                </div>
-            @endif
-
             <form autocomplete="off" method="post" action="{{route("userdashboard.store")}}">
                 @csrf
                 <div class="form-group">

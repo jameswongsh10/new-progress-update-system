@@ -42,6 +42,11 @@
             Dashboard
         </div>
         <div class="card-body">
+            @if( session()->get('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+            @endif
             <div class="table-responsive">
                 {!! $calendar->calendar() !!}
                 {!! $calendar->script() !!}

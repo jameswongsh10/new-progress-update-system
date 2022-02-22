@@ -56,9 +56,8 @@
                 <div class="col-sm">
                     {{$user->name}}
                 </div>
-                <div class="col-sm-3 bg-light">
+                <div class="col-sm-1 bg-light">
                     <a href="#" id=monthbutton class="btn btn-sm btn-success btn-submit">Monthly View</a>
-                    <a href="{{route('weekView',  $user->id)}}" class="btn btn-sm btn-success">Weekly View</a>
                 </div>
             </div>
         </div>

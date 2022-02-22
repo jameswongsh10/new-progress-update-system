@@ -107,7 +107,7 @@ class UserDashboardController extends Controller
             ]);
 
             if ($save) {
-                return back()->with('success', 'Task Updated');
+                return redirect('/userdashboard')->with('success', 'Task Updated');
             }
         }
         //if it is a new task
@@ -130,7 +130,7 @@ class UserDashboardController extends Controller
             $save = $newTask->save();
 
             if($save) {
-                return back()->with('success', 'Task Added');
+                return redirect('/userdashboard')->with('success', 'Task Added');
             }
         }
     }
