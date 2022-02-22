@@ -18,7 +18,7 @@ class ReportViewController extends Controller
 {
     public function reportView($created_at)
     {
-        setcookie("created_at", $created_at, time() + (86400 * 30), "/");
+        setcookie("created_at", $created_at, time() + 86400, "/");
         $id = $_COOKIE['id'];
         $user = User::find($id);
         $answer = Report::where('user_id',$id)->whereDate('created_at', '=', date($created_at))->paginate();
@@ -28,8 +28,8 @@ class ReportViewController extends Controller
             $set = array($question->progress_title,$ans->answer);
             array_push($question_array,$set);
         }
-        setcookie("report_user", serialize($user), time() + (86400 * 30), "/");
-        setcookie("array", serialize($question_array), time() + (86400 * 30), "/");
+        setcookie("report_user", serialize($user), time() + 86400, "/");
+        setcookie("array", serialize($question_array), time() + 86400, "/");
         return view('report',compact('created_at','user','question_array'));
     }
 

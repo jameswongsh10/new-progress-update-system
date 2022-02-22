@@ -3,7 +3,7 @@
 @endphp
 <!doctype html>
 <html lang="en">
-@if(!strcmp($_COOKIE["online"],"true"))
+@if(isset($_COOKIE["isLoggedIn"]))
 
 <head>
     <meta charset="UTF-8">

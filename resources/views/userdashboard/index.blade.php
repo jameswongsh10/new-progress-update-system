@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"user")))
+@if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"user")))
 
 <head>
     <meta charset="UTF-8">

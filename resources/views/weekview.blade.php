@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
+@if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -70,7 +70,7 @@
                         @forelse($tasks as $task)
                             <?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' +'.$x.' days'))?>
                             @if($today >= $task->start_date && $today <=$task->end_date)
-                                <?php setcookie("report_date", $today, time() + (86400 * 30), "/"); ?>
+                                <?php setcookie("report_date", $today, time() + 86400, "/"); ?>
                                 <tr>
                                     <td>{{$task->task_title}}</td>
                                     <td>{{$task->task_description}}</td>

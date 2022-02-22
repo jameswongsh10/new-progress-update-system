@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-@if(!strcmp($_COOKIE["online"],"true") && (!strcmp($_COOKIE['user_role'],"admin")))
+@if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"admin")))
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
