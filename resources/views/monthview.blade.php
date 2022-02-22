@@ -82,13 +82,7 @@
                         <tr>
                             <td>{{$task->task_title}}</td>
                             <td>{{$task->task_description}}</td>
-                            <td>
-                                <select id="status" name="status" class="form-control">
-                                    <option value="ongoing" @if($task->status == 'ongoing') selected @endif>Ongoing</option>
-                                    <option value="completed" @if($task->status == 'completed') selected @endif>Completed</option>
-                                    <option value="delay" @if($task->status == 'delay') selected @endif>Delay</option>
-                                </select>
-                            </td>
+                            <td>{{$task->status}}</td>
                             <td>{{$task->remark}}</td>
                             @if(!strcmp($_COOKIE['user_role'],'admin'))
                             <td><a href="{{route('editTask',$task->id)}}" class="btn btn-sm btn-warning">Edit</a></td>
