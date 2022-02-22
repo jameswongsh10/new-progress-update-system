@@ -60,7 +60,7 @@
                         <form>
                             <input type="text" id="filterKeyword" class="form-control"/>
                         </form>
-                        <button class="btn btn-submit">Filter</button>
+                        <button class="btn btn-submit btn-secondary">Filter</button>
                     </div>
                 </div>
             </div>
