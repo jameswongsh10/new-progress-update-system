@@ -36,15 +36,15 @@ class ReportViewController extends Controller
             foreach ($day as $newDay) {
                 $question = Setting::where('id', $newDay->setting_id)->first();
                 $set = array($question, $newDay);
-                $printReportSet = array($newDay->created_at,$question, $newDay);
+                $printReportSet = array($newDay->created_at,$question->progress_title, $newDay->answer);
                 array_push($question_array, $set);
                 array_push($report_question_array, $printReportSet);
             }
         }
 
         setcookie("report_user", serialize($user), time() + 86400, "/");
-        setcookie("array", serialize($question_array), time() + 86400, "/");
-        setcookie("report_question_array", serialize($report_question_array), time() + 86400, "/");
+        setcookie("array", serialize($report_question_array), time() + 86400, "/");
+        setcookie("reportArray", serialize($report_question_array), time() + 86400, "/");
         return view('report', compact('created_at', 'user', 'question_array', 'lastDay','groupByDay'));
     }
 
@@ -52,7 +52,7 @@ class ReportViewController extends Controller
     {
         $filename = 'Daily Report.pdf';
         $created_at = $_COOKIE['created_at'];
-        $question_array = unserialize($_COOKIE["report_question_array"]);
+        $question_array = unserialize($_COOKIE["array"]);
         $user = unserialize($_COOKIE["report_user"]);
 
         //group by day
@@ -79,7 +79,7 @@ class ReportViewController extends Controller
         $pdf::AddPage();
 
         $pdf::writeHTML($html, true, false, true, false, '');
-        $pdf::Output($filename, 'D');
+        $pdf::Output($filename);
     }
 
 

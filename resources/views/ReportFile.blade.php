@@ -18,14 +18,15 @@
     @csrf
     <?php $i = 1; ?>
     @foreach ($groupByDay as $day => $value)
-        <h6><?php echo $day; ?></h6>
+        <h3><?php echo $day; ?></h3>
         @foreach($question_array as $ans)
-{{--            @if(!strcmp($day,date("Y-m-d",strtotime($ans[1]->created_at))))--}}
-{{--                <h4><?php echo $i . ". " . $ans[1]; ?></h4>--}}
-{{--                <pre><?php echo "Answer: " . $ans[2]; $i++;?></pre>--}}
-{{--            @endif--}}
+            @if(!strcmp($day,date("Y-m-d",strtotime($ans[0]))))
+                <h5><?php echo $i . ". " . $ans[1]; ?></h5>
+                <pre><?php echo "Answer: " . $ans[2]; $i++;?></pre>
+            @endif
         @endforeach
     @endforeach
+
     </body>
 @else
     <meta http-equiv="refresh" content="0;url={{route('logout')}}">
