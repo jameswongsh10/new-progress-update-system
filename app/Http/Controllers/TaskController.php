@@ -48,7 +48,7 @@ class TaskController extends Controller
             $date = $_COOKIE['month'];
         }
         $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->paginate();
-        return view('monthview', compact('tasks'));
+        return view('monthview', compact('tasks','date'));
     }
 
     public function getWeek()

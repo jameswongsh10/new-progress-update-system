@@ -38,6 +38,7 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <h3><a href="{{ url()->previous() }}" class="btn btn-sm btn-secondary">Back</a></h3>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
@@ -52,6 +53,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm">
+                    <h3><?php echo DateTime::createFromFormat('!m', $date)->format('F'); ?></h3>
                 </div>
                 <div class="col-sm-3 bg-light">
                     <div class="input-group">
@@ -59,7 +61,7 @@
                         <form>
                             <input type="text" id="filterKeyword" class="form-control"/>
                         </form>
-                        <button class="btn btn-submit">Filter</button>
+                        <button class="btn btn-submit btn-secondary">Filter</button>
                     </div>
                 </div>
             </div>
@@ -81,13 +83,7 @@
                         <tr>
                             <td>{{$task->task_title}}</td>
                             <td>{{$task->task_description}}</td>
-                            <td>
-                                <select id="status" name="status" class="form-control">
-                                    <option value="ongoing" @if($task->status == 'ongoing') selected @endif>Ongoing</option>
-                                    <option value="completed" @if($task->status == 'completed') selected @endif>Completed</option>
-                                    <option value="delay" @if($task->status == 'delay') selected @endif>Delay</option>
-                                </select>
-                            </td>
+                            <td>{{$task->status}}</td>
                             <td>{{$task->remark}}</td>
                             @if(!strcmp($_COOKIE['user_role'],'admin'))
                             <td><a href="{{route('editTask',$task->id)}}" class="btn btn-sm btn-warning">Edit</a></td>
