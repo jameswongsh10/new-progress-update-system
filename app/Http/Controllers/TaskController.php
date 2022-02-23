@@ -154,7 +154,7 @@ class TaskController extends Controller
                 $existingTask->remark = $request->input('remark');
                 $save = $existingTask->save();
                 if ($save) {
-                    return back()->with('success', 'User has been updated.');
+                    return redirect('/monthlyView')->with('success', 'Task has been updated.');
                 }
             } catch (\Exception $e) {
                 return back()->with('failed', 'Please check your information and try again.');
