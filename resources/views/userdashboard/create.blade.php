@@ -123,7 +123,6 @@
                 data:{taskId:task_id},
                 dataType: 'json',
                 success:function(data){
-                    $("#description").val(data.desc).prop("disabled", true)
                     $("#start_date").val(data.start_date)
                     $("#end_date").val(data.end_date)
                 }

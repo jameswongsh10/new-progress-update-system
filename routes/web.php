@@ -4,6 +4,7 @@ use App\Http\Controllers\DailyReportSettingController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReportViewController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamSettingController;
 use App\Http\Controllers\UserDashboardController;
@@ -35,6 +36,7 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::resource('users', UserManagementController::class);
 Route::resource('teamsetting', TeamSettingController::class);
 Route::resource('userdashboard', UserDashboardController::class);
+
 
 Route::get('/dailyreport', [ReportController::class, 'create'])->name('dailyreport');
 Route::post('/dailyreport', [ReportController::class, 'store'])->name("dailyreportstore");
@@ -75,6 +77,7 @@ Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 //--------------------------------Setting-----------------------------
 Route::resource('/settings/teamsetting', TeamSettingController::class);
 Route::resource('/settings/daily-report-setting', DailyReportSettingController::class);
+Route::resource('/settings/status-setting', StatusController::class);
 //Route::get('/setting/daily-report-setting', [SettingController::class, 'progressUpdateSetting'])->name('daily-report-setting');
 //Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
 

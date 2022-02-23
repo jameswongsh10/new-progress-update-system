@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Acaronlex\LaravelCalendar\Calendar;
 use App\Models\Setting;
+use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -127,8 +128,9 @@ class TaskController extends Controller
     public function editTask($id)
     {
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $statuses = Status::where('is_active', '=', '1')->get();
             $task = Task::where('id', $id)->first();
-            return view('editTask', compact('task'));
+            return view('editTask', compact('task', 'statuses'));
         }
     }
 
