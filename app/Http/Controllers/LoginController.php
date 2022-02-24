@@ -33,6 +33,7 @@ class LoginController extends Controller
             if (Hash::check($request->password, $userInfo->password)) {
                 setcookie("isLoggedIn", $userInfo->id, time() + 86400, "/");
                 setcookie("user_role", $userInfo->role, time() + 86400, "/");
+//                setcookie('filter', true, time() + 86400, "/");
                 if (strcmp($userInfo->role, 'admin') == 0 || strcmp($userInfo->role, 'viewer') == 0) {
                     return redirect('dashboard');
                 } elseif (strcmp($userInfo->role, 'user') == 0) {

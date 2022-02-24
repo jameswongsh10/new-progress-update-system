@@ -56,7 +56,7 @@
 
         <!-- table -->
 
-        <div class="card" >
+        <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm">
@@ -80,40 +80,40 @@
                         {{ session()->get('success') }}
                     </div>
                 @endif
-                <?php $i = 0; ?>
-                @foreach($groupByTaskID as $singleTask)
-                    <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
-                    <div class="table-responsive" >
-                        <table class="table table-striped table-bordered" id="taskTable">
-                            <tr>
-                                <th>Date</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Remark</th>
-                                @if(!strcmp($_COOKIE['user_role'],'admin'))
-                                    <th>Edit</th>
-                                @endif
-                            </tr>
-
-                            @forelse($statusTask as $task)
-                                @if($task->task_id == $newTask->id)
+                <?php $i = 0;?>
+                    @foreach($groupByTaskID as $singleTask)
+                        <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="taskTable">
                                 <tr>
-                                    <td>{{date('Y-m-d', strtotime($task->created_at))}}</td>
-                                    <td>{{$task->task_description}}</td>
-                                    <td>{{$task->status_id}}</td>
-                                    <td>{{$task->task_remark}}</td>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Remark</th>
                                     @if(!strcmp($_COOKIE['user_role'],'admin'))
-                                        <td><a href="{{route('editTask',$task->task_id, )}}"
-                                               class="btn btn-sm btn-warning">Edit</a></td>
+                                        <th>Edit</th>
                                     @endif
                                 </tr>
-                                @endif
-                            @empty
-                                <p>There is no task</p>
-                            @endforelse
 
-                        </table>
-                    </div>
+                                @forelse($statusTask as $task)
+                                    @if($task->task_id == $newTask->id)
+                                        <tr>
+                                            <td>{{date('Y-m-d', strtotime($task->created_at))}}</td>
+                                            <td>{{$task->task_description}}</td>
+                                            <td>{{$task->status_id}}</td>
+                                            <td>{{$task->task_remark}}</td>
+                                            @if(!strcmp($_COOKIE['user_role'],'admin'))
+                                                <td><a href="{{route('editTask',$task->task_id)}}"
+                                                       class="btn btn-sm btn-warning">Edit</a></td>
+                                            @endif
+                                        </tr>
+                                    @endif
+                                @empty
+                                    <p>There is no task</p>
+                                @endforelse
+
+                            </table>
+                        </div>
                     @endforeach
             </div>
         </div>
