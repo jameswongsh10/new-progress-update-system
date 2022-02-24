@@ -70,7 +70,7 @@
                 <form>
                     @csrf
                     @foreach ($groupByDay as $day => $value)
-                        <h6><?php echo $day; ?></h6>
+                        <h5><?php echo $day; ?></h5>
                         @foreach($question_array as $ans)
                             @if(!strcmp($day,date("Y-m-d",strtotime($ans[1]->report_date))))
                                 <div class="form-group">
