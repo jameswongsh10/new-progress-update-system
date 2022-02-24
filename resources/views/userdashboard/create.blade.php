@@ -2,8 +2,9 @@
     use App\Models\Task;
     use Illuminate\Support\Facades\Cookie;
 @endphp
-    <!doctype html>
+<!doctype html>
 <html lang="en">
+@if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"user")))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -30,6 +31,7 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            <h3><a href="javascript:history.back()" class="btn btn-sm btn-secondary">Back</a></h3>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
@@ -45,18 +47,18 @@
                 <div class="col-sm">
                     Date: {{$today}}
                 </div>
-                @if(isset($_COOKIE['daily_report_done']))
-                    <div class="col-sm-3 bg-light">
-                        You have done the report for today.
-                    </div>
+                    @if(isset($_COOKIE['daily_report_done']))
+                        <div class="col-sm-3 bg-light">
+                            You have done the report for today.
+                        </div>
+                        <div class="col-sm-2 bg-light">
+                            <a href=" {{ route('dailyreportedit') }}" class="btn btn-sm btn-success">Edit Daily Report</a>
+                        </div>
+                    @else
                     <div class="col-sm-2 bg-light">
-                        <a href=" {{ route('dailyreportedit') }}" class="btn btn-sm btn-success">Edit Daily Report</a>
+                        <a href=" {{ route('dailyreport') }}" class="btn btn-sm btn-success">Add Daily Report</a>
                     </div>
-                @else
-                <div class="col-sm-2 bg-light">
-                    <a href=" {{ route('dailyreport') }}" class="btn btn-sm btn-success">Add Daily Report</a>
-                </div>
-                @endif
+                    @endif
 
             </div>
         </div>
@@ -146,5 +148,7 @@
 
 </script>
 </body>
-
+@else
+    <meta http-equiv="refresh" content="0;url={{route('logout')}}">
+@endif
 </html>

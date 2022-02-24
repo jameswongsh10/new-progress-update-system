@@ -49,10 +49,6 @@ class LoginController extends Controller
         Session::flush();
         Auth::logout();
         setcookie("isLoggedIn", "", time() + (-3600), "/");
-        if (isset($_COOKIE['daily_report_done'])) {
-            unset($_COOKIE['daily_report_done']);
-            setcookie("daily_report_done", "", time() - 3600);
-        }
         return redirect('login');
     }
 }

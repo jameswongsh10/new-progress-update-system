@@ -50,15 +50,29 @@ class UserDashboardController extends Controller
         $calendar->setCallbacks([
             'navLinkDayClick' => 'function(date, jsEvent) {
                 const today = date.toISOString().substring(0, 10);
-                console.log(today);
-                $.ajax({
-                    type:\'POST\',
-                    url:"/getDay",
-                    data:{myDay:today},
-                    success:function(data){
-                        window.location.href = "/userdashboard/create";
-                    }
-                });
+
+                var todayPlusOne = new Date();
+                var dd = String(date.getDate()).padStart(2, "0");
+                var mm = String(date.getMonth() + 1).padStart(2, "0");
+                var yyyy = date.getFullYear();
+
+                todayPlusOne = yyyy + "-" + mm + "-" + dd;
+
+                if(moment().format("YYYY-MM-DD") === todayPlusOne) {
+                    $.ajax({
+                        type:\'POST\',
+                        url:"/getDay",
+                        data:{myDay:today},
+                        success:function(data){
+                            window.location.href = "/userdashboard/create";
+                        }
+                    });
+                } else {
+                    alert("Wrong date selected.")
+                }
+
+
+
             }',
             'navLinkWeekClick' => 'function(week, jsEvent) {
                 console.log(week.toString());

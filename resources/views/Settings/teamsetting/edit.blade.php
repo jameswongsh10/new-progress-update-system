@@ -33,6 +33,9 @@
         <li>
             <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
         </li>
+        <li class="w-100">
+            <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
+        </li>
     </ul>
     <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
@@ -57,7 +60,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm">
-                    Add teams
+                    Edit teams
                 </div>
             </div>
         </div>

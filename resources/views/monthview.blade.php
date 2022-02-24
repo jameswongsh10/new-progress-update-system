@@ -3,7 +3,7 @@
     use App\Models\Status;
 @endphp
 
-    <!doctype html>
+<!doctype html>
 <html lang="en">
 @if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
     <head>
