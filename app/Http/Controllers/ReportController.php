@@ -42,4 +42,37 @@ class ReportController extends Controller
             return redirect('/userdashboard')->with('success', 'Daily report has been added');
         }
     }
+
+    public function edit() {
+        $today = $_COOKIE['today'];
+        $settings = Setting::where('is_active', '=', '1')->get();
+        $reports = Report::where('user_id', $_COOKIE['isLoggedIn'])->whereDate('created_at', '=', $today)->get();
+        return view('editDailyReport', compact('today', 'reports', 'settings'));
+    }
+
+
+    public function update(Request $request) {
+        $validateArray = array();
+        $settings = Setting::where('is_active', '=', 1)->get();
+
+        foreach($settings as $setting) {
+            $htmlName[] = $setting->html_name;
+        }
+
+        for($i = 0; $i < count($htmlName); $i++) {
+            $validateArray[$htmlName[$i]] = 'required';
+        }
+
+        $this->validate($request, $validateArray);
+
+        foreach ($settings as $setting) {
+            $existingReport = Report::where('user_id', $_COOKIE['isLoggedIn'])->where('setting_id', $setting->id)->first();
+            $existingReport->answer = $request->input($setting->html_name);
+            $save = $existingReport->save();
+        }
+
+        if ($save) {
+            return redirect('/userdashboard')->with('success', 'Daily report has been edited');
+        }
+    }
 }

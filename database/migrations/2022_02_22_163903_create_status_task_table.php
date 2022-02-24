@@ -17,6 +17,7 @@ class CreateStatusTaskTable extends Migration
             $table->id();
             $table->foreignId('status_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('task_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('task_description');
             $table->string('task_remark');
             $table->timestamps();

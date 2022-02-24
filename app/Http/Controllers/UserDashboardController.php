@@ -105,12 +105,22 @@ class UserDashboardController extends Controller
                 'start_date' => 'required|date_format:Y-m-d',
                 'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date'
             ];
+
             $this->validate($request, $validateArray);
-            $save = Task::where('id', $request->get('tasks'))->update([
+
+            $taskSave = Task::where('id', $request->get('tasks'))->update([
                     'end_date' => $request->input('end_date'),
             ]);
 
-            if ($save) {
+            $newStatusTask = new StatusTask();
+            $newStatusTask->status_id = $request->input('status');
+            $newStatusTask->task_id = $request->get('tasks');
+            $newStatusTask->user_id = $_COOKIE['isLoggedIn'];
+            $newStatusTask->task_description = $request->input('description');
+            $newStatusTask->task_remark = '';
+            $statusTaskSave = $newStatusTask->save();
+
+            if ($taskSave && $statusTaskSave) {
                 return redirect('/userdashboard')->with('success', 'Task Updated');
             }
         }
@@ -123,18 +133,26 @@ class UserDashboardController extends Controller
                 'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date'
             ];
 
+            $this->validate($request, $validateArray);
+
             //save for task
             $newTask = new Task();
             $newTask->user_id = $_COOKIE['isLoggedIn'];
             $newTask->task_title = $request->input('newtask');
             $newTask->start_date = $request->input('start_date');
             $newTask->end_date = $request->input('end_date');
-            $save = $newTask->save();
+            $taskSave = $newTask->save();
 
             $newStatusTask = new StatusTask();
-//            $newStatusTask-> ;
+            $newStatusTask->status_id = $request->input('status');
+            $newStatusTask->task_id = $newTask->id;
+            $newStatusTask->user_id = $_COOKIE['isLoggedIn'];
+            $newStatusTask->task_description = $request->input('description');
+            $newStatusTask->task_remark = '';
+            $statusTaskSave = $newStatusTask->save();
 
-            if($save) {
+
+            if($taskSave && $statusTaskSave) {
                 return redirect('/userdashboard')->with('success', 'Task Added');
             }
         }

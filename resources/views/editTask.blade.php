@@ -79,16 +79,14 @@
                     <input autocomplete="off" disabled name="title" class="form-control" value="{{$task->task_title}}" />
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
-                    {{--                    TODO change the value of description to StatusTask.--}}
-                    <input autocomplete="off" disabled name="description" class="form-control" value="{{$task->task_description}}" />
-                </div>
-                <div class="form-group">
                     <label>Status</label>
                     <select name="status" class="form-control">
                         <option disabled value="">Select Status</option>
+{{--                        TODO please fix this. and Monthly View--}}
                         @foreach($statuses as $status)
-                            <option value="{{$status->html_name}}">{{$status->status_title}}</option>
+                            @foreach($statusTask as $individualStatusTask)
+                                <option value="{{$status->html_name}}" @if($individualStatusTask->status_id == $status->id) selected @endif>{{$status->status_title}}</option>
+                            @endforeach
                         @endforeach
                     </select>
                     <span class="text-danger">@error ('status') {{$message}} @enderror</span>

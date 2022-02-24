@@ -13,5 +13,5 @@ class StatusTask extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['status_id', 'task_id', 'task_description', 'task_remark'];
+    protected $fillable = ['status_id', 'task_id', 'user_id', 'task_description', 'task_remark'];
 }

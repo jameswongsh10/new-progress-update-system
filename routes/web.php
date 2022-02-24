@@ -41,6 +41,9 @@ Route::resource('userdashboard', UserDashboardController::class);
 Route::get('/dailyreport', [ReportController::class, 'create'])->name('dailyreport');
 Route::post('/dailyreport', [ReportController::class, 'store'])->name("dailyreportstore");
 
+Route::get('/dailyreport/edit', [ReportController::class, 'edit'])->name('dailyreportedit');
+Route::put('/dailyreport/edit', [ReportController::class, 'update'])->name('dailyreportupdate');
+
 //Route::get('/users', [DashboardController::class, 'displayUsers'])->name('users');
 Route::get('/users/adduser', [DashboardController::class, 'addUser'])->name('adduser');
 
@@ -68,7 +71,7 @@ Route::post('getTaskId', [TaskController::class, 'getTaskId'])->name('getTaskId'
 Route::post('getKeyword', [TaskController::class, 'getKeyword'])->name('getKeyword');
 Route::get('filteredView', [TaskController::class, 'filteredView'])->name('filteredView');
 
-Route::get('/editTask/{id}', [TaskController::class, 'editTask'])->name('editTask');
+Route::get('/editTask/{id}/{statusTaskId}', [TaskController::class, 'editTask'])->name('editTask');
 Route::get('/updateTask/{id}', [TaskController::class, 'updateTask'])->name('updateTask');
 
 Route::get('/reportView/{created_at}', [ReportViewController::class, 'reportView'])->name('reportView');
