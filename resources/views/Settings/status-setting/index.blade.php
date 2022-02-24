@@ -29,7 +29,6 @@
             <li>
                 <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
             </li>
-{{--            TODO Remember to add line to every view page.--}}
             <li class="w-100">
                 <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
             </li>

@@ -55,6 +55,7 @@ class TaskController extends Controller
             $id = $_COOKIE['user'];
             $date = $_COOKIE['month'];
         }
+        $statuses = Status::where('is_active', '=', '1')->get();
         $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->paginate();
         $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
 
@@ -69,7 +70,7 @@ class TaskController extends Controller
             array_push($taskTitleArray,$taskTitle);
         }
 
-        return view('monthview', compact('tasks', 'statusTask','date','groupByTaskID','taskTitleArray'));
+        return view('monthview', compact('tasks', 'statusTask','date','groupByTaskID','taskTitleArray', 'statuses'));
     }
 
     public function getWeek()
@@ -149,11 +150,8 @@ class TaskController extends Controller
     {
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
             $statuses = Status::where('is_active', '=', '1')->get();
-            $statusTask = StatusTask::where('user_id', $_COOKIE['user'])
-                            ->where('task_id', $id)
-                            ->get();
-            $task = Task::where('id', $id)->first();
-            return view('editTask', compact('task', 'statusTask', 'statuses'));
+            $statusTask = StatusTask::find($id);
+            return view('editTask', compact('statusTask', 'statuses'));
         }
     }
 
@@ -164,6 +162,7 @@ class TaskController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
+    // the ID here is the status task ID
     public function updateTask(Request $request, int $id)
     {
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
@@ -174,15 +173,17 @@ class TaskController extends Controller
             ]);
 
             try {
-                $existingTask = Task::find($id);
-                $existingTask->status = $request->input('status');
-                $existingTask->remark = $request->input('remark');
-                $save = $existingTask->save();
+                $existingStatusTask = StatusTask::find($id);
+                $existingStatusTask->status_id = $request->input('status');
+                $existingStatusTask->task_remark = $request->input('remark');
+                $save = $existingStatusTask->save();
                 if ($save) {
                     return redirect('/monthlyView')->with('success', 'Task has been updated.');
                 }
             } catch (\Exception $e) {
+
                 return back()->with('failed', 'Please check your information and try again.');
+
             }
         }
     }

@@ -100,10 +100,14 @@
                                 <tr>
                                     <td>{{date('Y-m-d', strtotime($task->created_at))}}</td>
                                     <td>{{$task->task_description}}</td>
-                                    <td>{{$task->status_id}}</td>
+                                    @foreach($statuses as $status)
+                                        @if($task->status_id == $status->id)
+                                            <td>{{$status->status_title}}</td>
+                                        @endif
+                                    @endforeach
                                     <td>{{$task->task_remark}}</td>
                                     @if(!strcmp($_COOKIE['user_role'],'admin'))
-                                        <td><a href="{{route('editTask',$task->task_id, )}}"
+                                        <td><a href="{{route('editTask',$task->id, )}}"
                                                class="btn btn-sm btn-warning">Edit</a></td>
                                     @endif
                                 </tr>

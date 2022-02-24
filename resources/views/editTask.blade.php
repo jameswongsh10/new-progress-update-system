@@ -20,8 +20,8 @@
 <div class="sidenav">
     <header>Progress Update System</header>
     <hr>
-    <a href="{{ route('dashboard') }}" class="item-nav">Dashboard</a>
-    <a href="{{ route('users.index') }}" class="item-nav active">User Management</a>
+    <a href="{{ route('dashboard') }}" class="item-nav active">Dashboard</a>
+    <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
     <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
         <span class="ms-1 d-none d-sm-inline">Settings</span>
     </a>
@@ -75,30 +75,23 @@
                 </div>
             @endif
 
-            <form autocomplete="off" method="post" action="{{ route('updateTask', $task->id) }}">
+            <form autocomplete="off" method="post" action="{{ route('updateTask', $statusTask->id) }}">
                 @csrf
                 @method('GET')
-                <div class="form-group">
-                    <label>Task Title</label>
-                    <input autocomplete="off" disabled name="title" class="form-control" value="{{$task->task_title}}" />
-                </div>
                 <div class="form-group">
                     <label>Status</label>
                     <select name="status" class="form-control">
                         <option disabled value="">Select Status</option>
-{{--                        TODO please fix this. and Monthly View--}}
+
                         @foreach($statuses as $status)
-                            @foreach($statusTask as $individualStatusTask)
-                                <option value="{{$status->html_name}}" @if($individualStatusTask->status_id == $status->id) selected @endif>{{$status->status_title}}</option>
-                            @endforeach
+                        <option value="{{$status->id}}" @if($status->id == $statusTask->id) selected @endif> {{$status->status_title}}</option>
                         @endforeach
                     </select>
                     <span class="text-danger">@error ('status') {{$message}} @enderror</span>
                 </div>
                 <div class="form-group">
                     <label>Remark</label>
-{{--                    TODO change the value of remark to StatusTask.--}}
-                    <input autocomplete="off" type="search" name="remark" class="form-control" value="" />
+                    <input autocomplete="off" type="search" name="remark" class="form-control" />
                     <span class="text-danger">@error ('remark') {{$message}} @enderror</span>
                 </div>
                 <br>
