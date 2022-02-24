@@ -120,8 +120,9 @@ a.item-nav.active {
     width: 5%;
 }
 
-#reportTable{
+#reportTable, #taskTable{
     width: 100%; display: table; table-layout: fixed;
 }
+
 
 
