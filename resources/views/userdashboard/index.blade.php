@@ -39,7 +39,14 @@
     <!-- calendar for user view -->
     <div class="card">
         <div class="card-header">
-            Dashboard
+            <div class="row">
+                <div class="col-sm">
+                    Dashboard
+                </div>
+                <div class="col-sm-1 bg-light">
+                    <a href="#" id=monthbutton class="btn btn-sm btn-success btn-submit">Monthly View</a>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             @if( session()->get('success'))
@@ -70,8 +77,25 @@
         }
     });
 
-    var calendarEl = document.getElementById('calendar');
+    $(".btn-submit").click(function(e){
 
+        e.preventDefault();
+
+        var date = calendar.getDate();
+        var month = date.getMonth();
+        var finalMonth = ++month;
+        var id = {{$user->id}};
+
+        $.ajax({
+            type:'POST',
+            url:"{{route('getData')}}",
+            data:{myMonth:finalMonth, myID:id},
+            success:function(data){
+                console.log("===== " + data + " =====");
+                window.location.href = "{{route('usermonthview')}}";
+            }
+        });
+    });
 </script>
 </body>
 @else

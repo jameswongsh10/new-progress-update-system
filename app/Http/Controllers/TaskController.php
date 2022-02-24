@@ -142,6 +142,8 @@ class TaskController extends Controller
         } else {
             $keyword = $_COOKIE['myKeyword'];
 
+            $statuses = Status::where('is_active', '=', '1')->get();
+
             $groupByTaskID = Task::where('user_id',$id)->where('task_title', 'like', array('%' . $keyword . '%'))->get()->groupBy(function ($data) {
                 return $data->id;
             });
@@ -155,7 +157,7 @@ class TaskController extends Controller
 
             $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
 
-            return view('monthview', compact( 'statusTask','date','groupByTaskID','taskTitleArray'));
+            return view('monthview', compact( 'statusTask','date','groupByTaskID','taskTitleArray', 'statuses'));
 
         }
 

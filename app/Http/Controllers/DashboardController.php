@@ -21,8 +21,4 @@ class DashboardController extends Controller
         $team = Team::find($id);
         return view('teamview', compact('team'));
     }
-
-    public function userweekview() {
-        return view('userweekview');
-    }
 }

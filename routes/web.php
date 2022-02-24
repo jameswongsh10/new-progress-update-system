@@ -9,6 +9,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamSettingController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\UserMonthlyViewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
@@ -56,7 +57,9 @@ Route::get('/teamview/{id}', [DashboardController::class, 'teamview'])->name('te
 Route::get('/calendar/{id}', [FullCalendarController::class, 'usercalendar'])->name('calendar')->where('id', '[0-9]+');
 
 
-Route::get('/userweekview', [DashboardController::class, 'userweekview']);
+Route::get('/usermonthview', [UserMonthlyViewController::class, 'usermonthview'])->name('usermonthview');
+Route::get('/filteredUserView', [UserMonthlyViewController::class, 'filteredUserView'])->name('filteredUserView');
+
 Route::post('getDay', [TaskController::class, 'getDay'])->name('getDay');
 Route::get('addTask', [TaskController::class, 'addTask'])->name('addTask');
 
@@ -70,6 +73,7 @@ Route::post('getTaskId', [TaskController::class, 'getTaskId'])->name('getTaskId'
 
 Route::post('getKeyword', [TaskController::class, 'getKeyword'])->name('getKeyword');
 Route::get('filteredView', [TaskController::class, 'filteredView'])->name('filteredView');
+
 
 Route::get('/editTask/{id}', [TaskController::class, 'editTask'])->name('editTask');
 Route::get('/updateTask/{id}', [TaskController::class, 'updateTask'])->name('updateTask');

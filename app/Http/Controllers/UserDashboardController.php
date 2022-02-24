@@ -70,13 +70,7 @@ class UserDashboardController extends Controller
                 } else {
                     alert("Wrong date selected.")
                 }
-
-
-
             }',
-            'navLinkWeekClick' => 'function(week, jsEvent) {
-                console.log(week.toString());
-            }'
         ]);
         return view('userdashboard.index', compact('user', 'calendar'));
     }
