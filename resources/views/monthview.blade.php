@@ -1,3 +1,8 @@
+@php
+    use App\Models\StatusTask;
+    use App\Models\Status;
+@endphp
+
 <!doctype html>
 <html lang="en">
 @if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
@@ -84,6 +89,7 @@
                         <th>Edit</th>
                         @endif
                     </tr>
+{{--                    TODO Please display the correct data. --}}
                     @forelse($tasks as $task)
                         <tr>
                             <td>{{$task->task_title}}</td>
@@ -91,7 +97,7 @@
                             <td>{{$task->status}}</td>
                             <td>{{$task->remark}}</td>
                             @if(!strcmp($_COOKIE['user_role'],'admin'))
-                            <td><a href="{{route('editTask',$task->id)}}" class="btn btn-sm btn-warning">Edit</a></td>
+                            <td><a href="{{route('editTask',$task->id, )}}" class="btn btn-sm btn-warning">Edit</a></td>
                             @endif
                         </tr>
                     @empty

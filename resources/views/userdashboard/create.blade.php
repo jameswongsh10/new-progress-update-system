@@ -32,7 +32,7 @@
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <h6 class="nav-link">Name</h6>
+                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
                 </li>
             </ul>
         </div>
@@ -46,8 +46,11 @@
                     Date: {{$today}}
                 </div>
                 @if(isset($_COOKIE['daily_report_done']))
+                    <div class="col-sm-3 bg-light">
+                        You have done the report for today.
+                    </div>
                     <div class="col-sm-2 bg-light">
-                        You have done the report for today
+                        <a href=" {{ route('dailyreportedit') }}" class="btn btn-sm btn-success">Edit Daily Report</a>
                     </div>
                 @else
                 <div class="col-sm-2 bg-light">
@@ -79,6 +82,16 @@
                     <label>Description</label>
                     <input autocomplete="off" type="search" id="description" name="description" class="form-control"  />
                     <span class="text-danger">@error ("description") {{$message}} @enderror</span>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="status" name="status" class="form-control">
+                        <option value=""  selected="selected" disabled>Please select a status</option>
+                        @foreach($statuses as $status)
+                            <option value="{{$status->id}}">{{$status->status_title}}</option>
+                        @endforeach
+                    </select>
+                    <span class="text-danger">@error ("status") {{$message}} @enderror</span>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="start_date">Start Date</label>
@@ -115,7 +128,6 @@
         e.preventDefault();
 
         let task_id = $(this).val()
-        console.log(task_id)
         if (task_id !== 'newTaskOption') {
             $.ajax({
                 type:'POST',
@@ -123,7 +135,8 @@
                 data:{taskId:task_id},
                 dataType: 'json',
                 success:function(data){
-                    $("#description").val(data.desc).prop("disabled", true)
+
+                    $('#status option[value="' +data.status_id + '"]').prop('selected', true).trigger("change");
                     $("#start_date").val(data.start_date)
                     $("#end_date").val(data.end_date)
                 }

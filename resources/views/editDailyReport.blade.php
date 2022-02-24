@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Daily Report</title>
+    <title>Edit Daily Report</title>
 </head>
 <body>
 <!-- sidebar --->
@@ -47,28 +47,34 @@
             </div>
         </div>
         <div class="card-body">
-
             @if( session()->get('success'))
                 <div class="alert alert-success">
                     {{ session()->get('success') }}
                 </div>
             @endif
-
-            <form autocomplete="off" method="post" action="{{route("dailyreportstore")}}">
+            <form autocomplete="off" method="post" action="{{route("dailyreportupdate")}}">
                 @csrf
-                Daily Report
+                @method('PUT')
+                Edit Daily Report
                 <hr>
+                @php
+                    $i = 0;
+                @endphp
                 @foreach($settings as $setting)
+
                     <div class="form-group">
                         <label>{{$setting->progress_title}}</label>
-                        <input autocomplete="=off" type="search" name="{{$setting->html_name}}" class="form-control" />
+                        <input autocomplete="=off" type="search" name="{{$setting->html_name}}" class="form-control" value="{{$reports[$i]->answer}}" />
                         <span class="text-danger">@error ($setting->html_name) {{$message}} @enderror</span>
                     </div>
+                    @php
+                        $i = $i + 1;
+                    @endphp
                 @endforeach
                 <br>
                 <br>
                 <div class="form-group">
-                    <button type="submit" onClick="return confirm('Please make sure that the details are correct.')" class="btn btn-primary">Add</button>
+                    <button type="submit" onClick="return confirm('Please make sure that the details are correct.')" class="btn btn-primary">Edit</button>
                 </div>
             </form>
         </div>
@@ -80,34 +86,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
-<script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $('#taskname').change(function(e){
-        e.preventDefault();
-
-        let task_id = $(this).val()
-        console.log(task_id)
-        if (task_id !== 'newTaskOption') {
-            $.ajax({
-                type:'POST',
-                url:"{{route('getTaskId')}}",
-                data:{taskId:task_id},
-                dataType: 'json',
-                success:function(data){
-                    $("#description").val(data.desc).prop("disabled", true)
-                    $("#start_date").val(data.start_date)
-                    $("#end_date").val(data.end_date)
-                }
-            });
-        }
-    })
-
-</script>
 </body>
 
 </html>

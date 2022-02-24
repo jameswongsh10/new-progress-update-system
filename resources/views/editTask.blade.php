@@ -80,22 +80,22 @@
                     <input autocomplete="off" disabled name="title" class="form-control" value="{{$task->task_title}}" />
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
-                    <input autocomplete="off" disabled name="description" class="form-control" value="{{$task->task_description}}" />
-                </div>
-                <div class="form-group">
                     <label>Status</label>
                     <select name="status" class="form-control">
                         <option disabled value="">Select Status</option>
-                        <option value="ongoing" @if($task->status == 'ongoing') selected @endif>Ongoing</option>
-                        <option value="completed" @if($task->status == 'completed') selected @endif>Completed</option>
-                        <option value="delay" @if($task->status == 'delay') selected @endif>Delay</option>
+{{--                        TODO please fix this. and Monthly View--}}
+                        @foreach($statuses as $status)
+                            @foreach($statusTask as $individualStatusTask)
+                                <option value="{{$status->html_name}}" @if($individualStatusTask->status_id == $status->id) selected @endif>{{$status->status_title}}</option>
+                            @endforeach
+                        @endforeach
                     </select>
                     <span class="text-danger">@error ('status') {{$message}} @enderror</span>
                 </div>
                 <div class="form-group">
                     <label>Remark</label>
-                    <input autocomplete="off" type="search" name="remark" class="form-control" value="{{$task->remark}}" />
+{{--                    TODO change the value of remark to StatusTask.--}}
+                    <input autocomplete="off" type="search" name="remark" class="form-control" value="" />
                     <span class="text-danger">@error ('remark') {{$message}} @enderror</span>
                 </div>
                 <br>

@@ -4,6 +4,7 @@ use App\Http\Controllers\DailyReportSettingController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReportViewController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamSettingController;
 use App\Http\Controllers\UserDashboardController;
@@ -36,8 +37,12 @@ Route::resource('users', UserManagementController::class);
 Route::resource('teamsetting', TeamSettingController::class);
 Route::resource('userdashboard', UserDashboardController::class);
 
+
 Route::get('/dailyreport', [ReportController::class, 'create'])->name('dailyreport');
 Route::post('/dailyreport', [ReportController::class, 'store'])->name("dailyreportstore");
+
+Route::get('/dailyreport/edit', [ReportController::class, 'edit'])->name('dailyreportedit');
+Route::put('/dailyreport/edit', [ReportController::class, 'update'])->name('dailyreportupdate');
 
 //Route::get('/users', [DashboardController::class, 'displayUsers'])->name('users');
 Route::get('/users/adduser', [DashboardController::class, 'addUser'])->name('adduser');
@@ -66,7 +71,7 @@ Route::post('getTaskId', [TaskController::class, 'getTaskId'])->name('getTaskId'
 Route::post('getKeyword', [TaskController::class, 'getKeyword'])->name('getKeyword');
 Route::get('filteredView', [TaskController::class, 'filteredView'])->name('filteredView');
 
-Route::get('/editTask/{id}', [TaskController::class, 'editTask'])->name('editTask');
+Route::get('/editTask/{id}/{statusTaskId}', [TaskController::class, 'editTask'])->name('editTask');
 Route::get('/updateTask/{id}', [TaskController::class, 'updateTask'])->name('updateTask');
 
 Route::get('/reportView/{created_at}', [ReportViewController::class, 'reportView'])->name('reportView');
@@ -75,6 +80,7 @@ Route::get('/pdf', [ReportViewController::class, 'pdf'])->name('pdf');
 //--------------------------------Setting-----------------------------
 Route::resource('/settings/teamsetting', TeamSettingController::class);
 Route::resource('/settings/daily-report-setting', DailyReportSettingController::class);
+Route::resource('/settings/status-setting', StatusController::class);
 //Route::get('/setting/daily-report-setting', [SettingController::class, 'progressUpdateSetting'])->name('daily-report-setting');
 //Route::get('/setting/role-access-setting', [SettingController::class, 'roleAccessSetting'])->name('role-access-setting');
 

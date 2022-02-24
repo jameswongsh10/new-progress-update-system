@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Acaronlex\LaravelCalendar\Calendar;
 use App\Models\Setting;
+use App\Models\Status;
+use App\Models\StatusTask;
 use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,7 +32,13 @@ class TaskController extends Controller
         $this->taskId = $_POST['taskId'];
         $returnTask = array();
         $task = Task::where('id', $this->taskId)->first();
+        $statusTask = StatusTask::where('task_id', $this->taskId)
+            ->where('user_id', $_COOKIE['isLoggedIn'])
+            ->first();
 
+
+        $returnTask['status_id'] = $statusTask->status_id;
+        $returnTask['user_id'] = $_COOKIE['isLoggedIn'];
         $returnTask['taskId'] = $task->id;
         $returnTask['desc'] = $task->task_description;
         $returnTask['start_date'] = $task->start_date;
@@ -48,7 +56,8 @@ class TaskController extends Controller
             $date = $_COOKIE['month'];
         }
         $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->paginate();
-        return view('monthview', compact('tasks','date'));
+        $statusTask = StatusTask::where('user_id', $id)->get();
+        return view('monthview', compact('tasks', 'statusTask'));
     }
 
     public function getWeek()
@@ -124,11 +133,15 @@ class TaskController extends Controller
         }
     }
 
-    public function editTask($id)
+    public function editTask($id, $statusTaskId)
     {
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
+            $statuses = Status::where('is_active', '=', '1')->get();
+            $statusTask = StatusTask::where('user_id', $_COOKIE['user'])
+                            ->where('task_id', $id)
+                            ->get();
             $task = Task::where('id', $id)->first();
-            return view('editTask', compact('task'));
+            return view('editTask', compact('task', 'statusTask', 'statuses'));
         }
     }
 

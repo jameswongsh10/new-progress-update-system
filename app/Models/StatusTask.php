@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class StatusTask extends Model
 {
     use HasFactory;
 
-    protected $table = 'tasks';
+    protected $table = 'status_task';
 
     protected $primaryKey = 'id';
 
-    protected $fillable = [
-        'task_title',
-        'start_date',
-        'end_date'
-    ];
+    protected $fillable = ['status_id', 'task_id', 'user_id', 'task_description', 'task_remark'];
 }

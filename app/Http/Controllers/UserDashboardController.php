@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Acaronlex\LaravelCalendar\Facades\Calendar;
 use App\Models\Report;
 use App\Models\Setting;
+use App\Models\Status;
+use App\Models\StatusTask;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -83,7 +85,8 @@ class UserDashboardController extends Controller
         $id = $_COOKIE['isLoggedIn'];
         $tasks = Task::where('user_id', $id)->get();
         $settings = Setting::where('is_active', '=', 1)->get();
-        return view('userdashboard.create', compact('settings','today', 'tasks'));
+        $statuses = Status::where('is_active', '=', 1)->get();
+        return view('userdashboard.create', compact('settings','today', 'tasks', 'statuses'));
     }
 
     /**
@@ -98,15 +101,26 @@ class UserDashboardController extends Controller
         //if it is an existing task
         if(strcmp($request->tasks, "newTaskOption") != 0) {
             $validateArray = [
+                'description' => 'required',
                 'start_date' => 'required|date_format:Y-m-d',
                 'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date'
             ];
+
             $this->validate($request, $validateArray);
-            $save = Task::where('id', $request->get('tasks'))->update([
+
+            $taskSave = Task::where('id', $request->get('tasks'))->update([
                     'end_date' => $request->input('end_date'),
             ]);
 
-            if ($save) {
+            $newStatusTask = new StatusTask();
+            $newStatusTask->status_id = $request->input('status');
+            $newStatusTask->task_id = $request->get('tasks');
+            $newStatusTask->user_id = $_COOKIE['isLoggedIn'];
+            $newStatusTask->task_description = $request->input('description');
+            $newStatusTask->task_remark = '';
+            $statusTaskSave = $newStatusTask->save();
+
+            if ($taskSave && $statusTaskSave) {
                 return redirect('/userdashboard')->with('success', 'Task Updated');
             }
         }
@@ -119,17 +133,26 @@ class UserDashboardController extends Controller
                 'end_date' => 'required|date_format:Y-m-d|after_or_equal:start_date'
             ];
 
+            $this->validate($request, $validateArray);
+
+            //save for task
             $newTask = new Task();
             $newTask->user_id = $_COOKIE['isLoggedIn'];
             $newTask->task_title = $request->input('newtask');
-            $newTask->task_description = $request->input('description');
-            $newTask->status = "";
-            $newTask->remark = "";
             $newTask->start_date = $request->input('start_date');
             $newTask->end_date = $request->input('end_date');
-            $save = $newTask->save();
+            $taskSave = $newTask->save();
 
-            if($save) {
+            $newStatusTask = new StatusTask();
+            $newStatusTask->status_id = $request->input('status');
+            $newStatusTask->task_id = $newTask->id;
+            $newStatusTask->user_id = $_COOKIE['isLoggedIn'];
+            $newStatusTask->task_description = $request->input('description');
+            $newStatusTask->task_remark = '';
+            $statusTaskSave = $newStatusTask->save();
+
+
+            if($taskSave && $statusTaskSave) {
                 return redirect('/userdashboard')->with('success', 'Task Added');
             }
         }
