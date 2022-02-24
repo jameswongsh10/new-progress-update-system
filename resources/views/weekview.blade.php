@@ -19,18 +19,22 @@
         <hr>
         <a href="{{ route('dashboard') }}" class="item-nav active ">Dashboard</a>
         <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
-        <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
-            <span class="ms-1 d-none d-sm-inline">Settings</span>
-        </a>
-        <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
-            <li class="w-100">
-                <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report
-                    Settings</a>
-            </li>
-            <li>
-                <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
-            </li>
-        </ul>
+        @if((!strcmp($_COOKIE['user_role'],"admin")))
+            <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
+                <span class="ms-1 d-none d-sm-inline">Settings</span>
+            </a>
+            <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
+                <li class="w-100">
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report
+                        Settings</a>
+                </li>
+                <li>
+                    <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
+                </li>
+            </ul>
+        @endif
+
         <a href="{{ route('logout') }}" class="item-nav">Logout</a>
     </div>
 
@@ -38,22 +42,23 @@
     <div class="main">
         <!-- navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <h3><a href="javascript:history.back()" class="btn btn-sm btn-secondary">Back</a></h3>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
-                </li>
-            </ul>
-        </div>
-    </nav>
+            <div class="container-fluid">
+                <h3><a href="javascript:history.back()" class="btn btn-sm btn-secondary">Back</a></h3>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <h4>
                         <?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' + 1 days'));?>
-                        Weekly View <a href="{{route('reportView',$today)}}" class="btn btn-sm btn-primary">View Report</a>
+                        Weekly View <a href="{{route('reportView',$today)}}" class="btn btn-sm btn-primary">View
+                            Report</a>
                     </h4>
                 </div>
             </div>

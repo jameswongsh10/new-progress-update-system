@@ -19,18 +19,21 @@
         <hr>
         <a href="{{ route('dashboard') }}" class="item-nav active ">Dashboard</a>
         <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
-        <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
-            <span class="ms-1 d-none d-sm-inline">Settings</span>
-        </a>
-        <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
-            <li class="w-100">
-                <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report
-                    Settings</a>
-            </li>
-            <li>
-                <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
-            </li>
-        </ul>
+        @if((!strcmp($_COOKIE['user_role'],"admin")))
+            <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
+                <span class="ms-1 d-none d-sm-inline">Settings</span>
+            </a>
+            <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
+                <li class="w-100">
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report
+                        Settings</a>
+                </li>
+                <li>
+                    <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
+                </li>
+            </ul>
+        @endif
         <a href="{{ route('logout') }}" class="item-nav">Logout</a>
     </div>
 
@@ -38,15 +41,15 @@
     <div class="main">
         <!-- navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <h3><a href="javascript:history.back()" class="btn btn-sm btn-secondary">Back</a></h3>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
-                </li>
-            </ul>
-        </div>
-    </nav>
+            <div class="container-fluid">
+                <h3><a href="javascript:history.back()" class="btn btn-sm btn-secondary">Back</a></h3>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
         <div class="card">
             <div class="card-header">
@@ -70,12 +73,12 @@
                         <h6><?php echo $day; ?></h6>
                         @foreach($question_array as $ans)
                             @if(!strcmp($day,date("Y-m-d",strtotime($ans[1]->report_date))))
-                            <div class="form-group">
-                                <label><?php echo "Question: " . $ans[0]->progress_title; ?></label>
-                                <input autocomplete="off" type="search" readonly class="form-control"
-                                       value="<?php echo $ans[1]->answer; ?>"/>
-                            </div>
-                            <br>
+                                <div class="form-group">
+                                    <label><?php echo "Question: " . $ans[0]->progress_title; ?></label>
+                                    <input autocomplete="off" type="search" readonly class="form-control"
+                                           value="<?php echo $ans[1]->answer; ?>"/>
+                                </div>
+                                <br>
                             @endif
                         @endforeach
                     @endforeach

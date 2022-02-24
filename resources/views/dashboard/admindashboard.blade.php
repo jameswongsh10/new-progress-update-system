@@ -23,7 +23,8 @@
         {{--    @if(strcmp($userRole, 'admin') == 0 || strcmp($userRole, 'viewer') == 0)--}}
         <a href="{{ route('dashboard') }}" class="item-nav active ">Dashboard</a>
         <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
-        <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
+        @if((!strcmp($_COOKIE['user_role'],"admin")))
+            <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
             <span class="ms-1 d-none d-sm-inline">Settings</span>
         </a>
         <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
@@ -34,6 +35,7 @@
                 <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
             </li>
         </ul>
+        @endif
         <a href="{{ route('logout') }}" class="item-nav">Logout</a>
     </div>
 
