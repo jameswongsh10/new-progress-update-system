@@ -56,7 +56,7 @@
 
         <!-- table -->
 
-        <div class="card" >
+        <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm">
@@ -80,20 +80,20 @@
                         {{ session()->get('success') }}
                     </div>
                 @endif
-                <?php $i = 0; ?>
-                @foreach($groupByTaskID as $singleTask)
-                    <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
-                    <div class="table-responsive" >
-                        <table class="table table-striped table-bordered" id="taskTable">
-                            <tr>
-                                <th>Date</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Remark</th>
-                                @if(!strcmp($_COOKIE['user_role'],'admin'))
-                                    <th>Edit</th>
-                                @endif
-                            </tr>
+                <?php $i = 0;?>
+                    @foreach($groupByTaskID as $singleTask)
+                        <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="taskTable">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Remark</th>
+                                    @if(!strcmp($_COOKIE['user_role'],'admin'))
+                                        <th>Edit</th>
+                                    @endif
+                                </tr>
 
                             @forelse($statusTask as $task)
                                 @if($task->task_id == $newTask->id)
@@ -116,8 +116,8 @@
                                 <p>There is no task</p>
                             @endforelse
 
-                        </table>
-                    </div>
+                            </table>
+                        </div>
                     @endforeach
             </div>
         </div>

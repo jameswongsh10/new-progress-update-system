@@ -56,7 +56,7 @@ class TaskController extends Controller
             $date = $_COOKIE['month'];
         }
         $statuses = Status::where('is_active', '=', '1')->get();
-        $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->paginate();
+
         $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
 
         $groupByTaskID = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->orderBy('created_at')->get()->groupBy(function ($data) {
@@ -64,13 +64,14 @@ class TaskController extends Controller
         });
 
         $taskTitleArray = array();
+
         //search for task name
         foreach ($groupByTaskID as $task => $value){
             $taskTitle = Task::where('id', $task)->first();
             array_push($taskTitleArray,$taskTitle);
         }
-
-        return view('monthview', compact('tasks', 'statusTask','date','groupByTaskID','taskTitleArray', 'statuses'));
+        setcookie('filter', false, time() + (-3600), "/");
+        return view('monthview', compact('statusTask','date','groupByTaskID','taskTitleArray', 'statuses'));
     }
 
     public function getWeek()
@@ -137,13 +138,27 @@ class TaskController extends Controller
         $date = $_COOKIE['month'];
 
         if (!isset($_COOKIE["myKeyword"])) {
-            $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->get();
-            return view('monthview', compact('tasks'));
+            return $this->monthlyView();
         } else {
             $keyword = $_COOKIE['myKeyword'];
-            $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->where('task_title', 'like', array('%' . $keyword . '%'))->get();
-            return view('monthview', compact('tasks'));
+
+            $groupByTaskID = Task::where('user_id',$id)->where('task_title', 'like', array('%' . $keyword . '%'))->get()->groupBy(function ($data) {
+                return $data->id;
+            });
+
+            $taskTitleArray = array();
+
+            foreach ($groupByTaskID as $task => $value){
+                $taskTitle = Task::where('id', $task)->first();
+                array_push($taskTitleArray,$taskTitle);
+            }
+
+            $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
+
+            return view('monthview', compact( 'statusTask','date','groupByTaskID','taskTitleArray'));
+
         }
+
     }
 
     public function editTask($id)
@@ -181,9 +196,7 @@ class TaskController extends Controller
                     return redirect('/monthlyView')->with('success', 'Task has been updated.');
                 }
             } catch (\Exception $e) {
-
                 return back()->with('failed', 'Please check your information and try again.');
-
             }
         }
     }
