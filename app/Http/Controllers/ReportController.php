@@ -18,6 +18,8 @@ class ReportController extends Controller
 
     public function store(Request $request) {
         $save = '';
+        $clickedDate = date('Y-m-d', strtotime($_COOKIE['day'] . ' + 1 days'));
+
         $settings = Setting::where('is_active', '=', 1)->get();
         $htmlName = array();
         $validateArray = array();
@@ -33,6 +35,7 @@ class ReportController extends Controller
             $newReport = new Report();
             $newReport->user_id = $_COOKIE['isLoggedIn'];
             $newReport->setting_id = $setting->id;
+            $newReport->report_date = $clickedDate;
             $newReport->answer = $request->input($setting->html_name);
             $save = $newReport->save();
         }

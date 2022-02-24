@@ -13,5 +13,5 @@ class Report extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['user_id', 'setting_id', 'answer'];
+    protected $fillable = ['user_id', 'setting_id', 'answer','report_date'];
 }

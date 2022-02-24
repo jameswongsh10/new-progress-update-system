@@ -69,7 +69,7 @@
                     @foreach ($groupByDay as $day => $value)
                         <h6><?php echo $day; ?></h6>
                         @foreach($question_array as $ans)
-                            @if(!strcmp($day,date("Y-m-d",strtotime($ans[1]->created_at))))
+                            @if(!strcmp($day,date("Y-m-d",strtotime($ans[1]->report_date))))
                             <div class="form-group">
                                 <label><?php echo "Question: " . $ans[0]->progress_title; ?></label>
                                 <input autocomplete="off" type="search" readonly class="form-control"
