@@ -57,7 +57,7 @@ class TaskController extends Controller
         }
         $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->paginate();
         $statusTask = StatusTask::where('user_id', $id)->get();
-        return view('monthview', compact('tasks', 'statusTask'));
+        return view('monthview', compact('tasks', 'statusTask','date'));
     }
 
     public function getWeek()
@@ -133,7 +133,7 @@ class TaskController extends Controller
         }
     }
 
-    public function editTask($id, $statusTaskId)
+    public function editTask($id)
     {
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
             $statuses = Status::where('is_active', '=', '1')->get();
