@@ -56,8 +56,20 @@ class TaskController extends Controller
             $date = $_COOKIE['month'];
         }
         $tasks = Task::where('user_id', $id)->whereMonth('start_date', $date)->paginate();
-        $statusTask = StatusTask::where('user_id', $id)->get();
-        return view('monthview', compact('tasks', 'statusTask', 'date'));
+        $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
+
+        $groupByTaskID = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->orderBy('created_at')->get()->groupBy(function ($data) {
+            return $data->task_id;
+        });
+
+        $taskTitleArray = array();
+        //search for task name
+        foreach ($groupByTaskID as $task => $value){
+            $taskTitle = Task::where('id', $task)->first();
+            array_push($taskTitleArray,$taskTitle);
+        }
+
+        return view('monthview', compact('tasks', 'statusTask','date','groupByTaskID','taskTitleArray'));
     }
 
     public function getWeek()
