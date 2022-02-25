@@ -51,11 +51,11 @@
                     <div class="col-sm-1 bg-light">
                         <a href=" {{ route('dailyreport') }}" class="btn btn-sm btn-success">Add Daily Report</a>
                     </div>
-                    @if(isset($_COOKIE['daily_report_done']))
+
                     <div class="col-sm-1 bg-light">
                         <a href=" {{ route('dailyreportedit') }}" class="btn btn-sm btn-success">Edit Daily Report</a>
                     </div>
-                    @endif
+
 
             </div>
         </div>
