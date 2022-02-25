@@ -157,7 +157,7 @@ class UserManagementController extends Controller
             $user = User::find($id);
             $user->delete();
 
-            return back()->with('success', 'Team has been deleted');
+            return back()->with('success', 'User has been deleted');
         }
     }
 }

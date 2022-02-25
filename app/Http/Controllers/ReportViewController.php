@@ -19,14 +19,14 @@ class ReportViewController extends Controller
     public function reportView($created_at)
     {
         setcookie("created_at", $created_at, time() + 86400, "/");
+
         $lastDay = date('Y-m-d', strtotime($created_at . ' + 6 days'));
         $id = $_COOKIE['id'];
         $user = User::find($id);
 
-
         //group by day
-        $groupByDay = Report::where('user_id', $id)->whereDate('created_at', '>=', date($created_at))->whereDate('created_at', '<=', date($lastDay))->orderBy('created_at')->get()->groupBy(function ($data) {
-            return $data->created_at->format('Y-m-d');
+        $groupByDay = Report::where('user_id', $id)->whereDate('report_date', '>=', date('Y-m-d', strtotime($created_at)))->whereDate('report_date', '<=', date($lastDay))->orderBy('report_date')->get()->groupBy(function ($data) {
+            return $data->report_date;
         });
 
         $question_array = array();
@@ -36,7 +36,7 @@ class ReportViewController extends Controller
             foreach ($day as $newDay) {
                 $question = Setting::where('id', $newDay->setting_id)->first();
                 $set = array($question, $newDay);
-                $printReportSet = array($newDay->created_at,$question->progress_title, $newDay->answer);
+                $printReportSet = array($newDay->report_date,$question->progress_title, $newDay->answer);
                 array_push($question_array, $set);
                 array_push($report_question_array, $printReportSet);
             }
@@ -51,13 +51,13 @@ class ReportViewController extends Controller
     public function pdf()
     {
         $filename = 'Daily Report.pdf';
-        $created_at = $_COOKIE['created_at'];
+        $created_at = date('Y-m-d', strtotime($_COOKIE['created_at']));
         $question_array = unserialize($_COOKIE["array"]);
         $user = unserialize($_COOKIE["report_user"]);
 
         //group by day
-        $groupByDay = Report::where('user_id', $_COOKIE['id'])->whereDate('created_at', '>=', date($created_at))->whereDate('created_at', '<=', date(date('Y-m-d', strtotime($created_at . ' + 6 days'))))->orderBy('created_at')->get()->groupBy(function ($data) {
-            return $data->created_at->format('Y-m-d');
+        $groupByDay = Report::where('user_id', $_COOKIE['id'])->whereDate('report_date', '>=', date($created_at))->whereDate('report_date', '<=', date(date('Y-m-d', strtotime($created_at . ' + 6 days'))))->orderBy('report_date')->get()->groupBy(function ($data) {
+            return $data->report_date;
         });
 
         $data = [
@@ -79,7 +79,7 @@ class ReportViewController extends Controller
         $pdf::AddPage();
 
         $pdf::writeHTML($html, true, false, true, false, '');
-        $pdf::Output($filename);
+        $pdf::Output($filename,'D');
     }
 
 

@@ -115,8 +115,7 @@ class TaskController extends Controller
 
     public function getDay()
     {
-        $this->day = $_POST['myDay'];
-        setcookie("day", $this->day, time() + 86400, "/");
+        setcookie("day", $_POST['myDay'], time() + 86400, "/");
     }
 
     public function addTask()

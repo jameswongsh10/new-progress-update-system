@@ -25,18 +25,21 @@
         <hr>
         <a href="{{ route('dashboard') }}" class="item-nav active ">Dashboard</a>
         <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
-        <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
-            <span class="ms-1 d-none d-sm-inline">Settings</span>
-        </a>
-        <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
-            <li class="w-100">
-                <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report
-                    Settings</a>
-            </li>
-            <li>
-                <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
-            </li>
-        </ul>
+        @if((!strcmp($_COOKIE['user_role'],"admin")))
+            <a href="#settingmenu" data-bs-toggle="collapse" class="item-nav px-0 align-middle">
+                <span class="ms-1 d-none d-sm-inline">Settings</span>
+            </a>
+            <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
+                <li class="w-100">
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report
+                        Settings</a>
+                </li>
+                <li>
+                    <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
+                </li>
+            </ul>
+        @endif
         <a href="{{ route('logout') }}" class="item-nav">Logout</a>
     </div>
 
@@ -81,19 +84,19 @@
                     </div>
                 @endif
                 <?php $i = 0;?>
-                    @foreach($groupByTaskID as $singleTask)
-                        <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered" id="taskTable">
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Description</th>
-                                    <th>Status</th>
-                                    <th>Remark</th>
-                                    @if(!strcmp($_COOKIE['user_role'],'admin'))
-                                        <th>Edit</th>
-                                    @endif
-                                </tr>
+                @foreach($groupByTaskID as $singleTask)
+                    <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" id="taskTable">
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Remark</th>
+                                @if(!strcmp($_COOKIE['user_role'],'admin'))
+                                    <th>Edit</th>
+                                @endif
+                            </tr>
 
                             @forelse($statusTask as $task)
                                 @if($task->task_id == $newTask->id)
@@ -116,9 +119,9 @@
                                 <p>There is no task</p>
                             @endforelse
 
-                            </table>
-                        </div>
-                    @endforeach
+                        </table>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
