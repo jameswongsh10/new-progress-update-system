@@ -62,7 +62,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm">
-                        Daily Report Settings
+                        Status Settings
                     </div>
                     @if(!strcmp($_COOKIE['user_role'],'admin'))
                         <div class="col-sm-1 bg-light">
@@ -84,13 +84,14 @@
                             <tr>
                                 <th>Title</th>
                                 <th class="custom-team">Is Active</th>
+                                <th class="custom-team">Colour</th>
                                 @if(!strcmp($_COOKIE['user_role'],'admin'))
                                     <th class="width-action">Edit</th>
                                 @endif
                             </tr>
                             @foreach($statuses as $status)
                                 <tr>
-                                    <td>{{$status->status_title}}</td>
+                                    <td style="color:{{$status->colour}}">{{$status->status_title}}</td>
                                     <td>
                                         @if($status->is_active == 1)
                                             <i class="bi bi-check"></i>
@@ -98,6 +99,7 @@
                                             <i class="bi bi-x"></i>
                                         @endif
                                     </td>
+                                    <td style="color:{{$status->colour}}">{{$status->colour}}</td>
                                     @if(!strcmp($_COOKIE['user_role'],'admin'))
                                         <td><a href="{{ route('status-setting.edit', $status->id) }}"
                                                class="btn btn-sm btn-warning">Edit</a></td>

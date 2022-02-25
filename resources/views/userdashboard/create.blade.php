@@ -47,16 +47,13 @@
                 <div class="col-sm">
                     Date: {{$today}}
                 </div>
-                    @if(isset($_COOKIE['daily_report_done']))
-                        <div class="col-sm-3 bg-light">
-                            You have done the report for today.
-                        </div>
-                        <div class="col-sm-2 bg-light">
-                            <a href=" {{ route('dailyreportedit') }}" class="btn btn-sm btn-success">Edit Daily Report</a>
-                        </div>
-                    @else
-                    <div class="col-sm-2 bg-light">
+
+                    <div class="col-sm-1 bg-light">
                         <a href=" {{ route('dailyreport') }}" class="btn btn-sm btn-success">Add Daily Report</a>
+                    </div>
+                    @if(isset($_COOKIE['daily_report_done']))
+                    <div class="col-sm-1 bg-light">
+                        <a href=" {{ route('dailyreportedit') }}" class="btn btn-sm btn-success">Edit Daily Report</a>
                     </div>
                     @endif
 

@@ -81,6 +81,13 @@
                         </select>
                         <span class="text-danger">@error ('isActive') {{$message}} @enderror</span>
                     </div>
+                    <div class="form-group">
+                        <label>Colour for status</label>
+                        <input type="text" id="hex" name="colour" class="form-control"/>
+                        <p></p>
+                        <input type="color" id="color" />
+                    </div>
+
                     <br>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Add</button>

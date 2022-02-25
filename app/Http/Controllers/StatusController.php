@@ -42,14 +42,17 @@ class StatusController extends Controller
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
             $request->validate([
                 'title' => 'required',
+                'colour' => ['required', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/']
             ]);
 
             $newStatus = new Status();
             $newStatus->status_title = $request->input('title');
             $newStatus->is_active = $request->input('isActive');
+            $newStatus->colour = $request->input('colour');
             $htmlNameLower = strtolower($request->input('title'));
             $htmlName = str_replace(' ', '_', $htmlNameLower);
             $newStatus->html_name = $htmlName;
+
             $save = $newStatus->save();
 
             if ($save) {
@@ -97,16 +100,17 @@ class StatusController extends Controller
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
             $request->validate([
                 'title' => 'required',
+                'colour' => ['required', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/']
             ]);
 
             $save = $newStatus = Status::where('id', $id)->update([
                 'status_title' => $request->input('title'),
-                'is_active' => $request->input('isActive')
+                'is_active' => $request->input('isActive'),
+                'colour' => $request->input('colour')
             ]);
 
-
             if ($save) {
-                return redirect('/settings/status-setting')->with('success', 'Progress title has been updated.');
+                return redirect('/settings/status-setting')->with('success', 'Status has been updated.');
             }
         }
     }

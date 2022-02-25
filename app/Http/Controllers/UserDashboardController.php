@@ -58,7 +58,7 @@ class UserDashboardController extends Controller
 
                 todayPlusOne = yyyy + "-" + mm + "-" + dd;
 
-                if(moment().format("YYYY-MM-DD") === todayPlusOne) {
+//                if(moment().format("YYYY-MM-DD") === todayPlusOne) {
                     $.ajax({
                         type:\'POST\',
                         url:"/getDay",
@@ -67,9 +67,9 @@ class UserDashboardController extends Controller
                             window.location.href = "/userdashboard/create";
                         }
                     });
-                } else {
-                    alert("Wrong date selected.")
-                }
+//                } else {
+//                    alert("Wrong date selected.")
+//                }
             }',
         ]);
         return view('userdashboard.index', compact('user', 'calendar'));

@@ -13,5 +13,5 @@ class Status extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['status_title', 'is_active', 'html_name'];
+    protected $fillable = ['status_title', 'is_active', 'colour', 'html_name'];
 }
