@@ -89,7 +89,7 @@
                                         <td>{{$task->task_description}}</td>
                                         @foreach($statuses as $status)
                                             @if($task->status_id == $status->id)
-                                                <td>{{$status->status_title}}</td>
+                                                <td style="color:{{$status->colour}}">{{$status->status_title}}</td>
                                             @endif
                                         @endforeach
                                         <td>{{$task->task_remark}}</td>

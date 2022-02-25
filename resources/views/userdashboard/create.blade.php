@@ -87,7 +87,7 @@
                     <select id="status" name="status" class="form-control">
                         <option value=""  selected="selected" disabled>Please select a status</option>
                         @foreach($statuses as $status)
-                            <option value="{{$status->id}}">{{$status->status_title}}</option>
+                            <option value="{{$status->id}}" style="color:{{$status->colour}}">{{$status->status_title}}</option>
                         @endforeach
                     </select>
                     <span class="text-danger">@error ("status") {{$message}} @enderror</span>

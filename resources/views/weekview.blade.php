@@ -82,7 +82,7 @@
                                     <tr>
                                         <td>{{$task->task_title}}</td>
                                         <td>{{$task->task_description}}</td>
-                                        <td>{{$task->status}}</td>
+                                        <td >{{$task->status}}</td>
                                     </tr>
                                 @endif
                             @empty

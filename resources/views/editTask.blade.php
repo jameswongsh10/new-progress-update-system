@@ -88,7 +88,7 @@
                         <option disabled value="">Select Status</option>
 
                         @foreach($statuses as $status)
-                        <option value="{{$status->id}}" @if($status->id == $statusTask->status_id) selected @endif> {{$status->status_title}}</option>
+                        <option value="{{$status->id}}" style="color:{{$status->colour}}" @if($status->id == $statusTask->status_id) selected @endif> {{$status->status_title}}</option>
                         @endforeach
                     </select>
                     <span class="text-danger">@error ('status') {{$message}} @enderror</span>
