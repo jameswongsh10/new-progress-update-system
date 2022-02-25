@@ -25,13 +25,15 @@
             </a>
             <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
                 <li class="w-100">
-                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report Settings</a>
                 </li>
                 <li>
                     <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
                 </li>
                 <li class="w-100">
-                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
+                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status
+                        Settings</a>
                 </li>
             </ul>
         @endif
@@ -56,43 +58,57 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <h4>
-                        <?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' + 1 days'));?>
-                        Weekly View <a href="{{route('reportView',$today)}}" class="btn btn-sm btn-primary">View
-                            Report</a>
-                    </h4>
+                    <div class="col-sm">
+                        <h5><?php echo "Week: From". $date. " to " . date('Y-m-d', strtotime($date . ' + 6 days'));?></h5>                    </div>
+                    <div class="col-sm-3 bg-light">
+                        <div class="input-group">
+                            @csrf
+                            <form>
+                                <input type="text" id="filterKeyword" class="form-control"/>
+                            </form>
+                            <button class="btn btn-submit btn-secondary">Filter</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            @for($x = 1; $x <= 7; $x++)
-                <div class="card-body">
-                    <h5><?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' +' . $x . ' days')); echo $today?></h5>
-
+            <div class="card-body">
+                @if( session()->get('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
+                <?php $i = 0;?>
+                @foreach($groupByTaskID as $singleTask)
+                    <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
                     <div class="table-responsive">
-                        <table id="reportTable" class="table table-striped table-bordered">
+                        <table class="table table-striped table-bordered" id="taskTable">
                             <tr>
-                                <th>Tasks</th>
+                                <th>Date</th>
                                 <th>Description</th>
                                 <th>Status</th>
                             </tr>
-                            @forelse($tasks as $task)
-                                <?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' +' . $x . ' days'))?>
-                                @if($today >= $task->start_date && $today <=$task->end_date)
-                                    <?php setcookie("report_date", $today, time() + 86400, "/"); ?>
+
+                            @forelse($statusTask as $task)
+                                @if($task->task_id == $newTask->id)
                                     <tr>
-                                        <td>{{$task->task_title}}</td>
+                                        <td>{{date('Y-m-d', strtotime($task->status_date))}}</td>
                                         <td>{{$task->task_description}}</td>
-                                        <td >{{$task->status}}</td>
+                                        @foreach($statuses as $status)
+                                            @if($task->status_id == $status->id)
+                                                <td style="color:{{$status->colour}}">{{$status->status_title}}</td>
+                                            @endif
+                                        @endforeach
                                     </tr>
                                 @endif
                             @empty
                                 <p>There is no task</p>
                             @endforelse
+
                         </table>
                     </div>
-                </div>
-            @endfor
-
+                @endforeach
+            </div>
         </div>
     </div>
 

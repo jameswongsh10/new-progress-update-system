@@ -28,7 +28,8 @@ class TaskController extends Controller
         setcookie("month", $this->month, time() + 86400, "/");
     }
 
-    public function getTaskId() {
+    public function getTaskId()
+    {
         $this->taskId = $_POST['taskId'];
         $returnTask = array();
         $task = Task::where('id', $this->taskId)->first();
@@ -66,12 +67,12 @@ class TaskController extends Controller
         $taskTitleArray = array();
 
         //search for task name
-        foreach ($groupByTaskID as $task => $value){
+        foreach ($groupByTaskID as $task => $value) {
             $taskTitle = Task::where('id', $task)->first();
-            array_push($taskTitleArray,$taskTitle);
+            array_push($taskTitleArray, $taskTitle);
         }
         setcookie('filter', false, time() + (-3600), "/");
-        return view('monthview', compact('statusTask','date','groupByTaskID','taskTitleArray', 'statuses'));
+        return view('monthview', compact('statusTask', 'date', 'groupByTaskID', 'taskTitleArray', 'statuses'));
     }
 
     public function getWeek()
@@ -88,29 +89,26 @@ class TaskController extends Controller
             echo "Cookie named '" . "' is not set!";
         } else {
             $id = $_COOKIE['user'];
-            $week = $_COOKIE['week'];
+            $date = date('Y-m-d', strtotime($_COOKIE['week'] . ' + 1 days'));
 
-            $week = date('Y-m-d', strtotime($week));
-            $weekend = date('Y-m-d', strtotime($week . ' +6 days'));
-            $tasks = Task::where('user_id', $id)->where(function ($query) use ($weekend, $week) {
-                $query->where('start_date', '<=', $week)
-                    ->where('end_date', '>=', $weekend);
-            })->orWhere(function ($query) use ($id, $weekend, $week) {
-                $query->where('user_id', $id)
-                    ->where('start_date', '>=', $week)
-                    ->where('end_date', '<=', $weekend);
-            })->orWhere(function ($query) use ($id, $weekend, $week) {
-                $query->where('user_id', $id)
-                    ->where('start_date', '<=', $week)
-                    ->where('end_date', '>', $week);
-            })->orWhere(function ($query) use ($id, $weekend, $week) {
-                $query->where('user_id', $id)
-                    ->where('start_date', '<', $weekend)
-                    ->where('end_date', '>=', $weekend);
-            })->paginate();
+            $statuses = Status::where('is_active', '=', '1')->get();
 
+            $statusTask = StatusTask::where('user_id', $id)->whereDate('status_date', '>=', $date)->whereDate('status_date', '<=', date('Y-m-d', strtotime($date . ' + 6 days')))->get();
+
+            $groupByTaskID = StatusTask::where('user_id', $id)->whereDate('status_date', '>=', $date)->whereDate('status_date', '<=',date('Y-m-d', strtotime($date . ' + 6 days')))->orderBy('status_date')->get()->groupBy(function ($data) {
+                return $data->task_id;
+            });
+
+            $taskTitleArray = array();
+
+            //search for task name
+            foreach ($groupByTaskID as $task => $value) {
+                $taskTitle = Task::where('id', $task)->first();
+                array_push($taskTitleArray, $taskTitle);
+            }
+            setcookie('filter', false, time() + (-3600), "/");
+            return view('weekView', compact('statusTask', 'date', 'groupByTaskID', 'taskTitleArray', 'statuses'));
         }
-        return view('weekView', compact('tasks'));
     }
 
     public function getDay()
@@ -143,20 +141,20 @@ class TaskController extends Controller
 
             $statuses = Status::where('is_active', '=', '1')->get();
 
-            $groupByTaskID = Task::where('user_id',$id)->where('task_title', 'like', array('%' . $keyword . '%'))->get()->groupBy(function ($data) {
+            $groupByTaskID = Task::where('user_id', $id)->where('task_title', 'like', array('%' . $keyword . '%'))->get()->groupBy(function ($data) {
                 return $data->id;
             });
 
             $taskTitleArray = array();
 
-            foreach ($groupByTaskID as $task => $value){
+            foreach ($groupByTaskID as $task => $value) {
                 $taskTitle = Task::where('id', $task)->first();
-                array_push($taskTitleArray,$taskTitle);
+                array_push($taskTitleArray, $taskTitle);
             }
 
             $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
 
-            return view('monthview', compact( 'statusTask','date','groupByTaskID','taskTitleArray', 'statuses'));
+            return view('monthview', compact('statusTask', 'date', 'groupByTaskID', 'taskTitleArray', 'statuses'));
 
         }
 

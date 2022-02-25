@@ -126,6 +126,7 @@ class UserDashboardController extends Controller
             $newStatusTask->user_id = $_COOKIE['isLoggedIn'];
             $newStatusTask->task_description = $request->input('description');
             $newStatusTask->task_remark = '';
+            $newStatusTask->status_date = $_COOKIE['today'];
             $statusTaskSave = $newStatusTask->save();
 
             if ($taskSave && $statusTaskSave) {
@@ -157,6 +158,7 @@ class UserDashboardController extends Controller
             $newStatusTask->user_id = $_COOKIE['isLoggedIn'];
             $newStatusTask->task_description = $request->input('description');
             $newStatusTask->task_remark = '';
+            $newStatusTask->status_date = $_COOKIE['today'];
             $statusTaskSave = $newStatusTask->save();
 
 
