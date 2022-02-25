@@ -59,7 +59,12 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm">
-                        <h5><?php echo "Week: From". $date. " to " . date('Y-m-d', strtotime($date . ' + 6 days'));?></h5>                    </div>
+                        <h4>
+                            <?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' + 1 days'));
+                            echo $date . " to " . date('Y-m-d', strtotime($date . ' + 6 days'));?>
+                            <a href="{{route('reportView',$today)}}" class="btn btn-sm btn-primary">View
+                                Report</a>
+                        </h4></div>
                     <div class="col-sm-3 bg-light">
                         <div class="input-group">
                             @csrf
