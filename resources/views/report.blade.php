@@ -55,10 +55,10 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <h4 class="col-sm">
+
                         Report of <?php echo $user->name . " from " . $created_at . " to " . $lastDay;?>
-                    </h4>
-                    {{--                <p><?php foreach ($dayCount as $day){echo $day[0] ;} ?></p>--}}
+
+
                 </div>
             </div>
             <div class="card-body">
@@ -71,7 +71,7 @@
                 <form>
                     @csrf
                     @foreach ($groupByDay as $day => $value)
-                        <h5><?php echo $day; ?></h5>
+                       <?php echo $day; ?>
                         @foreach($question_array as $ans)
                             @if(!strcmp($day,date("Y-m-d",strtotime($ans[1]->report_date))))
                                 <div class="form-group">

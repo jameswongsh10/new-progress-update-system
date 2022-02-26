@@ -64,7 +64,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm">
-                        <h3><?php echo DateTime::createFromFormat('!m', $date)->format('F'); ?></h3>
+                        <?php echo DateTime::createFromFormat('!m', $date)->format('F'); ?>
                     </div>
                     <div class="col-sm-3 bg-light">
                         <div class="input-group">
@@ -86,7 +86,7 @@
                 @endif
                 <?php $i = 0;?>
                 @foreach($groupByTaskID as $singleTask)
-                    <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
+                    <?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" id="taskTable">
                             <tr>

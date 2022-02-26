@@ -59,12 +59,12 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm">
-                        <h4>
+
                             <?php $today = date('Y-m-d', strtotime($_COOKIE['week'] . ' + 1 days'));
                             echo $date . " to " . date('Y-m-d', strtotime($date . ' + 6 days'));?>
                             <a href="{{route('reportView',$today)}}" class="btn btn-sm btn-primary">View
                                 Report</a>
-                        </h4></div>
+                        </div>
                     <div class="col-sm-3 bg-light">
                         <div class="input-group">
                             @csrf
@@ -85,7 +85,7 @@
                 @endif
                 <?php $i = 0;?>
                 @foreach($groupByTaskID as $singleTask)
-                    <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
+                    <?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" id="taskTable">
                             <tr>
