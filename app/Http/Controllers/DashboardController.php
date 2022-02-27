@@ -12,11 +12,17 @@ use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
+    /**
+     * Admin dashboard view.
+     */
     public function admindashboard() {
         $teams = Team::all();
         return view('dashboard.admindashboard', compact('teams'));
     }
 
+    /**
+     * The team view on the dashboard.
+     */
     public function teamview($id) {
         $team = Team::find($id);
         return view('teamview', compact('team'));

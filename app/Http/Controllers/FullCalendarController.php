@@ -8,9 +8,22 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
+/**
+ * This file uses a library by acaronlex, https://github.com/acaronlex/laravel-calendar and a JS plugin called Full Calendar, https://fullcalendar.io/
+ */
 
 class FullCalendarController extends Controller
 {
+    /**
+     * @param Request $request
+     * @param $id
+     *
+     * An id is taken in to find the user which the admin has clicked into, and render the specific tasks which belongs to them.
+     * Then a calendar will be rendered with the tasks.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Exception
+     */
     public function usercalendar(Request $request, $id) {
         $scheduleEvents= [];
         $user = User::find($id);
@@ -37,6 +50,8 @@ class FullCalendarController extends Controller
             'navLinks' => 'true',
             'firstDay' => '1'
         ]);
+        // A callback function is added to the calendar, which allows the user to be able to click on the week number.
+        // An ajax call is being triggered whenever the user clicks on the week number, which transport the week value to the next page.
         $calendar->setCallbacks([
             'navLinkWeekClick' => 'function(weekStart, jsEvent) {
                 console.log(weekStart.toISOString().substring(0, 10));
@@ -45,7 +60,7 @@ class FullCalendarController extends Controller
                 const userId = value.split(`; ${"id"}=`);
                 const weekValue = weekStart.toISOString().substring(0, 10);
                 if (userId.length === 2){
-                var id = userId.pop().split(\';\').shift();
+                    var id = userId.pop().split(\';\').shift();
                 }
 
                 $.ajax({
@@ -59,9 +74,5 @@ class FullCalendarController extends Controller
             }'
         ]);
         return view('calendar', compact('calendar', 'user'));
-    }
-
-    public function getDate(){
-        return \Acaronlex\LaravelCalendar\Calendar::event($this->getDate())->isAllDay();
     }
 }

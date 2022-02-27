@@ -13,9 +13,17 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Elibyy\TCPDF\Facades\TCPDF;
 
+/**
+ * This controller class is used to create the pdf view for the report. It is using a library created by Eliby and uses the TCPDF (https://github.com/elibyy/tcpdf-laravel)
+ */
 
 class ReportViewController extends Controller
 {
+    /**
+     *
+     * @param $created_at
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function reportView($created_at)
     {
         setcookie("created_at", $created_at, time() + 86400, "/");
