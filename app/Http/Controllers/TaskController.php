@@ -20,6 +20,11 @@ class TaskController extends Controller
 {
     public $month, $user, $week, $day, $keyword, $taskId;
 
+    /**
+     * Get month that clicked by Admin.
+     * Gets the user's ID that are currently being view by admin.
+     * Set the month and user's ID as cookie.
+     */
     public function getData()
     {
         $this->month = $_POST['myMonth'];
@@ -37,7 +42,6 @@ class TaskController extends Controller
             ->where('user_id', $_COOKIE['isLoggedIn'])
             ->first();
 
-
         $returnTask['status_id'] = $statusTask->status_id;
         $returnTask['user_id'] = $_COOKIE['isLoggedIn'];
         $returnTask['taskId'] = $task->id;
@@ -48,6 +52,11 @@ class TaskController extends Controller
         echo json_encode($returnTask);
     }
 
+    /**
+     * Show specific user's task for the selected month.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function monthlyView()
     {
         if (!isset($_COOKIE["user"])) {
@@ -60,6 +69,7 @@ class TaskController extends Controller
 
         $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
 
+        //Get all the tasks added by user at this month and group it by task_id.
         $groupByTaskID = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->orderBy('created_at')->get()->groupBy(function ($data) {
             return $data->task_id;
         });
@@ -75,6 +85,11 @@ class TaskController extends Controller
         return view('monthview', compact('statusTask', 'date', 'groupByTaskID', 'taskTitleArray', 'statuses'));
     }
 
+    /**
+     * Get week that clicked by admin.
+     * Gets the user's ID that are currently being view by admin.
+     * Set the week and user's ID as cookie.
+     */
     public function getWeek()
     {
         $this->week = $_POST['myWeek'];
@@ -83,6 +98,11 @@ class TaskController extends Controller
         setcookie("week", $this->week, time() + 86400, "/");
     }
 
+    /**
+     * Show specific user's task for the selected week.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function weekView()
     {
         if (!isset($_COOKIE["user"])) {
@@ -93,8 +113,10 @@ class TaskController extends Controller
 
             $statuses = Status::where('is_active', '=', '1')->get();
 
+            //Get all the tasks added by user within the week.
             $statusTask = StatusTask::where('user_id', $id)->whereDate('status_date', '>=', $date)->whereDate('status_date', '<=', date('Y-m-d', strtotime($date . ' + 6 days')))->get();
 
+            //Get all the tasks added by user within the week and group it by task_id.
             $groupByTaskID = StatusTask::where('user_id', $id)->whereDate('status_date', '>=', $date)->whereDate('status_date', '<=',date('Y-m-d', strtotime($date . ' + 6 days')))->orderBy('status_date')->get()->groupBy(function ($data) {
                 return $data->task_id;
             });
@@ -111,6 +133,10 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * Get the date of the day which is selected by the Admin.
+     * Set the date as cookie.
+     */
     public function getDay()
     {
         setcookie("day", $_POST['myDay'], time() + 86400, "/");
@@ -123,12 +149,20 @@ class TaskController extends Controller
         return view('addtask', compact('settings', 'today'));
     }
 
+    /**
+     * Get keyword from search text box and set it as cookie.
+     */
     public function getKeyword()
     {
         $this->keyword = $_POST['myKeyword'];
         setcookie('myKeyword', $this->keyword, time() + 86400, "/");
     }
 
+    /**
+     * Display filtered result which searched by the Admin.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function filteredView()
     {
         $id = $_COOKIE['user'];
@@ -141,6 +175,7 @@ class TaskController extends Controller
 
             $statuses = Status::where('is_active', '=', '1')->get();
 
+            //Get tasks which its title is alike to the keyword and group them by Task id.
             $groupByTaskID = Task::where('user_id', $id)->where('task_title', 'like', array('%' . $keyword . '%'))->get()->groupBy(function ($data) {
                 return $data->id;
             });
@@ -149,6 +184,7 @@ class TaskController extends Controller
 
             foreach ($groupByTaskID as $task => $value) {
                 $taskTitle = Task::where('id', $task)->first();
+                //Push the task title into the array
                 array_push($taskTitleArray, $taskTitle);
             }
 

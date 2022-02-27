@@ -75,6 +75,9 @@ class UserDashboardController extends Controller
         return view('userdashboard.index', compact('user', 'calendar'));
     }
 
+    /**
+     * Get date that are selected by the user and set it as cookie.
+     */
     public function getDay()
     {
         $this->day = $_POST['myDay'];
