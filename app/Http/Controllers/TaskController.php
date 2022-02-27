@@ -21,7 +21,9 @@ class TaskController extends Controller
     public $month, $user, $week, $day, $keyword, $taskId;
 
     /**
-     * Ajax method to get the month and the id of the user
+     * Get month that clicked by Admin.
+     * Gets the user's ID that are currently being view by admin.
+     * Set the month and user's ID as cookie.
      */
     public function getData()
     {
@@ -43,7 +45,6 @@ class TaskController extends Controller
             ->where('user_id', $_COOKIE['isLoggedIn'])
             ->first();
 
-
         $returnTask['status_id'] = $statusTask->status_id;
         $returnTask['user_id'] = $_COOKIE['isLoggedIn'];
         $returnTask['taskId'] = $task->id;
@@ -55,8 +56,9 @@ class TaskController extends Controller
     }
 
     /**
-     * Method used to render the monthly view of the user.
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * Show specific user's task for the selected month.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function monthlyView()
     {
@@ -70,6 +72,7 @@ class TaskController extends Controller
 
         $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
 
+        //Get all the tasks added by user at this month and group it by task_id.
         $groupByTaskID = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->orderBy('created_at')->get()->groupBy(function ($data) {
             return $data->task_id;
         });
@@ -86,7 +89,9 @@ class TaskController extends Controller
     }
 
     /**
-     * Ajax method to get the week and the user id
+     * Get week that clicked by admin.
+     * Gets the user's ID that are currently being view by admin.
+     * Set the week and user's ID as cookie.
      */
     public function getWeek()
     {
@@ -97,8 +102,9 @@ class TaskController extends Controller
     }
 
     /**
-     * A method used to render the weekly view of that user.
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     * Show specific user's task for the selected week.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function weekView()
     {
@@ -110,8 +116,10 @@ class TaskController extends Controller
 
             $statuses = Status::where('is_active', '=', '1')->get();
 
+            //Get all the tasks added by user within the week.
             $statusTask = StatusTask::where('user_id', $id)->whereDate('status_date', '>=', $date)->whereDate('status_date', '<=', date('Y-m-d', strtotime($date . ' + 6 days')))->get();
 
+            //Get all the tasks added by user within the week and group it by task_id.
             $groupByTaskID = StatusTask::where('user_id', $id)->whereDate('status_date', '>=', $date)->whereDate('status_date', '<=',date('Y-m-d', strtotime($date . ' + 6 days')))->orderBy('status_date')->get()->groupBy(function ($data) {
                 return $data->task_id;
             });
@@ -129,7 +137,8 @@ class TaskController extends Controller
     }
 
     /**
-     * Ajax method to set the cookie of today's day.
+     * Get the date of the day which is selected by the Admin.
+     * Set the date as cookie.
      */
     public function getDay()
     {
@@ -148,7 +157,7 @@ class TaskController extends Controller
     }
 
     /**
-     * An ajax method used to get the keyword for task filtration.
+     * Get keyword from search text box and set it as cookie.
      */
     public function getKeyword()
     {
@@ -157,8 +166,9 @@ class TaskController extends Controller
     }
 
     /**
-     * A method for task filtration
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * Display filtered result which searched by the Admin.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function filteredView()
     {
@@ -172,6 +182,7 @@ class TaskController extends Controller
 
             $statuses = Status::where('is_active', '=', '1')->get();
 
+            //Get tasks which its title is alike to the keyword and group them by Task id.
             $groupByTaskID = Task::where('user_id', $id)->where('task_title', 'like', array('%' . $keyword . '%'))->get()->groupBy(function ($data) {
                 return $data->id;
             });
@@ -180,6 +191,7 @@ class TaskController extends Controller
 
             foreach ($groupByTaskID as $task => $value) {
                 $taskTitle = Task::where('id', $task)->first();
+                //Push the task title into the array
                 array_push($taskTitleArray, $taskTitle);
             }
 

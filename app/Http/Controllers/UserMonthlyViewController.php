@@ -9,10 +9,6 @@ use Illuminate\Http\Request;
 
 class UserMonthlyViewController extends Controller
 {
-    /**
-     * User's monthly view.
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function usermonthview() {
         if (!isset($_COOKIE["user"])) {
             echo "Cookie named '" . "' is not set!";
@@ -31,11 +27,12 @@ class UserMonthlyViewController extends Controller
 
         $taskTitleArray = array();
 
-        //search for task name
+        //search for task name and push the task name into the array
         foreach ($groupByTaskID as $task => $value){
             $taskTitle = Task::where('id', $task)->first();
             array_push($taskTitleArray,$taskTitle);
         }
+
         setcookie('filter', false, time() + (-3600), "/");
         return view('usermonthview', compact('statusTask','date','groupByTaskID','taskTitleArray', 'statuses'));
     }
@@ -52,12 +49,14 @@ class UserMonthlyViewController extends Controller
 
             $statuses = Status::where('is_active', '=', '1')->get();
 
+            //Get tasks which its title is alike to the keyword and group them by Task id.
             $groupByTaskID = Task::where('user_id',$id)->where('task_title', 'like', array('%' . $keyword . '%'))->get()->groupBy(function ($data) {
                 return $data->id;
             });
 
             $taskTitleArray = array();
 
+            //Push the title of the task to the array.
             foreach ($groupByTaskID as $task => $value){
                 $taskTitle = Task::where('id', $task)->first();
                 array_push($taskTitleArray,$taskTitle);
