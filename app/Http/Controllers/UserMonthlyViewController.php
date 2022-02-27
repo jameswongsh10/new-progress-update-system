@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class UserMonthlyViewController extends Controller
 {
+    /**
+     * User's monthly view.
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function usermonthview() {
         if (!isset($_COOKIE["user"])) {
             echo "Cookie named '" . "' is not set!";

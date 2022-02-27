@@ -1,5 +1,7 @@
 <!doctype html>
 <html lang="en">
+{{-- At the top of every view page, this is used for user authentication. If the user is logged in and is either admin or viewer, they will
+ see this page. Else, they will be redirected to the login page. --}}
 @if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
     <head>
         <meta charset="UTF-8">

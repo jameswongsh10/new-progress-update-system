@@ -20,6 +20,9 @@ class TaskController extends Controller
 {
     public $month, $user, $week, $day, $keyword, $taskId;
 
+    /**
+     * Ajax method to get the month and the id of the user
+     */
     public function getData()
     {
         $this->month = $_POST['myMonth'];
@@ -28,6 +31,9 @@ class TaskController extends Controller
         setcookie("month", $this->month, time() + 86400, "/");
     }
 
+    /**
+     * Ajax method to get the task id, and the information of that task.
+     */
     public function getTaskId()
     {
         $this->taskId = $_POST['taskId'];
@@ -48,6 +54,10 @@ class TaskController extends Controller
         echo json_encode($returnTask);
     }
 
+    /**
+     * Method used to render the monthly view of the user.
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function monthlyView()
     {
         if (!isset($_COOKIE["user"])) {
@@ -75,6 +85,9 @@ class TaskController extends Controller
         return view('monthview', compact('statusTask', 'date', 'groupByTaskID', 'taskTitleArray', 'statuses'));
     }
 
+    /**
+     * Ajax method to get the week and the user id
+     */
     public function getWeek()
     {
         $this->week = $_POST['myWeek'];
@@ -83,6 +96,10 @@ class TaskController extends Controller
         setcookie("week", $this->week, time() + 86400, "/");
     }
 
+    /**
+     * A method used to render the weekly view of that user.
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function weekView()
     {
         if (!isset($_COOKIE["user"])) {
@@ -111,11 +128,18 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * Ajax method to set the cookie of today's day.
+     */
     public function getDay()
     {
         setcookie("day", $_POST['myDay'], time() + 86400, "/");
     }
 
+    /**
+     * Add a task for user.
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function addTask()
     {
         $today = date('Y-m-d', strtotime($_COOKIE['day'] . ' +1 days'));
@@ -123,12 +147,19 @@ class TaskController extends Controller
         return view('addtask', compact('settings', 'today'));
     }
 
+    /**
+     * An ajax method used to get the keyword for task filtration.
+     */
     public function getKeyword()
     {
         $this->keyword = $_POST['myKeyword'];
         setcookie('myKeyword', $this->keyword, time() + 86400, "/");
     }
 
+    /**
+     * A method for task filtration
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function filteredView()
     {
         $id = $_COOKIE['user'];
@@ -159,6 +190,11 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     * A method which is used for editing an existing task.
+     * @param $id Task's id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function editTask($id)
     {
         if (!strcmp($_COOKIE['user_role'], 'admin')) {
