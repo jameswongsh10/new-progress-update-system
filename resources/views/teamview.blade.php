@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
 @if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
-
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
@@ -14,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Teams</title>
     </head>
+
     <body>
     <!-- sidebar -->
     <div class="sidenav">
@@ -27,13 +26,15 @@
             </a>
             <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
                 <li class="w-100">
-                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report Settings</a>
                 </li>
                 <li>
                     <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
                 </li>
                 <li class="w-100">
-                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
+                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status
+                        Settings</a>
                 </li>
             </ul>
         @endif
@@ -55,7 +56,6 @@
         </nav>
 
         <!-- table -->
-
         <div class="card">
             <div class="card-header">
                 @php

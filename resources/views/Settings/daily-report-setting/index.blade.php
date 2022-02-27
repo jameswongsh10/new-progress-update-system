@@ -55,7 +55,6 @@
         </nav>
 
         <!-- table -->
-
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -72,7 +71,6 @@
             </div>
             <div class="card-body">
                 <div class="row">
-
                     @if( session()->get('success'))
                         <div class="alert alert-success">
                             {{ session()->get('success') }}
@@ -100,7 +98,6 @@
                                     @if(!strcmp($_COOKIE['user_role'],'admin'))
                                         <td><a href="{{ route('daily-report-setting.edit', $setting->id) }}"
                                                class="btn btn-sm btn-warning">Edit</a></td>
-
                                     @endif
                                 </tr>
                             @endforeach
@@ -109,8 +106,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

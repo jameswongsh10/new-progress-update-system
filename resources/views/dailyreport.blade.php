@@ -1,8 +1,8 @@
+<!doctype html>
+<html lang="en">
 @php
     use App\Models\Task;
 @endphp
-<!doctype html>
-<html lang="en">
 @if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"user")))
 <head>
     <meta charset="UTF-8">
@@ -24,57 +24,60 @@
     <a href="{{ route('logout') }}" class="item-nav">Logout</a>
 </div>
 
-<!-- main content -->
-<div class="main">
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <h3><a href="javascript:history.back()" class="btn btn-sm btn-secondary">Back</a></h3>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <!-- main content -->
+    <div class="main">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <h3><a href="javascript:history.back()" class="btn btn-sm btn-secondary">Back</a></h3>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <h6 class="nav-link"><?php echo \App\Models\User::find($_COOKIE["isLoggedIn"])->name; ?></h6>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-    <!-- table -->
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-sm">
-                    Date: {{$today}}
+        <!-- table -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm">
+                        Date: {{$today}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card-body">
+            <div class="card-body">
 
-            @if( session()->get('success'))
-                <div class="alert alert-success">
-                    {{ session()->get('success') }}
-                </div>
-            @endif
-
-            <form autocomplete="off" method="post" action="{{route("dailyreportstore")}}">
-                @csrf
-                Daily Report
-                <hr>
-                @foreach($settings as $setting)
-                    <div class="form-group">
-                        <label>{{$setting->progress_title}}</label>
-                        <input autocomplete="=off" type="search" name="{{$setting->html_name}}" class="form-control" />
-                        <span class="text-danger">@error ($setting->html_name) {{$message}} @enderror</span>
+                @if( session()->get('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
                     </div>
-                @endforeach
-                <br>
-                <br>
-                <div class="form-group">
-                    <button type="submit" onClick="return confirm('Please make sure that the details are correct.')" class="btn btn-primary">Add</button>
-                </div>
-            </form>
+                @endif
+
+                <form autocomplete="off" method="post" action="{{route("dailyreportstore")}}">
+                    @csrf
+                    Daily Report
+                    <hr>
+                    @foreach($settings as $setting)
+                        <div class="form-group">
+                            <label>{{$setting->progress_title}}</label>
+                            <input autocomplete="=off" type="search" name="{{$setting->html_name}}"
+                                   class="form-control"/>
+                            <span class="text-danger">@error ($setting->html_name) {{$message}} @enderror</span>
+                        </div>
+                    @endforeach
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" onClick="return confirm('Please make sure that the details are correct.')"
+                                class="btn btn-primary">Add
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -88,28 +91,27 @@
         }
     });
 
-    $('#taskname').change(function(e){
-        e.preventDefault();
+        $('#taskname').change(function (e) {
+            e.preventDefault();
 
-        let task_id = $(this).val()
-        console.log(task_id)
-        if (task_id !== 'newTaskOption') {
-            $.ajax({
-                type:'POST',
-                url:"{{route('getTaskId')}}",
-                data:{taskId:task_id},
-                dataType: 'json',
-                success:function(data){
-                    $("#description").val(data.desc).prop("disabled", true)
-                    $("#start_date").val(data.start_date)
-                    $("#end_date").val(data.end_date)
-                }
-            });
-        }
-    })
-
-</script>
-</body>
+            let task_id = $(this).val()
+            console.log(task_id)
+            if (task_id !== 'newTaskOption') {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('getTaskId')}}",
+                    data: {taskId: task_id},
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#description").val(data.desc).prop("disabled", true)
+                        $("#start_date").val(data.start_date)
+                        $("#end_date").val(data.end_date)
+                    }
+                });
+            }
+        })
+    </script>
+    </body>
 @else
     <meta http-equiv="refresh" content="0;url={{route('logout')}}">
 @endif

@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Add teams</title>
 </head>
+
 <body>
 <!-- sidebar -->
 <div class="sidenav">
@@ -54,7 +55,6 @@
     </nav>
 
     <!-- table -->
-
     <div class="card">
         <div class="card-header">
             <div class="row">

@@ -1,9 +1,8 @@
+<!doctype html>
 @php
     use App\Models\StatusTask;
     use App\Models\Status;
 @endphp
-
-    <!doctype html>
 <html lang="en">
 @if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"user")))
     <head>
@@ -18,6 +17,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Month View</title>
     </head>
+
     <body>
     <!-- sidebar -->
     <div class="sidenav">
@@ -42,7 +42,6 @@
         </nav>
 
         <!-- table -->
-
         <div class="card">
             <div class="card-header">
                 <div class="row">

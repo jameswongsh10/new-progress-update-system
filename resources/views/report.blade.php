@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Week View</title>
     </head>
+
     <body>
     <!-- sidebar -->
     <div class="sidenav">
@@ -25,13 +26,15 @@
             </a>
             <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
                 <li class="w-100">
-                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report Settings</a>
                 </li>
                 <li>
                     <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
                 </li>
                 <li class="w-100">
-                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
+                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status
+                        Settings</a>
                 </li>
             </ul>
         @endif
@@ -83,8 +86,6 @@
                             @endif
                         @endforeach
                     @endforeach
-
-
                     <div class="form-group">
                         <a href="{{route('pdf')}}" class="btn btn-success">Download as PDF</a>
                     </div>

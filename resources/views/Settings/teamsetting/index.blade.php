@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Team Settings</title>
     </head>
+
     <body>
     <!-- sidebar -->
     <div class="sidenav">
@@ -54,7 +55,6 @@
         </nav>
 
         <!-- table -->
-
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -107,11 +107,8 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
-
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
