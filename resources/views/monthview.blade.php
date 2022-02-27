@@ -65,7 +65,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm">
-                        <h3><?php echo DateTime::createFromFormat('!m', $date)->format('F'); ?></h3>
+                        <?php echo DateTime::createFromFormat('!m', $date)->format('F'); ?>
                     </div>
                     <div class="col-sm-3 bg-light">
                         <div class="input-group">
@@ -87,7 +87,7 @@
                 @endif
                 <?php $i = 0;?>
                 @foreach($groupByTaskID as $singleTask)
-                    <h5><?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?></h5>
+                    <?php $newTask = $taskTitleArray[$i]; echo $newTask->task_title; $i++; ?>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" id="taskTable">
                             <tr>
@@ -131,8 +131,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
     <script>
         $.ajaxSetup({

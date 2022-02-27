@@ -157,7 +157,6 @@ class TaskController extends Controller
             return view('monthview', compact('statusTask', 'date', 'groupByTaskID', 'taskTitleArray', 'statuses'));
 
         }
-
     }
 
     public function editTask($id)

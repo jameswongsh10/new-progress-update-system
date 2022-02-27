@@ -17,9 +17,14 @@ class LoginController extends Controller
         return view('login');
     }
 
+    /**
+     *
+     * Method used for checking the validity of the credentials entered by the user.
+     *
+     */
     public function check(Request $request)
     {
-        //validation
+        //input validation
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8|alpha_num',
@@ -28,12 +33,15 @@ class LoginController extends Controller
         $userInfo = User::where('email', '=', $request->email)->first();
 
         if (!$userInfo) {
+            //Email check
             return back()->with('fail', 'Email or password is wrong');
         } else {
+            //password check
             if (Hash::check($request->password, $userInfo->password)) {
+                //set cookies
                 setcookie("isLoggedIn", $userInfo->id, time() + 86400, "/");
                 setcookie("user_role", $userInfo->role, time() + 86400, "/");
-//                setcookie('filter', true, time() + 86400, "/");
+                //redirection
                 if (strcmp($userInfo->role, 'admin') == 0 || strcmp($userInfo->role, 'viewer') == 0) {
                     return redirect('dashboard');
                 } elseif (strcmp($userInfo->role, 'user') == 0) {
@@ -45,6 +53,11 @@ class LoginController extends Controller
         }
     }
 
+    /**
+     *
+     * Logout method. It removes all the session data and set the isLoggedIn cookie to none.
+     * Redirects the user back to login page.
+     */
     public function logout()
     {
         Session::flush();
