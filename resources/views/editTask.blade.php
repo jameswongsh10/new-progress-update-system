@@ -1,7 +1,7 @@
+<!doctype html>
 @php
     use App\Models\User;
 @endphp
-    <!doctype html>
 <html lang="en">
 @if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"admin")))
 
@@ -16,8 +16,8 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Edit Tasks</title>
     </head>
-    <body>
 
+    <body>
     <!-- sidebar -->
     <div class="sidenav">
         <header>Progress Update System</header>
@@ -30,13 +30,15 @@
             </a>
             <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
                 <li class="w-100">
-                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report Settings</a>
                 </li>
                 <li>
                     <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
                 </li>
                 <li class="w-100">
-                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
+                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status
+                        Settings</a>
                 </li>
             </ul>
         @endif
@@ -58,7 +60,6 @@
         </nav>
 
         <!-- table -->
-
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -68,7 +69,6 @@
                 </div>
             </div>
             <div class="card-body">
-
                 @if( session()->get('success'))
                     <div class="alert alert-success">
                         {{ session()->get('success') }}
@@ -78,34 +78,34 @@
                         {{ session()->get('failed') }}
                     </div>
                 @endif
+                <form autocomplete="off" method="post" action="{{ route('updateTask', $statusTask->id) }}">
+                    @csrf
+                    @method('GET')
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select name="status" class="form-control">
+                            <option disabled value="">Select Status</option>
 
-            <form autocomplete="off" method="post" action="{{ route('updateTask', $statusTask->id) }}">
-                @csrf
-                @method('GET')
-                <div class="form-group">
-                    <label>Status</label>
-                    <select name="status" class="form-control">
-                        <option disabled value="">Select Status</option>
-
-                        @foreach($statuses as $status)
-                        <option value="{{$status->id}}" style="color:{{$status->colour}}" @if($status->id == $statusTask->status_id) selected @endif> {{$status->status_title}}</option>
-                        @endforeach
-                    </select>
-                    <span class="text-danger">@error ('status') {{$message}} @enderror</span>
-                </div>
-                <div class="form-group">
-                    <label>Remark</label>
-                    <input autocomplete="off" type="search" name="remark" class="form-control" />
-                    <span class="text-danger">@error ('remark') {{$message}} @enderror</span>
-                </div>
-                <br>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </div>
-            </form>
+                            @foreach($statuses as $status)
+                                <option value="{{$status->id}}" style="color:{{$status->colour}}"
+                                        @if($status->id == $statusTask->status_id) selected @endif> {{$status->status_title}}</option>
+                            @endforeach
+                        </select>
+                        <span class="text-danger">@error ('status') {{$message}} @enderror</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Remark</label>
+                        <input autocomplete="off" type="search" name="remark" class="form-control"/>
+                        <span class="text-danger">@error ('remark') {{$message}} @enderror</span>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

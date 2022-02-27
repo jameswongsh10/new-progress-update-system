@@ -16,11 +16,9 @@
 
 
     <!-- sidebar -->
-
     <div class="sidenav">
         <header>Progress Update System</header>
         <hr>
-        {{--    @if(strcmp($userRole, 'admin') == 0 || strcmp($userRole, 'viewer') == 0)--}}
         <a href="{{ route('dashboard') }}" class="item-nav active ">Dashboard</a>
         <a href="{{ route('users.index') }}" class="item-nav">User Management</a>
         @if((!strcmp($_COOKIE['user_role'],"admin")))

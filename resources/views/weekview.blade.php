@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Week View</title>
     </head>
+
     <body>
     <!-- sidebar -->
     <div class="sidenav">
@@ -37,7 +38,6 @@
                 </li>
             </ul>
         @endif
-
         <a href="{{ route('logout') }}" class="item-nav">Logout</a>
     </div>
 
@@ -109,7 +109,6 @@
                             @empty
                                 <p>There is no task</p>
                             @endforelse
-
                         </table>
                     </div>
                 @endforeach

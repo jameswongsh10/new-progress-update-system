@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Add teams</title>
 </head>
+
 <body>
 <!-- sidebar -->
 <div class="sidenav">
@@ -25,7 +26,8 @@
         </a>
         <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
             <li class="w-100">
-                <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
+                <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report
+                    Settings</a>
             </li>
             <li>
                 <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
@@ -53,7 +55,6 @@
     </nav>
 
     <!-- table -->
-
     <div class="card">
         <div class="card-header">
             <div class="row">

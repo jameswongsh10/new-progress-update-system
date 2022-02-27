@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Edit Status Title</title>
     </head>
+
     <body>
     <!-- sidebar -->
     <div class="sidenav">
@@ -26,17 +27,19 @@
             </a>
             <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
                 <li class="w-100">
-                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report Settings</a>
                 </li>
                 <li>
                     <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
                 </li>
                 <li class="w-100">
-                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
+                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status
+                        Settings</a>
                 </li>
             </ul>
         @endif
-            <a href="{{ route('logout') }}" class="item-nav">Logout</a>
+        <a href="{{ route('logout') }}" class="item-nav">Logout</a>
     </div>
 
     <!-- main content -->
@@ -54,7 +57,6 @@
         </nav>
 
         <!-- table -->
-
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -84,9 +86,10 @@
                     </div>
                     <div class="form-group">
                         <label>Colour for status</label>
-                        <input type="text" id="hex" name="colour" class="form-control" value="{{$currentStatus->colour}}"/>
+                        <input type="text" id="hex" name="colour" class="form-control"
+                               value="{{$currentStatus->colour}}"/>
                         <p></p>
-                        <input type="color" id="color" value="{{$currentStatus->colour}}" />
+                        <input type="color" id="color" value="{{$currentStatus->colour}}"/>
                         <span class="text-danger">@error ('colour') {{$message}} @enderror</span>
                     </div>
                     <br>

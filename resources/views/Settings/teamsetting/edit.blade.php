@@ -13,9 +13,9 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Edit teams</title>
     </head>
+
     <body>
     <!-- sidebar -->
-
     @php
         $teamByUrl = \App\Models\Team::find(Request::segment(3));
     @endphp
@@ -31,13 +31,15 @@
             </a>
             <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
                 <li class="w-100">
-                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report Settings</a>
                 </li>
                 <li>
                     <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
                 </li>
                 <li class="w-100">
-                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
+                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status
+                        Settings</a>
                 </li>
             </ul>
         @endif
@@ -59,7 +61,6 @@
         </nav>
 
         <!-- table -->
-
         <div class="card">
             <div class="card-header">
                 <div class="row">

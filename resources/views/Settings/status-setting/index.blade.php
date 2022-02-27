@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Status Setting</title>
     </head>
+
     <body>
     <!-- sidebar -->
     <div class="sidenav">
@@ -27,13 +28,15 @@
             </a>
             <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
                 <li class="w-100">
-                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report Settings</a>
                 </li>
                 <li>
                     <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
                 </li>
                 <li class="w-100">
-                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
+                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status
+                        Settings</a>
                 </li>
             </ul>
         @endif
@@ -54,7 +57,6 @@
         </nav>
 
         <!-- table -->
-
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -70,7 +72,6 @@
             </div>
             <div class="card-body">
                 <div class="row">
-
                     @if( session()->get('success'))
                         <div class="alert alert-success">
                             {{ session()->get('success') }}
@@ -100,7 +101,6 @@
                                     @if(!strcmp($_COOKIE['user_role'],'admin'))
                                         <td><a href="{{ route('status-setting.edit', $status->id) }}"
                                                class="btn btn-sm btn-warning">Edit</a></td>
-
                                     @endif
                                 </tr>
                             @endforeach

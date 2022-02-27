@@ -1,9 +1,8 @@
+<!doctype html>
 @php
     use App\Models\StatusTask;
     use App\Models\Status;
 @endphp
-
-<!doctype html>
 <html lang="en">
 @if(isset($_COOKIE["isLoggedIn"]) && (!strcmp($_COOKIE['user_role'],"admin") || !strcmp($_COOKIE['user_role'],"viewer")))
     <head>
@@ -18,6 +17,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <title>Month View</title>
     </head>
+
     <body>
     <!-- sidebar -->
     <div class="sidenav">
@@ -31,13 +31,15 @@
             </a>
             <ul class="collapse nav flex-column ms-1" id="settingmenu" data-bs-parent="#menu">
                 <li class="w-100">
-                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily Report Settings</a>
+                    <a href="{{ route('daily-report-setting.index') }}" class="item-nav custom-font-size px-0">Daily
+                        Report Settings</a>
                 </li>
                 <li>
                     <a href="{{ route('teamsetting.index') }}" class="item-nav custom-font-size px-0">Team Settings</a>
                 </li>
                 <li class="w-100">
-                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status Settings</a>
+                    <a href="{{ route('status-setting.index') }}" class="item-nav custom-font-size px-0">Status
+                        Settings</a>
                 </li>
             </ul>
         @endif
@@ -59,7 +61,6 @@
         </nav>
 
         <!-- table -->
-
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -101,20 +102,20 @@
 
                             @forelse($statusTask as $task)
                                 @if($task->task_id == $newTask->id)
-                                <tr>
-                                    <td>{{date('Y-m-d', strtotime($task->created_at))}}</td>
-                                    <td>{{$task->task_description}}</td>
-                                    @foreach($statuses as $status)
-                                        @if($task->status_id == $status->id)
-                                            <td style="color:{{$status->colour}}">{{$status->status_title}}</td>
+                                    <tr>
+                                        <td>{{date('Y-m-d', strtotime($task->created_at))}}</td>
+                                        <td>{{$task->task_description}}</td>
+                                        @foreach($statuses as $status)
+                                            @if($task->status_id == $status->id)
+                                                <td style="color:{{$status->colour}}">{{$status->status_title}}</td>
+                                            @endif
+                                        @endforeach
+                                        <td>{{$task->task_remark}}</td>
+                                        @if(!strcmp($_COOKIE['user_role'],'admin'))
+                                            <td><a href="{{route('editTask',$task->id, )}}"
+                                                   class="btn btn-sm btn-warning">Edit</a></td>
                                         @endif
-                                    @endforeach
-                                    <td>{{$task->task_remark}}</td>
-                                    @if(!strcmp($_COOKIE['user_role'],'admin'))
-                                        <td><a href="{{route('editTask',$task->id, )}}"
-                                               class="btn btn-sm btn-warning">Edit</a></td>
-                                    @endif
-                                </tr>
+                                    </tr>
                                 @endif
                             @empty
                                 <p>There is no task</p>
