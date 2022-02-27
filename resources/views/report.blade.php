@@ -58,10 +58,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-
                         Report of <?php echo $user->name . " from " . $created_at . " to " . $lastDay;?>
-
-
                 </div>
             </div>
             <div class="card-body">

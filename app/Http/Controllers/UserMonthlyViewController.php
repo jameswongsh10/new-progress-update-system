@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class UserMonthlyViewController extends Controller
 {
+    /**
+     * Show specific user's task for the selected month.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function usermonthview() {
         if (!isset($_COOKIE["user"])) {
             echo "Cookie named '" . "' is not set!";
@@ -37,6 +42,11 @@ class UserMonthlyViewController extends Controller
         return view('usermonthview', compact('statusTask','date','groupByTaskID','taskTitleArray', 'statuses'));
     }
 
+    /**
+     * Display filtered result which searched by the Admin.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function filteredUserView()
     {
         $id = $_COOKIE['user'];
