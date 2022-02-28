@@ -66,7 +66,6 @@
                         $i = 0;
                     @endphp
                     @foreach($settings as $setting)
-
                         <div class="form-group">
                             <label>{{$setting->progress_title}}</label>
                             <input autocomplete="=off" type="search" name="{{$setting->html_name}}" class="form-control"

@@ -19,6 +19,7 @@ class ReportController extends Controller
         if (!strcmp($_COOKIE['user_role'], 'user')) {
             $settings = Setting::where('is_active', '=', '1')->get();
             $today = $_COOKIE['today'];
+
             return view('dailyreport', compact("today", "settings"));
         }
     }
@@ -47,19 +48,19 @@ class ReportController extends Controller
         }
         $this->validate($request, $validateArray);
 
-        foreach ($settings as $setting) {
-            $newReport = new Report();
-            $newReport->user_id = $_COOKIE['isLoggedIn'];
-            $newReport->setting_id = $setting->id;
-            $newReport->report_date = $clickedDate;
-            $newReport->answer = $request->input($setting->html_name);
-            $save = $newReport->save();
-        }
-        setcookie('daily_report_done', '1', time() + (86400), "/");
+            foreach ($settings as $setting) {
+                $newReport = new Report();
+                $newReport->user_id = $_COOKIE['isLoggedIn'];
+                $newReport->setting_id = $setting->id;
+                $newReport->report_date = $clickedDate;
+                $newReport->answer = $request->input($setting->html_name);
+                $save = $newReport->save();
+            }
+            setcookie('daily_report_done', '1', time() + (86400), "/");
 
-        if ($save) {
-            return redirect('/userdashboard')->with('success', 'Daily report has been added');
-        }
+            if ($save) {
+                return redirect('/userdashboard')->with('success', 'Daily report has been added');
+            }
     }
 
     /**
@@ -70,7 +71,7 @@ class ReportController extends Controller
         if (!strcmp($_COOKIE['user_role'], 'user')) {
             $today = $_COOKIE['today'];
             $settings = Setting::where('is_active', '=', '1')->get();
-            $reports = Report::where('user_id', $_COOKIE['isLoggedIn'])->whereDate('created_at', '=', $today)->get();
+            $reports = Report::where('user_id', $_COOKIE['isLoggedIn'])->whereDate('report_date', '=', $today)->get();
             return view('editDailyReport', compact('today', 'reports', 'settings'));
         }
     }

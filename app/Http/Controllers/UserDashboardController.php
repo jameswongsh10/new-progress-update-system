@@ -97,7 +97,12 @@ class UserDashboardController extends Controller
         $tasks = Task::where('user_id', $id)->get();
         $settings = Setting::where('is_active', '=', 1)->get();
         $statuses = Status::where('is_active', '=', 1)->get();
-        return view('userdashboard.create', compact('settings','today', 'tasks', 'statuses'));
+        $exist = Report::where('user_id',$_COOKIE['isLoggedIn'])->where('report_date',$today)->get()->count();
+        $didReport = false;
+        if($exist > 0){
+            $didReport = true;
+        }
+        return view('userdashboard.create', compact('settings','today', 'tasks', 'statuses','didReport'));
     }
 
     /**
