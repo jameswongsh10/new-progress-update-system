@@ -161,15 +161,25 @@ class TaskController extends Controller
     /**
      * Display filtered result which searched by the Admin.
      *
+     * @param $type
      * @return \Illuminate\Http\Response
      */
-    public function filteredView()
+    public function filteredView($type)
     {
         $id = $_COOKIE['user'];
-        $date = $_COOKIE['month'];
+        if(!strcmp($type,"month")){
+            $date = $_COOKIE['month'];
+        }else{
+            $date = date('Y-m-d', strtotime($_COOKIE['week'] . ' + 1 days'));
+        }
 
         if (!isset($_COOKIE["myKeyword"])) {
-            return $this->monthlyView();
+
+            if(!strcmp($type,"month")){
+                return $this->monthlyView();
+            }else{
+                return $this->weekView();
+            }
         } else {
             $keyword = $_COOKIE['myKeyword'];
 
@@ -188,9 +198,14 @@ class TaskController extends Controller
                 array_push($taskTitleArray, $taskTitle);
             }
 
-            $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
+            if(!strcmp($type,"month")){
+                $statusTask = StatusTask::where('user_id', $id)->whereMonth('created_at', $date)->get();
+                return view('monthview', compact('statusTask', 'date', 'groupByTaskID', 'taskTitleArray', 'statuses'));
 
-            return view('monthview', compact('statusTask', 'date', 'groupByTaskID', 'taskTitleArray', 'statuses'));
+            }else{
+                $statusTask = StatusTask::where('user_id', $id)->whereDate('status_date', '>=', $date)->whereDate('status_date', '<=', date('Y-m-d', strtotime($date . ' + 6 days')))->get();
+                return view('weekView', compact('statusTask', 'date', 'groupByTaskID', 'taskTitleArray', 'statuses'));
+            }
 
         }
     }

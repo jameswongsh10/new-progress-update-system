@@ -150,7 +150,7 @@
                 url: "{{route('getKeyword')}}",
                 data: {myKeyword: keyword},
                 success: function (data) {
-                    window.location.href = "{{route('filteredView')}}";
+                    window.location.href = "{{route('filteredView',"month")}}";
                 }
             });
         });

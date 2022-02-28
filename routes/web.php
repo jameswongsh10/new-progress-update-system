@@ -51,7 +51,7 @@ Route::get('/usermonthview', [UserMonthlyViewController::class, 'usermonthview']
 Route::get('/filteredUserView', [UserMonthlyViewController::class, 'filteredUserView'])->name('filteredUserView');
 Route::get('monthlyView', [TaskController::class, 'monthlyView'])->name('monthlyView');
 Route::get('weekView', [TaskController::class, 'weekView'])->name('weekView');
-Route::get('filteredView', [TaskController::class, 'filteredView'])->name('filteredView');
+Route::get('filteredView/{type}', [TaskController::class, 'filteredView'])->name('filteredView');
 
 //------------------------------ Add and edit task -----------------------
 Route::get('addTask', [TaskController::class, 'addTask'])->name('addTask');
